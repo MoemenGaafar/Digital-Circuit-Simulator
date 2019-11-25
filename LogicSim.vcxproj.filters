@@ -136,6 +136,9 @@
     <ClInclude Include="Components\Switch.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
+    <ClInclude Include="Components\LED.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\AND2.cpp">
@@ -283,6 +286,7 @@
     <ClCompile Include="Components\XOR2.cpp" />
     <ClCompile Include="Components\XNOR2.cpp" />
     <ClCompile Include="Components\Switch.cpp" />
+    <ClCompile Include="Components\LED.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

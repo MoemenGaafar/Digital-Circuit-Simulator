@@ -7,7 +7,7 @@ UI::UI()
 	//Initilaize interface colors
 	DrawColor = BLACK;
 	SelectColor = BLUE;
-	ConnColor = RED;
+	ConnColor = BLUE;
 	MsgColor = BLUE;
 	BkGrndColor = WHITE;
 	
@@ -41,7 +41,7 @@ void UI::GetPointClicked(int &x, int &y)
 	pWind->WaitMouseClick(x, y);	//Wait for mouse click
 }
 
-string UI::GetSrting()
+string UI::GetString()
 {
 	//Reads a complete string from the user until the user presses "ENTER".
 	//If the user presses "ESCAPE". This function should return an empty string.
@@ -77,10 +77,12 @@ string UI::GetSrting()
 }
 
 //This function reads the position where the user clicks to determine the desired action
-ActionType UI::GetUserAction() const
+ActionType UI::GetUserAction() 
 {	
-	int x,y;
-	pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+	int x, y; 
+	GetPointClicked(x, y);	//Get the coordinates of the user click
+	PCx = x; 
+	PCy = y; 
 
 	if(AppMode == DESIGN )	//application is in design mode
 	{
@@ -102,10 +104,24 @@ ActionType UI::GetUserAction() const
 			case ITM_NOR2: return ADD_NOR_GATE_2;
 			case ITM_XOR2: return ADD_XOR_GATE_2;
 			case ITM_XNOR2: return ADD_XNOR_GATE_2;
-//			case ITM_SWITCH: return ADD_Switch;
-//			case ITM_LED: return ADD_LED;
-//			case ITM_CONNECTION: return ADD_CONNECTION;
+			case ITM_SWITCH: return ADD_Switch;
+			case ITM_LED: return ADD_LED;
+			case ITM_CONNECTION: return ADD_CONNECTION;
+			case ITM_UNDO: return UNDO;
+			case ITM_REDO: return REDO;
+			case ITM_SAVE: return SAVE; 
+			case ITM_LOAD: return LOAD; 
+			case ITM_LABEL: return ADD_Label;
+			case ITM_DEL: return DEL;
+			case ITM_MOVE: return MOVE;
+            case ITM_COPY: return COPY;
+            case ITM_CUT: return CUT;
+            case ITM_PASTE: return PASTE; 
+			case ITM_SIM: return SIM_MODE; 
+			case ITM_EDITCONN: return EDIT_Conn;
 			case ITM_EXIT: return EXIT;	
+			
+
 			
 			default: return DSN_TOOL;	//A click on empty place in desgin toolbar
 			}
@@ -122,8 +138,33 @@ ActionType UI::GetUserAction() const
 	}
 	else	//Application is in Simulation mode
 	{
-		return SIM_MODE;	//This should be changed after creating the compelete simulation bar 
+	  if (y >= 0 && y < ToolBarHeight)
+	  {
+		
+		int ClickedItemOrder = (x / ToolItemWidth);
+		
+
+		switch (ClickedItemOrder)
+		{
+		
+		case ITM_DSN: return DSN_MODE;
+		case ITM_EXIT: return EXIT;
+
+		default: return DSN_TOOL;	//A click on empty place in desgin toolbar
+		}
+	  }
+
+	   //[2] User clicks on the drawing area
+	   if (y >= ToolBarHeight && y < height - StatusBarHeight)
+	   {
+		return SELECT;	//user want to select/unselect a statement in the flowchart
+	   }
+
+	//[3] User clicks on the status bar
+	    return STATUS_BAR;
+	
 	}
+	
 
 }
 
@@ -199,7 +240,18 @@ void UI::CreateDesignToolBar()
 	MenuItemImages[ITM_LED] = "images\\Menu\\Menu_LED.jpg";
 	MenuItemImages[ITM_CONNECTION] = "images\\Menu\\Menu_CONNECTION.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\Menu\\Menu_Exit.jpg";
-
+	MenuItemImages[ITM_UNDO] = "images\\Menu\\Menu_UNDO.jpg";
+	MenuItemImages[ITM_REDO] = "images\\Menu\\Menu_REDO.jpg";
+	MenuItemImages[ITM_LABEL] = "images\\Menu\\Menu_Label.jpg";
+	MenuItemImages[ITM_DEL] = "images\\Menu\\Menu_Delete.jpg";
+	MenuItemImages[ITM_MOVE] = "images\\Menu\\Menu_Move.jpg";
+	MenuItemImages[ITM_COPY] = "images\\Menu\\Menu_Copy.jpg";
+	MenuItemImages[ITM_CUT] = "images\\Menu\\Menu_Cut.jpg";
+	MenuItemImages[ITM_PASTE] = "images\\Menu\\Menu_Paste.jpg";
+	MenuItemImages[ITM_SAVE] = "images\\Menu\\Menu_Save.jpg";
+	MenuItemImages[ITM_LOAD] = "images\\Menu\\Menu_Load.jpg";
+	MenuItemImages[ITM_SIM] = "images\\Menu\\Menu_Simulate.jpg";
+	MenuItemImages[ITM_EDITCONN] = "images\\Menu\\Menu_EditConnect.jpg";
 
 	//Draw menu item one image at a time
 	for(int i=0; i<ITM_DSN_CNT; i++)
@@ -321,7 +373,7 @@ void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected) const
 {
 	string GateImage;
 	if (selected)	//use image in the highlighted case
-		GateImage = "Images\\Gates\\Switch_ON.jpg";
+		GateImage = "Images\\Gates\\Switch_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\Switch_OFF.jpg";
 
@@ -334,7 +386,7 @@ void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected) const
 {
 	string GateImage;
 	if (selected)	//use image in the highlighted case
-		GateImage = "Images\\Gates\\LED_ON.jpg";
+		GateImage = "Images\\Gates\\LED_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\LED_OFF.jpg";
 
@@ -344,18 +396,63 @@ void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected) const
 }
 
 
-void UI::DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected)
+void UI::DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected) const
 {
 	int x1 = r_GfxInfo.PointsList[0].x;
 	int y1 = r_GfxInfo.PointsList[0].y;
 	int x2 = r_GfxInfo.PointsList[1].x;
 	int y2 = r_GfxInfo.PointsList[1].y;
-	if (selected) DrawColor = RED;
-	pWind->DrawLine(x1, y1, (x2-x1)/3, y1);
-	pWind->DrawLine((x2 - x1) / 3, y1, (x2 - x1) / 3, y2);
-	pWind->DrawLine((x2 - x1) / 3, y1, x2, y2);
+	if (selected) 	pWind->SetPen(RED, 3);
+	else pWind->SetPen(ConnColor, 3);
+	pWind->DrawLine(x1, y1, x1 + (x2-x1)/3, y1);
+	pWind->DrawLine(x1 + (x2 - x1) / 3, y1, x1 + (x2 - x1) / 3, y2);
+	pWind->DrawLine(x1 + (x2 - x1) / 3, y2, x2, y2);
 }
 
+
+void UI::ClearConnection(GraphicsInfo *r_GfxInfo) const
+{
+	int x1 = r_GfxInfo->PointsList[0].x;
+	int y1 = r_GfxInfo->PointsList[0].y;
+	int x2 = r_GfxInfo->PointsList[1].x;
+	int y2 = r_GfxInfo->PointsList[1].y;
+
+	pWind->SetPen(BkGrndColor, 3);
+	pWind->DrawLine(x1, y1, x1 + (x2 - x1) / 3, y1);
+	pWind->DrawLine(x1 + (x2 - x1) / 3, y1, x1 + (x2 - x1) / 3, y2);
+	pWind->DrawLine(x1 + (x2 - x1) / 3, y2, x2, y2);
+
+}
+
+void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const
+{
+	int x1 = r_GfxInfo->PointsList[0].x;
+	int y1 = r_GfxInfo->PointsList[0].y;
+	int x2 = r_GfxInfo->PointsList[1].x;
+	int y2 = r_GfxInfo->PointsList[1].y;
+
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(x1, y1, x2, y2, FILLED, GATE_Width, GATE_Height);
+}
+
+
+void UI::LabelComp(string l, int x, int y) {
+
+	int MsgX = x + 10;
+
+	int MsgY = y - 20;
+
+	//Clear Old label
+	pWind->SetPen(BkGrndColor);
+	pWind->SetBrush(BkGrndColor);
+	pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
+
+	// Print the Message
+	pWind->SetFont(15, BOLD , BY_NAME, "Arial");
+	pWind->SetPen(BLACK);
+	pWind->DrawString(MsgX, MsgY, l);
+}
 
 UI::~UI()
 {

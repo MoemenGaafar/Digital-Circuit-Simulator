@@ -12,3 +12,4 @@ Component* InputPin::getComponent()
 {
 	return pComp;
 }
+

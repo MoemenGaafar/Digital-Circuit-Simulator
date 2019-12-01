@@ -45,9 +45,21 @@ class UI
 		ITM_NOR2,
 		ITM_XOR2,
 		ITM_XNOR2,
-    	ITM_SWITCH,
-    	ITM_LED,
-    	ITM_CONNECTION,
+		ITM_SWITCH,
+		ITM_LED,
+		ITM_CONNECTION,
+		ITM_LABEL,
+		ITM_UNDO,
+		ITM_REDO,
+		ITM_DEL,
+		ITM_MOVE,
+		ITM_EDITCONN,
+        ITM_COPY,
+        ITM_CUT,
+        ITM_PASTE,
+	    ITM_SAVE,
+		ITM_LOAD,
+		ITM_SIM,	//Simulate menu item
 		ITM_EXIT,		//Exit item
 		ITM_DSN_CNT		//no. of design menu items ==> This should be the last line in this enum
 	};
@@ -56,7 +68,8 @@ class UI
 	enum SimMenuItem //The items of the simulation menu (you should add more items)
 	{
 		//Note: Items are ordered here as they appear in menu
-		ITM_SIM,	//Simulate menu item
+		
+		ITM_DSN,	//Simulate menu items
 		ITM_TRUTH,	//Truth table menu item
 	
 		//TODO:Add more items names here
@@ -67,13 +80,7 @@ class UI
 
 
 
-	MODE AppMode;		//Application Mode (design or simulation)
 	
-	static const int	width = 1200, height = 650,	//Window width and height
-						wx = 15 , wy = 15,			//Window starting coordinates
-						StatusBarHeight = 50,	//Status Bar Height
-						ToolBarHeight = 80,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-						ToolItemWidth = 80;		//Width of each item in toolbar menu
 
 	color DrawColor;		//Drawing color
 	color SelectColor;		//Highlighting color
@@ -90,15 +97,21 @@ class UI
 	window *pWind;
 	
 public:
-	
+	static const int	width = 1200, height = 650,	//Window width and height
+		wx = 15, wy = 15,			//Window starting coordinates
+		StatusBarHeight = 50,	//Status Bar Height
+		ToolBarHeight = 50,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
+		ToolItemWidth = 50;		//Width of each item in toolbar menu
+	MODE AppMode;		//Application Mode (design or simulation)
+	int PCx, PCy;     // Last point clicked
 	UI();
 	int getGateWidth() const;
 	int getGateHeight() const;	
 	// Input Functions  ---------------------------
 	void GetPointClicked(int &, int &);	//Get coordinate where user clicks
-	string GetSrting();		//Returns a string entered by the user
+	string GetString();		//Returns a string entered by the user
 
-	ActionType GetUserAction() const; //Reads the user click and maps it to an action
+	ActionType GetUserAction(); //Reads the user click and maps it to an action
 
 	
 	// Output Functions  ---------------------------
@@ -125,9 +138,13 @@ public:
 	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 
 	// Draws Connection
-	void DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected = false);
+	void DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected = false) const;
+	// Clear Connection
+	void UI::ClearConnection(GraphicsInfo *r_GfxInfo) const;
+	void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const;
 	
 	void PrintMsg(string msg) const;	//Print a message on Status bar
+	void LabelComp(string l, int x, int y);
 
 	~UI();
 };

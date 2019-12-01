@@ -1,0 +1,24 @@
+#ifndef _DELETE_
+#define _DELETE_
+
+#include "action.h"
+#include "..\Components\Component.h"
+
+class Delete : public Action
+{
+private:
+	
+
+public:
+	Delete(ApplicationManager* pApp);
+	virtual ~Delete(void);
+	ActionType Type = DEL;
+	//Execute action (code depends on action type)
+	virtual void Execute();
+
+
+
+
+};
+
+#endif

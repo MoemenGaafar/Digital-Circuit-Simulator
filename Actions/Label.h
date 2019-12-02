@@ -12,12 +12,11 @@ private:
 public:
 	Label(ApplicationManager* pApp);
 	virtual ~Label(void);
-
+	ActionType Type = ADD_Label;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
-	virtual void Undo();
-	virtual void Redo();
+	
 
 
 };

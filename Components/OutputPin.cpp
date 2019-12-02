@@ -2,10 +2,12 @@
 #include "Connection.h"
 
 
-OutputPin::OutputPin() {
+OutputPin::OutputPin()
+{
 	m_Conn = 0;
 	m_FanOut = Default_FANOUT;
 }
+
 OutputPin::OutputPin(int r_FanOut)
 {
 	m_Conn = 0;		//initially Pin is not connected to anything.

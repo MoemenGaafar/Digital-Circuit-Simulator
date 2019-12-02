@@ -21,8 +21,3 @@ void Delete::Execute()
 
 }
 
-void Delete::Undo()
-{}
-
-void Delete::Redo()
-{}

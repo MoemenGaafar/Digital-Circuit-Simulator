@@ -21,8 +21,3 @@ void Copy::Execute()
 
 }
 
-void Copy::Undo()
-{}
-
-void Copy::Redo()
-{}

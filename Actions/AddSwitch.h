@@ -13,12 +13,11 @@ private:
 public:
 	AddSWITCH(ApplicationManager* pApp);
 	virtual ~AddSWITCH(void);
-
+	ActionType Type = ADD_Switch;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
-	virtual void Undo();
-	virtual void Redo();
+
 
 
 };

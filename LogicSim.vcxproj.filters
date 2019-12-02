@@ -178,13 +178,19 @@
     <ClInclude Include="Components\Component.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\DELETE.h">
+    <ClInclude Include="Actions\UNDO.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\REDO.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
     <ClInclude Include="Actions\COPY.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
     <ClInclude Include="Actions\CUT.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\DELETE.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
     <ClInclude Include="Actions\PASTE.h">
@@ -349,10 +355,12 @@
     <ClCompile Include="Actions\Label.cpp" />
     <ClCompile Include="Actions\EditCONN.cpp" />
     <ClCompile Include="Components\Component.cpp" />
+    <ClCompile Include="Actions\UNDO.cpp" />
+    <ClCompile Include="Actions\REDO.cpp" />
     <ClCompile Include="Actions\COPY.cpp" />
     <ClCompile Include="Actions\CUT.cpp" />
-    <ClCompile Include="Actions\PASTE.cpp" />
     <ClCompile Include="Actions\DELETE.cpp" />
+    <ClCompile Include="Actions\PASTE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

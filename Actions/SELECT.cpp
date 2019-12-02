@@ -60,8 +60,8 @@ void Select::Execute()
 			int y2 = pManager->CompList[i]->m_pGfxInfo->PointsList[1].y;
 
 			
-			
-			
+
+
 			if (Cx >= x1 && Cx <= x1 + (x2 - x1) / 3 && Cy >=y1-10 && Cy <=y1+10|| Cy >= y1 && Cy <= y2 && Cx >= x1 + (x2 - x1)/3 - 10 && Cx <= x1 + (x2 - x1) / 3 + 10 || Cx >= x1 + (x2 - x1) / 3 && Cx <= x2 && Cy >= y2 - 10 && Cy <= y2 + 10) {
 				found = true;
 				
@@ -82,8 +82,4 @@ void Select::Execute()
 
 }
 
-void Select::Undo()
-{}
 
-void Select::Redo()
-{}

@@ -99,7 +99,7 @@ ActionType UI::GetUserAction()
 			{
 			case ITM_AND2: return ADD_AND_GATE_2;
 			case ITM_OR2: return ADD_OR_GATE_2;
-			case ITM_LABEL: return ADD_Label;
+			case ITM_INV: return ADD_INV;
 			case ITM_NAND2: return ADD_NAND_GATE_2;
 			case ITM_NOR2: return ADD_NOR_GATE_2;
 			case ITM_XOR2: return ADD_XOR_GATE_2;
@@ -107,14 +107,18 @@ ActionType UI::GetUserAction()
 			case ITM_SWITCH: return ADD_Switch;
 			case ITM_LED: return ADD_LED;
 			case ITM_CONNECTION: return ADD_CONNECTION;
-			//case ITM_SAVE: return SAVE; 
-			//case ITM_LOAD: return LOAD; 
-			//case ITM_LABEL: return ADD_Label; 
-			//case ITM_DEL: return DEL; 
-			//case ITM_COPY: return COPY; 
-			//case ITM_CUT: return CUT; 
-			//case ITM_PASTE: return PASTE; 
-			//case ITM_SIM: return SIM_MODE; 
+			case ITM_UNDO: return UNDO;
+			case ITM_REDO: return REDO;
+			case ITM_SAVE: return SAVE; 
+			case ITM_LOAD: return LOAD; 
+			case ITM_LABEL: return ADD_Label;
+			case ITM_DEL: return DEL;
+			case ITM_MOVE: return MOVE;
+            case ITM_COPY: return COPY;
+            case ITM_CUT: return CUT;
+            case ITM_PASTE: return PASTE; 
+			case ITM_SIM: return SIM_MODE; 
+			case ITM_EDITCONN: return EDIT_Conn;
 			case ITM_EXIT: return EXIT;	
 			
 
@@ -225,7 +229,7 @@ void UI::CreateDesignToolBar()
 
 	//First prepare List of images for each menu item
 	string MenuItemImages[ITM_DSN_CNT];
-	MenuItemImages[ITM_LABEL] = "images\\Menu\\Menu_INV.jpg";
+	MenuItemImages[ITM_INV] = "images\\Menu\\Menu_INV.jpg";
 	MenuItemImages[ITM_AND2] = "images\\Menu\\Menu_AND2.jpg";
 	MenuItemImages[ITM_OR2]  = "images\\Menu\\Menu_OR2.jpg";
 	MenuItemImages[ITM_NAND2] = "images\\Menu\\Menu_NAND2.jpg";
@@ -236,7 +240,18 @@ void UI::CreateDesignToolBar()
 	MenuItemImages[ITM_LED] = "images\\Menu\\Menu_LED.jpg";
 	MenuItemImages[ITM_CONNECTION] = "images\\Menu\\Menu_CONNECTION.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\Menu\\Menu_Exit.jpg";
-
+	MenuItemImages[ITM_UNDO] = "images\\Menu\\Menu_UNDO.jpg";
+	MenuItemImages[ITM_REDO] = "images\\Menu\\Menu_REDO.jpg";
+	MenuItemImages[ITM_LABEL] = "images\\Menu\\Menu_Label.jpg";
+	MenuItemImages[ITM_DEL] = "images\\Menu\\Menu_Delete.jpg";
+	MenuItemImages[ITM_MOVE] = "images\\Menu\\Menu_Move.jpg";
+	MenuItemImages[ITM_COPY] = "images\\Menu\\Menu_Copy.jpg";
+	MenuItemImages[ITM_CUT] = "images\\Menu\\Menu_Cut.jpg";
+	MenuItemImages[ITM_PASTE] = "images\\Menu\\Menu_Paste.jpg";
+	MenuItemImages[ITM_SAVE] = "images\\Menu\\Menu_Save.jpg";
+	MenuItemImages[ITM_LOAD] = "images\\Menu\\Menu_Load.jpg";
+	MenuItemImages[ITM_SIM] = "images\\Menu\\Menu_Simulate.jpg";
+	MenuItemImages[ITM_EDITCONN] = "images\\Menu\\Menu_EditConnect.jpg";
 
 	//Draw menu item one image at a time
 	for(int i=0; i<ITM_DSN_CNT; i++)
@@ -358,7 +373,7 @@ void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected) const
 {
 	string GateImage;
 	if (selected)	//use image in the highlighted case
-		GateImage = "Images\\Gates\\Switch_ON.jpg";
+		GateImage = "Images\\Gates\\Switch_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\Switch_OFF.jpg";
 
@@ -371,7 +386,7 @@ void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected) const
 {
 	string GateImage;
 	if (selected)	//use image in the highlighted case
-		GateImage = "Images\\Gates\\LED_ON.jpg";
+		GateImage = "Images\\Gates\\LED_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\LED_OFF.jpg";
 
@@ -409,21 +424,32 @@ void UI::ClearConnection(GraphicsInfo *r_GfxInfo) const
 
 }
 
+void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const
+{
+	int x1 = r_GfxInfo->PointsList[0].x;
+	int y1 = r_GfxInfo->PointsList[0].y;
+	int x2 = r_GfxInfo->PointsList[1].x;
+	int y2 = r_GfxInfo->PointsList[1].y;
+
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(x1, y1, x2, y2, FILLED, GATE_Width, GATE_Height);
+}
 
 
 void UI::LabelComp(string l, int x, int y) {
 
-	int MsgX = x + 25;
+	int MsgX = x + 10;
 
-	int MsgY = y + 25;
+	int MsgY = y - 20;
 
 	//Clear Old label
 	pWind->SetPen(BkGrndColor);
 	pWind->SetBrush(BkGrndColor);
-	pWind->DrawRectangle(MsgX, height - MsgY, width, height);
+	pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
 
 	// Print the Message
-	pWind->SetFont(20, BOLD , BY_NAME, "Arial");
+	pWind->SetFont(15, BOLD , BY_NAME, "Arial");
 	pWind->SetPen(BLACK);
 	pWind->DrawString(MsgX, MsgY, l);
 }

@@ -12,13 +12,9 @@ private:
 public:
 	Paste(ApplicationManager* pApp);
 	virtual ~Paste(void);
-
+	ActionType Type = PASTE;
 	//Execute action (code depends on action type)
 	virtual void Execute();
-
-	virtual void Undo();
-	virtual void Redo();
-
 
 };
 

@@ -21,8 +21,3 @@ void Cut::Execute()
 
 }
 
-void Cut::Undo()
-{}
-
-void Cut::Redo()
-{}

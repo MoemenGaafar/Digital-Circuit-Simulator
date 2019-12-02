@@ -38,24 +38,28 @@ class UI
 	{
 		//Note: Items are ordered here as they appear in menu
 		//If you want to change the menu items order, change the order here
-		ITM_LABEL,
+		ITM_INV,
 		ITM_AND2,		//AND gate item in menu
 		ITM_OR2,		//OR gate item in menu
 		ITM_NAND2,
 		ITM_NOR2,
 		ITM_XOR2,
 		ITM_XNOR2,
-    	ITM_SWITCH,
-    	ITM_LED,
-    	ITM_CONNECTION,
-		//ITM_SAVE,
-		//ITM_LOAD,
-		//ITM_LABEL,
-		//ITM_DEL,
-		//ITM_COPY, 
-		//ITM_CUT, 
-		//ITM_PASTE,
-		//ITM_SIM,	//Simulate menu item
+		ITM_SWITCH,
+		ITM_LED,
+		ITM_CONNECTION,
+		ITM_LABEL,
+		ITM_UNDO,
+		ITM_REDO,
+		ITM_DEL,
+		ITM_MOVE,
+		ITM_EDITCONN,
+        ITM_COPY,
+        ITM_CUT,
+        ITM_PASTE,
+	    ITM_SAVE,
+		ITM_LOAD,
+		ITM_SIM,	//Simulate menu item
 		ITM_EXIT,		//Exit item
 		ITM_DSN_CNT		//no. of design menu items ==> This should be the last line in this enum
 	};
@@ -77,12 +81,6 @@ class UI
 
 
 	
-	
-	static const int	width = 1200, height = 650,	//Window width and height
-						wx = 15 , wy = 15,			//Window starting coordinates
-						StatusBarHeight = 50,	//Status Bar Height
-						ToolBarHeight = 80,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-						ToolItemWidth = 80;		//Width of each item in toolbar menu
 
 	color DrawColor;		//Drawing color
 	color SelectColor;		//Highlighting color
@@ -99,6 +97,11 @@ class UI
 	window *pWind;
 	
 public:
+	static const int	width = 1200, height = 650,	//Window width and height
+		wx = 15, wy = 15,			//Window starting coordinates
+		StatusBarHeight = 50,	//Status Bar Height
+		ToolBarHeight = 50,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
+		ToolItemWidth = 50;		//Width of each item in toolbar menu
 	MODE AppMode;		//Application Mode (design or simulation)
 	int PCx, PCy;     // Last point clicked
 	UI();
@@ -137,7 +140,8 @@ public:
 	// Draws Connection
 	void DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected = false) const;
 	// Clear Connection
-	void UI::ClearConnection(GraphicsInfo *r_GfxInfo) const; 
+	void UI::ClearConnection(GraphicsInfo *r_GfxInfo) const;
+	void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const;
 	
 	void PrintMsg(string msg) const;	//Print a message on Status bar
 	void LabelComp(string l, int x, int y);

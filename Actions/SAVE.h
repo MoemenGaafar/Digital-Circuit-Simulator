@@ -19,13 +19,11 @@ private:
 public:
 	Save(ApplicationManager* pApp);
 	virtual ~Save(void);
-
+	ActionType Type = SAVE;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
-	virtual void Undo();
-	virtual void Redo();
-
+	
 
 };
 

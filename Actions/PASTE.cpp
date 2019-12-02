@@ -21,8 +21,3 @@ void Paste::Execute()
 
 }
 
-void Paste::Undo()
-{}
-
-void Paste::Redo()
-{}

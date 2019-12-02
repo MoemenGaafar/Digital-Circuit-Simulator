@@ -13,13 +13,11 @@ private:
 public:
 	AddNORgate2(ApplicationManager* pApp);
 	virtual ~AddNORgate2(void);
-
+	ActionType Type = ADD_NOR_GATE_2;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
-	virtual void Undo();
-	virtual void Redo();
-
+	
 
 };
 

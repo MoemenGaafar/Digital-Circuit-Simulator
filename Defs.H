@@ -4,6 +4,7 @@
 //This header file contains some defenitions to be used all over the application
 
 //All possible actions
+
 enum ActionType 
 {
 	ADD_INV,			//Add 1-input Inverter gate
@@ -21,10 +22,10 @@ enum ActionType
 	EDIT_Conn,			//Edit source/destination pin(s) of connection 
 
 	SELECT,		//Select a Component, a Connection
-	DEL,		//Delete a Component, a Connection
+	DEL, //Delete a Component, a Connection
 	COPY,       //Copies a Component
 	CUT,        //Cuts a Component
-	PASTE,      //Pastes a Component 
+	PASTE,      //Pastes a Component
 	MOVE,		//Move a Component, a Connection
 
 	SAVE,		//Save the whole Circuit to a file
@@ -61,7 +62,7 @@ enum Type
 { 
 	T_CONNECTION,
 	T_SWITCH, 
-	T_LED, 
+	T_LED,
 	T_NOT,
 	T_AND2, 
 	T_OR2,
@@ -74,6 +75,7 @@ enum Type
 //Maximum number of input pins that can be connected to any output pin
 
 //assume fan out is 5 for now it can be read from the user or can be predefined as const
+
 enum FANOUT
 {
 	Default_FANOUT = 5	//Default fan out of 2-input AND gate

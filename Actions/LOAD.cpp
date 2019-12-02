@@ -39,16 +39,12 @@ void Load::Execute()
 			int ID;
 			int place;
 		};
-
-
-
 		//Calculate the rectangle Corners
 		int gateWidth = pUI->getGateWidth();
 		int gateHeight = pUI->getGateHeight();
 
 		int GateCount;
 		myfile >> GateCount;
-
 		map* mapGates = new map[GateCount];
 		string line;
 
@@ -65,7 +61,6 @@ void Load::Execute()
 			a >> label;
 			a >> Cx;
 			a >> Cy;
-
 			mapGates[i].ID = Identity;
 			mapGates[i].place = i;
 
@@ -144,7 +139,7 @@ void Load::Execute()
 
 			GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
 			OutputPin* pSrcPin;
-			InputPin pDstPin; 
+			InputPin* pDstPin = new InputPin; 
 
 			int sourceComp; 
 			int destinationComp; 
@@ -163,7 +158,7 @@ void Load::Execute()
 			for (int j = 0; j < GateCount; j++) {
 				if (mapGates[j].ID = T_Comp) {
 
-					pDstPin = pManager->CompList[mapGates[j].place]->m_InputPins[P_n -1];
+					/*pDstPin = pManager->CompList[mapGates[j].place]->m_InputPins[P_n];*/
 					destinationComp = j; 
 					break;
 				}
@@ -206,11 +201,11 @@ void Load::Execute()
 			
 			
 
-			   comp = pManager->CompList[destinationComp];
-			   x1 = comp->m_pGfxInfo->PointsList[0].x;
-			   y1 = comp->m_pGfxInfo->PointsList[0].y;
-			   x2 = comp->m_pGfxInfo->PointsList[1].x;
-			   y2 = comp->m_pGfxInfo->PointsList[1].y;
+			    comp = pManager->CompList[destinationComp];
+			    x1 = comp->m_pGfxInfo->PointsList[0].x;
+			    y1 = comp->m_pGfxInfo->PointsList[0].y;
+			    x2 = comp->m_pGfxInfo->PointsList[1].x;
+			    y2 = comp->m_pGfxInfo->PointsList[1].y;
 
 			
 
@@ -250,7 +245,7 @@ void Load::Execute()
 
 				
 			//Create Connection
-			pManager->CompList[GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
+		//	pManager->CompList[GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
 
 
 		}
@@ -263,9 +258,5 @@ void Load::Execute()
 
 }
 
-void Load::Undo()
-{}
 
-void Load::Redo()
-{}
 

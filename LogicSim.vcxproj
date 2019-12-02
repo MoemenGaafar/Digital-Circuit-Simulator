@@ -80,8 +80,10 @@
     <ClInclude Include="Actions\Label.h" />
     <ClInclude Include="Actions\LOAD.h" />
     <ClInclude Include="Actions\PASTE.h" />
+    <ClInclude Include="Actions\REDO.h" />
     <ClInclude Include="Actions\SAVE.h" />
     <ClInclude Include="Actions\SELECT.h" />
+    <ClInclude Include="Actions\UNDO.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -141,8 +143,10 @@
     <ClCompile Include="Actions\Label.cpp" />
     <ClCompile Include="Actions\LOAD.cpp" />
     <ClCompile Include="Actions\PASTE.cpp" />
+    <ClCompile Include="Actions\REDO.cpp" />
     <ClCompile Include="Actions\SAVE.cpp" />
     <ClCompile Include="Actions\SELECT.cpp" />
+    <ClCompile Include="Actions\UNDO.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

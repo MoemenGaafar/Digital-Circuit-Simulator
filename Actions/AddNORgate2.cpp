@@ -33,7 +33,8 @@ void AddNORgate2::Execute()
 	pGInfo->PointsList[0].y = Cy - gateHeight / 2;
 	pGInfo->PointsList[1].x = Cx + gateWidth / 2;
 	pGInfo->PointsList[1].y = Cy + gateHeight / 2;
-	if (pGInfo->PointsList[0].y < 80 || pGInfo->PointsList[1].y < 80) {
+
+	if (pGInfo->PointsList[0].y < pUI->ToolBarHeight || pGInfo->PointsList[1].y < pUI->ToolBarHeight) {
 		pUI->PrintMsg("YOU CAN'T PLACE A COMPONENT ON THE TOOLBAR!!");
 	}
 	else {
@@ -42,8 +43,3 @@ void AddNORgate2::Execute()
 	}
 }
 
-void AddNORgate2::Undo()
-{}
-
-void AddNORgate2::Redo()
-{}

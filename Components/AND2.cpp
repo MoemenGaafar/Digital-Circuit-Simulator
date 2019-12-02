@@ -2,6 +2,7 @@
 
 AND2::AND2(GraphicsInfo *r_pGfxInfo, int r_FanOut):Gate(r_pGfxInfo,2, r_FanOut)
 {
+	ComponentType = T_AND2;
 }
 
 
@@ -9,9 +10,9 @@ void AND2::Operate()
 {
 	//caclulate the output status as the ANDing of the two input pins
 	if ((m_InputPins[0].getStatus() == HIGH) && (m_InputPins[1].getStatus() == HIGH))
-	m_OutputPin.setStatus(HIGH);
+	m_OutputPin->setStatus(HIGH);
 	else
-	m_OutputPin.setStatus(LOW);
+	m_OutputPin->setStatus(LOW);
 }
 
 
@@ -26,7 +27,7 @@ void AND2::Draw(UI* pUI)
 //returns status of outputpin
 int AND2::GetOutPinStatus()	
 {
-	return m_OutputPin.getStatus();
+	return m_OutputPin->getStatus();
 }
 
 

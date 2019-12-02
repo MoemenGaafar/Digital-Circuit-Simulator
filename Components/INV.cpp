@@ -2,15 +2,16 @@
 
 INV::INV(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 {
+	ComponentType = T_NOT;
 }
 
 
 void INV::Operate()
 {
 	if ((m_InputPins[0].getStatus() == LOW))
-		m_OutputPin.setStatus(HIGH);
+		m_OutputPin->setStatus(HIGH);
 	else
-		m_OutputPin.setStatus(LOW);
+		m_OutputPin->setStatus(LOW);
 }
 
 
@@ -25,7 +26,7 @@ void INV::Draw(UI* pUI)
 //returns status of outputpin
 int INV::GetOutPinStatus()
 {
-	return m_OutputPin.getStatus();
+	return m_OutputPin->getStatus();
 }
 
 

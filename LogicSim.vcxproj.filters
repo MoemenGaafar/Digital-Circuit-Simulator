@@ -80,9 +80,6 @@
     <ClInclude Include="CMUgraphicsLib\windowinput.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Component.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Gate.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -139,6 +136,60 @@
     <ClInclude Include="Components\LED.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\AddInv.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddLED.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddNANDgate2.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddNORgate2.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddORgate2.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddSwitch.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddXNORgate2.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddXORgate2.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\LOAD.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\SAVE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\SELECT.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Label.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\EditCONN.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Component.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\DELETE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\COPY.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\CUT.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\PASTE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\AND2.cpp">
@@ -164,9 +215,6 @@
     </ClCompile>
     <ClCompile Include="CMUgraphicsLib\jpeg\jcparam.c">
       <Filter>CMUgrahpics Library</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Component.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\Connection.cpp">
       <Filter>Components</Filter>
@@ -287,6 +335,24 @@
     <ClCompile Include="Components\XNOR2.cpp" />
     <ClCompile Include="Components\Switch.cpp" />
     <ClCompile Include="Components\LED.cpp" />
+    <ClCompile Include="Actions\AddInv.cpp" />
+    <ClCompile Include="Actions\AddLED.cpp" />
+    <ClCompile Include="Actions\AddNANDgate2.cpp" />
+    <ClCompile Include="Actions\AddNORgate2.cpp" />
+    <ClCompile Include="Actions\AddORgate2.cpp" />
+    <ClCompile Include="Actions\AddSwitch.cpp" />
+    <ClCompile Include="Actions\AddXNORgate2.cpp" />
+    <ClCompile Include="Actions\AddXORgate2.cpp" />
+    <ClCompile Include="Actions\LOAD.cpp" />
+    <ClCompile Include="Actions\SAVE.cpp" />
+    <ClCompile Include="Actions\SELECT.cpp" />
+    <ClCompile Include="Actions\Label.cpp" />
+    <ClCompile Include="Actions\EditCONN.cpp" />
+    <ClCompile Include="Components\Component.cpp" />
+    <ClCompile Include="Actions\COPY.cpp" />
+    <ClCompile Include="Actions\CUT.cpp" />
+    <ClCompile Include="Actions\PASTE.cpp" />
+    <ClCompile Include="Actions\DELETE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

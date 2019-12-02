@@ -17,13 +17,14 @@ enum ActionType
 	ADD_LED,			//Add LED
 	ADD_CONNECTION,		//Add Wire Connection
 
-	ADD_Label,			//Add Label to a Component, a Connection
-	EDIT_Label,			//Edit Label of a Component, a Connection
-
-	Change_Switch,		//Change Switch Status in Simulation Mode
+	ADD_Label,			//Add/ Edit Label to a Component, a Connection
+	EDIT_Conn,			//Edit source/destination pin(s) of connection 
 
 	SELECT,		//Select a Component, a Connection
 	DEL,		//Delete a Component, a Connection
+	COPY,       //Copies a Component
+	CUT,        //Cuts a Component
+	PASTE,      //Pastes a Component 
 	MOVE,		//Move a Component, a Connection
 
 	SAVE,		//Save the whole Circuit to a file
@@ -56,13 +57,26 @@ enum  MODE	//Modes of operation
 	SIMULATION
 };
 
+enum Type
+{ 
+	T_CONNECTION,
+	T_SWITCH, 
+	T_LED, 
+	T_NOT,
+	T_AND2, 
+	T_OR2,
+	T_NAND2, 
+	T_NOR2, 
+	T_XOR2,
+	T_XNOR2
+};
+
 //Maximum number of input pins that can be connected to any output pin
-#define MAX_CONNS 20
 
 //assume fan out is 5 for now it can be read from the user or can be predefined as const
 enum FANOUT
 {
-	AND2_FANOUT = 5	//Default fan out of 2-input AND gate
+	Default_FANOUT = 5	//Default fan out of 2-input AND gate
 };
 
 

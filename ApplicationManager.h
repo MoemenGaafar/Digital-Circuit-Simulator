@@ -13,7 +13,6 @@ class ApplicationManager
 	enum { MaxCompCount = 200 };	//Max no of Components	
 
 private:
-	int CompCount;		//Actual number of Components
 
 	UI* pUI; //pointer to the UI
 
@@ -22,6 +21,8 @@ public:
 
 
 public:	
+	string HeldString;
+	int CompCount;		//Actual number of Components
 	Component* CompList[MaxCompCount];	//List of all Components (Array of pointers)
 	ApplicationManager(); //constructor
 
@@ -40,7 +41,12 @@ public:
 	//Adds a new component to the list of components
 	void AddComponent(Component* pComp);
 
-	int getCount();
+	//Unselects selected components before new action is excuted (not used with all action types)
+	void UnselectAll(); 
+
+	//Checks that only one component is selected and returns its location
+	int ReturnSelected() const; 
+
 
 	//destructor
 	~ApplicationManager();

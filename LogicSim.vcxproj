@@ -65,6 +65,23 @@
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\AddANDgate2.h" />
     <ClInclude Include="Actions\AddConnection.h" />
+    <ClInclude Include="Actions\AddInv.h" />
+    <ClInclude Include="Actions\AddLED.h" />
+    <ClInclude Include="Actions\AddNANDgate2.h" />
+    <ClInclude Include="Actions\AddNORgate2.h" />
+    <ClInclude Include="Actions\AddORgate2.h" />
+    <ClInclude Include="Actions\AddSwitch.h" />
+    <ClInclude Include="Actions\AddXNORgate2.h" />
+    <ClInclude Include="Actions\AddXORgate2.h" />
+    <ClInclude Include="Actions\COPY.h" />
+    <ClInclude Include="Actions\CUT.h" />
+    <ClInclude Include="Actions\DELETE.h" />
+    <ClInclude Include="Actions\EditCONN.h" />
+    <ClInclude Include="Actions\Label.h" />
+    <ClInclude Include="Actions\LOAD.h" />
+    <ClInclude Include="Actions\PASTE.h" />
+    <ClInclude Include="Actions\SAVE.h" />
+    <ClInclude Include="Actions\SELECT.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -109,6 +126,23 @@
   <ItemGroup>
     <ClCompile Include="Actions\AddANDgate2.cpp" />
     <ClCompile Include="Actions\AddConnection.cpp" />
+    <ClCompile Include="Actions\AddInv.cpp" />
+    <ClCompile Include="Actions\AddLED.cpp" />
+    <ClCompile Include="Actions\AddNANDgate2.cpp" />
+    <ClCompile Include="Actions\AddNORgate2.cpp" />
+    <ClCompile Include="Actions\AddORgate2.cpp" />
+    <ClCompile Include="Actions\AddSwitch.cpp" />
+    <ClCompile Include="Actions\AddXNORgate2.cpp" />
+    <ClCompile Include="Actions\AddXORgate2.cpp" />
+    <ClCompile Include="Actions\COPY.cpp" />
+    <ClCompile Include="Actions\CUT.cpp" />
+    <ClCompile Include="Actions\DELETE.cpp" />
+    <ClCompile Include="Actions\EditCONN.cpp" />
+    <ClCompile Include="Actions\Label.cpp" />
+    <ClCompile Include="Actions\LOAD.cpp" />
+    <ClCompile Include="Actions\PASTE.cpp" />
+    <ClCompile Include="Actions\SAVE.cpp" />
+    <ClCompile Include="Actions\SELECT.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

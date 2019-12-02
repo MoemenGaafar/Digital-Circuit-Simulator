@@ -17,6 +17,7 @@ int main()
 		//Read user action
 		ActType = AppManager.GetUserAction();
 
+		
 		//Exexute the action
 		AppManager.ExecuteAction(ActType);
 

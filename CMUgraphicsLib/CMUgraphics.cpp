@@ -301,13 +301,13 @@ window::~window() {
     }
 
     if(wipInput->Count() == 1) {
-        if(wipInput->bWaitClose == true) {
+       /* if(wipInput->bWaitClose == true) {
           FlushMouseQueue();
           // Can't use cout because it's destructor might be called before the 
           // window destructor if the window is in the global scope.
           printf("Click mouse in the graphics window to finish execution.\n");
           WaitMouseClick(iX, iY);
-        }
+        }*/
         wipInput->RemoveWindow(hwndWindow);
   	    delete wipInput;
    	    wipInput = NULL;

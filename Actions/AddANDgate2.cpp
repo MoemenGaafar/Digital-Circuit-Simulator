@@ -33,8 +33,13 @@ void AddANDgate2::Execute()
 	pGInfo->PointsList[0].y = Cy - gateHeight/2;
 	pGInfo->PointsList[1].x = Cx + gateWidth/2;
 	pGInfo->PointsList[1].y = Cy + gateHeight/2;
-	AND2 *pA=new AND2(pGInfo, AND2_FANOUT); 
-	pManager->AddComponent(pA);
+	if (pGInfo->PointsList[0].y < 80 || pGInfo->PointsList[1].y < 80) {
+		pUI->PrintMsg("YOU CAN'T PLACE A COMPONENT ON THE TOOLBAR!!");
+	}
+	else {
+		AND2* pA = new AND2(pGInfo, Default_FANOUT);
+		pManager->AddComponent(pA);
+	}
 }
 
 void AddANDgate2::Undo()

@@ -16,9 +16,7 @@
 class Gate:public Component
 {
 protected:
-    InputPin* m_InputPins;	//Array of input pins of the Gate
-	OutputPin m_OutputPin;	//The Gate output pin
-	int m_Inputs;		//No. of input pins of that Gate.
+   
 public:
 	Gate(GraphicsInfo* pGfxInfo, int r_Inputs, int r_FanOut);
 	

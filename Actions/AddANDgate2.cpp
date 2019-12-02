@@ -22,7 +22,7 @@ void AddANDgate2::Execute()
 	pUI->GetPointClicked(Cx, Cy);
 
 	//Clear Status Bar
-	pUI->ClearStatusBar();	
+	pUI->ClearStatusBar();
 	//Calculate the rectangle Corners
 	int gateWidth = pUI->getGateWidth();
 	int gateHeight = pUI->getGateHeight();

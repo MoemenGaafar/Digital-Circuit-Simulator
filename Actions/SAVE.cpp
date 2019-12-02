@@ -56,7 +56,7 @@ void Save::Execute()
 
 		myfile << ConnCount << endl;
 
-		int S_Comp, T_Comp = 0, DstPin = 0;
+		int S_Comp = 0, T_Comp = 0, DstPin = 0;
 		for (int i = 0; i < pManager->CompCount; i++) {
 
 			if (pManager->CompList[i]->ComponentType == T_CONNECTION) {
@@ -116,18 +116,18 @@ void Save::Execute()
 						}
 						case T_SWITCH:
 						{
-							if (DestX == x2 && DestY == y2-25)
+							if (SrcX == x1 + 15 && SrcY == y2 - 8)
 							{
-								T_Comp = j;
-							    DstPin = 1;
+								S_Comp = 1;
 							}
 							break;
 						}
 						case T_LED:
 						{
-							if (SrcX == x1+15 && SrcY == y2 - 8)
+							if (DestX == x2 && DestY == y2 - 25)
 							{
-								S_Comp = j;
+								T_Comp = j;
+								DstPin = 1;
 								
 							}
 							break;

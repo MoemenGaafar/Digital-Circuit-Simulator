@@ -94,9 +94,10 @@ class UI
 	static const int	GATE_Width = 50,		//Gate Image default width
 						GATE_Height = 50;		//Gate Image default height
 
-	window *pWind;
+	window* pWind;
 	
 public:
+	
 	static const int	width = 1200, height = 650,	//Window width and height
 		wx = 15, wy = 15,			//Window starting coordinates
 		StatusBarHeight = 50,	//Status Bar Height
@@ -107,6 +108,7 @@ public:
 	UI();
 	int getGateWidth() const;
 	int getGateHeight() const;	
+	window* getpWind(); 
 	// Input Functions  ---------------------------
 	void GetPointClicked(int &, int &);	//Get coordinate where user clicks
 	string GetString();		//Returns a string entered by the user

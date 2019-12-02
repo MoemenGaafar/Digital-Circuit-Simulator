@@ -20,9 +20,16 @@ int main()
 		
 		//Exexute the action
 		AppManager.ExecuteAction(ActType);
-
+		if (ActType == LOAD)
+					
 		//Update the drawing window
+		if(ActType!= EXIT && ActType != LOAD)
 		AppManager.UpdateInterface();
+		if (ActType == LOAD)
+			AppManager.UpdateInterface();
+
+	
+		
 		
 
 	}while(ActType != EXIT);

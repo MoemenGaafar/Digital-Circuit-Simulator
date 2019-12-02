@@ -248,8 +248,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		// see UI for items  
 
 	case EXIT:
-		for (int i = 0; i < CompCount; i++)
-			delete CompList[i];
+		//ApplicationManager::~ApplicationManager(); 
 		break;
 
 	//  case STATUS_BAR:

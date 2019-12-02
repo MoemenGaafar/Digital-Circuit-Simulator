@@ -49,7 +49,7 @@ void Save::Execute()
 				};
 				Cx = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x + pManager->CompList[i]->m_pGfxInfo->PointsList[1].x) / 2;
 				Cy = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y + pManager->CompList[i]->m_pGfxInfo->PointsList[1].y) / 2;
-				myfile << type << fixed << setw(10) << i << fixed << setw(5) << pManager->CompList[i]->m_Label << fixed << setw(12) << Cx << fixed << setw(6) << Cy << endl;
+				myfile << left<< setw(10)<< type << left << setw(10) << i << left << setw(5) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
 
 			}
 		}
@@ -104,6 +104,7 @@ void Save::Execute()
 						}
 						case T_NOT: {
 							if (SrcX == x2-1 && SrcY == y2 - 24) {
+								
 								S_Comp = j;
 							}
 							else if (DestX == x1 && DestY == y1 + 26)
@@ -116,7 +117,7 @@ void Save::Execute()
 						}
 						case T_SWITCH:
 						{
-							if (SrcX == x1 + 15 && SrcY == y2 - 8)
+							if (SrcX == x2 && SrcY == y2 - 25)
 							{
 								S_Comp = 1;
 							}
@@ -124,7 +125,7 @@ void Save::Execute()
 						}
 						case T_LED:
 						{
-							if (DestX == x2 && DestY == y2 - 25)
+							if (DestX == x1 + 15  && DestY == y2 - 8)
 							{
 								T_Comp = j;
 								DstPin = 1;
@@ -139,7 +140,7 @@ void Save::Execute()
 
 				
 
-				myfile << S_Comp << fixed << setw(10) << T_Comp << fixed << setw(10) << DstPin << endl; 
+				myfile << left << setw(10) <<S_Comp << left << setw(10) << T_Comp << left << setw(10) << DstPin << endl;
 
 
 			}

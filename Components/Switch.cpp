@@ -2,6 +2,8 @@
 
 Switch::Switch(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 {
+	ComponentType = T_SWITCH;
+	isON = LOW; 
 }
 
 
@@ -9,9 +11,9 @@ void Switch::Operate()
 {
 	
 	if ((isON == HIGH))
-		m_OutputPin.setStatus(HIGH);
+		m_OutputPin->setStatus(HIGH);
 	else
-		m_OutputPin.setStatus(LOW);
+		m_OutputPin->setStatus(LOW);
 }
 
 
@@ -26,7 +28,7 @@ void Switch::Draw(UI* pUI)
 //returns status of outputpin
 int Switch::GetOutPinStatus()
 {
-	return m_OutputPin.getStatus();
+	return m_OutputPin->getStatus();
 }
 
 
@@ -37,7 +39,7 @@ int Switch::GetInputPinStatus(int n)
 }
 
 //Set status of an input pin ot HIGH or LOW
-void Switch::setInputStatus(int n, STATUS s)
+void Switch::setInputPinStatus(int n, STATUS s)
 {
 	isON = s;
 }

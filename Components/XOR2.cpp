@@ -2,6 +2,7 @@
 
 XOR2::XOR2(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 {
+	ComponentType = T_XOR2;
 }
 
 
@@ -9,9 +10,9 @@ void XOR2::Operate()
 {
 	//caclulate the output status as the ORing of the two input pins
 	if (m_InputPins[0].getStatus() != m_InputPins[1].getStatus())
-		m_OutputPin.setStatus(HIGH);
+		m_OutputPin->setStatus(HIGH);
 	else
-		m_OutputPin.setStatus(LOW);
+		m_OutputPin->setStatus(LOW);
 }
 
 
@@ -26,7 +27,7 @@ void XOR2::Draw(UI* pUI)
 //returns status of outputpin
 int XOR2::GetOutPinStatus()
 {
-	return m_OutputPin.getStatus();
+	return m_OutputPin->getStatus();
 }
 
 

@@ -4,7 +4,9 @@ Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin *pDs
 {
 	SrcPin = pSrcPin;
 	DstPin = pDstPin;
+	ComponentType = T_CONNECTION;
 }
+
 void Connection::setSourcePin(OutputPin *pSrcPin)
 {	SrcPin = pSrcPin;	}
 
@@ -45,3 +47,8 @@ void Connection::setInputPinStatus(int n, STATUS s)
 {
 	SrcPin->setStatus(s);
 }
+
+Connection::~Connection(){
+}
+
+

@@ -2,7 +2,7 @@
 #define _INPUTPIN_H
 
 #include "Pin.h"
-class Component; //Forward class declaration
+class Component; 
 
 class InputPin: public Pin	//inherited from class Pin
 {

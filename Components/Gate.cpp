@@ -4,9 +4,12 @@
 //Parameters:
 //r_Inputs: no. of gate's input pins
 //r_FanOut: Fan out of the gate's output pin
-Gate::Gate(GraphicsInfo* pGfxInfo, int r_Inputs, int r_FanOut):Component(pGfxInfo), m_OutputPin(r_FanOut)
+
+Gate::Gate(GraphicsInfo* pGfxInfo, int r_Inputs, int r_FanOut):Component(pGfxInfo)
 {
 	//Allocate number of input pins (equals r_Inputs)
+
+	/*m_OutputPin->m_FanOut = r_FanOut;*/
 	m_InputPins = new InputPin[r_Inputs];
 	m_Inputs = r_Inputs;	//set no. of inputs of that gate
 	

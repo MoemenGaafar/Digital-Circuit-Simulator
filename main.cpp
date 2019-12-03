@@ -20,13 +20,17 @@ int main()
 		
 		//Exexute the action
 		AppManager.ExecuteAction(ActType);
-		if (ActType == LOAD)
+	
 					
 		//Update the drawing window
-		if(ActType!= EXIT && ActType != LOAD)
+		if(ActType!= EXIT )
 		AppManager.UpdateInterface();
-		if (ActType == LOAD)
+
+		/*if (ActType == LOAD) {
+			cout << "i will draw.";
 			AppManager.UpdateInterface();
+			cout << "i am done drawing."; 
+		}*/
 
 	
 		

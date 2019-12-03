@@ -20,8 +20,8 @@ public:
 	string HeldString;
 	ApplicationManager(); //constructor
 
-	Action* Done_Acts[1000]; //Array of Done actions
-	Action* Undone_Acts[1000]; //Array of undone actions
+	Action* Done_Acts[100000]; //Array of Done actions
+	Action* Undone_Acts[100000]; //Array of undone actions
 	int executed = 0; //Number of done actions
 	int Undone_count = 0; //Number of undone actions
 

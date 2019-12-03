@@ -49,6 +49,9 @@ void Load::Execute()
 		myfile.open(name.c_str());
 		if (myfile.is_open())
 		{
+			pUI->ClearDrawingArea(); 
+
+			pManager->CompCount = 0; 
 			 
 			struct map {
 				int ID;
@@ -267,10 +270,10 @@ void Load::Execute()
 				pManager->CompList[GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
 				pManager->CompCount++;
 				
-				pUI->PrintMsg("I AM IN FILE");
+				
 			}
 
-
+			pUI->PrintMsg("I FINISHED FILE");
 		}
 
 		else

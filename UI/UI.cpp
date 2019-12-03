@@ -436,7 +436,7 @@ void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const
 
 	pWind->SetPen(WHITE, 1);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(x1, y1, x2, y2, FILLED, GATE_Width, GATE_Height);
+	pWind->DrawRectangle(x1, y1, x2, y2);
 }
 
 

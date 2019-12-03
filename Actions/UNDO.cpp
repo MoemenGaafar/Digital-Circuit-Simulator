@@ -15,32 +15,35 @@ void Undo::Execute()
 	pUI->PrintMsg("You clicked on Undo.");
 
 		pManager->Undone_Acts[pManager->Undone_count] = pManager->Done_Acts[pManager->executed-1];
-		delete pManager->Done_Acts[pManager->executed-1];
+		pManager->Done_Acts[pManager->executed-1]= NULL;
 		pManager->Undone_count++;
 		pManager->executed--;
 
-		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount-1];
-		delete pManager->CompList[pManager->CompCount-1];
-		pManager->undone_Compcount++;
-		pManager->CompCount--;
-	    enum Type t = pManager->Undone_Comps[pManager->undone_Compcount - 1]->ComponentType;
+		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1]; 
+		
+		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
 
 		//Clearing the deleted components/actions on the UI:
 
-		if (pManager->Undone_Comps[pManager->undone_Compcount - 1]->ComponentType == T_CONNECTION)
-		{ 
-			pUI->ClearConnection(pManager->Undone_Comps[pManager->undone_Compcount - 1]->m_pGfxInfo);
-		}
-
-		else if ( t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
+		if (t == T_CONNECTION)
 		{
-			pUI->ClearComponent(pManager->Undone_Comps[pManager->undone_Compcount]->m_pGfxInfo);
+			pUI->ClearConnection(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
 		}
 
-		else if (pManager->Undone_Acts[pManager->Undone_count - 1]->Type == LOAD)
+		else if (t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
+		{
+			pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
+		}
+
+		else if (t == LOAD)
 		{
 			pUI->ClearDrawingArea();
 		}
+
+		pManager->CompList[pManager->CompCount - 1] = NULL;
+		pManager->undone_Compcount++;
+		pManager->CompCount--;
+
 	}
 
 	else
@@ -49,7 +52,6 @@ void Undo::Execute()
 	}
 
 }
-
 
 
 

@@ -25,6 +25,7 @@
 
 
 
+
 ApplicationManager::ApplicationManager()
 {
 	CompCount = 0;
@@ -99,84 +100,72 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		//Unselect any selected before next action 
 		UnselectAll();
 		pAct = new AddINV(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_AND_GATE_2:
 		UnselectAll();
 		pAct = new AddANDgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_OR_GATE_2:
 		UnselectAll();
 		pAct = new AddORgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NAND_GATE_2:
 		UnselectAll();
 		pAct = new AddNANDgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NOR_GATE_2:
 		UnselectAll();
 		pAct = new AddNORgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXORgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XNOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXNORgate2(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Switch:
 		UnselectAll();
 		pAct = new AddSWITCH(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_LED:
 		UnselectAll();
 		pAct = new AddLED(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_CONNECTION:
 		UnselectAll();
 		pAct = new AddConnection(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Label:
 		pAct = new Label(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case EDIT_Conn:
 		pAct = new EditConn(this); 
-		executed++;
-		Done_Acts[executed] = pAct;
-		break;
+		Done_Acts[executed++] = pAct;
+		break; 
 	
 	case SELECT:
 		pAct = new Select(this, pUI->PCx, pUI->PCy);
@@ -193,44 +182,37 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case LOAD:
 		UnselectAll();
 		pAct = new Load(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case UNDO:
 		UnselectAll();
 		pAct = new Undo(this);
-		pAct->Execute();
 		break;
 
 	case REDO:
 		UnselectAll();
 		pAct = new Redo(this);
-		pAct->Execute();
 		break;
 
 	case DEL:
 		pAct = new Delete(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case COPY:
 		pAct = new Copy(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case CUT:
 		pAct = new Cut(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case PASTE:
 		pAct = new Paste(this);
-		executed++;
-		Done_Acts[executed] = pAct;
+		Done_Acts[executed++] = pAct;
 		break;
 
 	case DSN_MODE:
@@ -269,7 +251,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
-		for(int i=0; i<CompCount; i++)
+	for(int i=0; i<CompCount; i++)
 			CompList[i]->Draw(pUI);
 
 }

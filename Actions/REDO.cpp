@@ -15,12 +15,12 @@ void Redo::Execute()
 	pUI->PrintMsg("You clicked on Redo.");
 
 		pManager->Done_Acts[pManager->executed] = pManager->Undone_Acts[pManager->Undone_count-1];
-		delete pManager->Undone_Acts[pManager->Undone_count-1];
+		pManager->Undone_Acts[pManager->Undone_count-1] = NULL;
 		pManager->Undone_count--;
 		pManager->executed++;
 
 		pManager->CompList[pManager->CompCount] = pManager->Undone_Comps[pManager->undone_Compcount-1];
-		delete pManager->Undone_Comps[pManager->undone_Compcount-1];
+	    pManager->Undone_Comps[pManager->undone_Compcount-1]= NULL;
 		pManager->CompCount++;
 		pManager->undone_Compcount--;
 	}

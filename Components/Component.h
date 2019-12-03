@@ -21,7 +21,7 @@ public:
 
 	bool selected = 0;
 	Type ComponentType;
-	string m_Label;
+	string m_Label= "-";
 	GraphicsInfo* m_pGfxInfo;  //The parameters required to draw a component
 
 

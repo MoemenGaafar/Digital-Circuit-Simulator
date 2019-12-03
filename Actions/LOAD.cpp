@@ -10,6 +10,12 @@
 #include "..\Components\SWITCH.h"
 #include "..\Components\LED.h"
 #include "..\Components\CONNECTION.h"
+#include "SAVE.h"
+#include <chrono>
+#include <thread>
+#include <iostream>
+using namespace std; 
+
 
 
 Load::Load(ApplicationManager* pApp) :Action(pApp)
@@ -26,21 +32,26 @@ void Load::Execute()
 	UI* pUI = pManager->GetUI();
 
 	//Print Action Message
-	pUI->PrintMsg("Please note that you will lose your current circuit to load a new one. Click enter to load and esc to terminate action .\n");
+	pUI->PrintMsg("Click enter to save current circuit then load, esc to abort action, or backspace to load without saving.\n");
 
 	char key; 
 	pUI->getpWind()->WaitKeyPress(key);
 
-	while (key != 13 && key != 27) {
+	while (key != 13 && key != 27 && key!=8) {
 		pUI->getpWind()->WaitKeyPress(key);
 	}
 
 	if (key == 27)
-		pUI->PrintMsg("Load terminated."); 
-	else if (key == 13)
+		pUI->PrintMsg("Load aborted."); 
+	else 
 	{
+		if (key == 13) {
+			Action* LSave = new Save(pManager); 
+			LSave->Execute();
+			std::this_thread::sleep_for(std::chrono::seconds(4));
+		}
 
-		pUI->PrintMsg("Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
+		pUI->PrintMsg("LOAD: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 
 		string name;
 		name = pUI->GetString();
@@ -53,10 +64,7 @@ void Load::Execute()
 
 			pManager->CompCount = 0; 
 			 
-			struct map {
-				int ID;
-				int place;
-			};
+			
 			//Calculate the rectangle Corners
 			int gateWidth = pUI->getGateWidth();
 			int gateHeight = pUI->getGateHeight();
@@ -66,11 +74,12 @@ void Load::Execute()
 			int GateCount;
 			myfile >> GateCount; //Read number of gates from first line 
 			getline(myfile, line);//discard first line 
-			map* mapGates = new map[GateCount];
+			
+			int *ID= new int[GateCount]; 
 			
 
 			string type, label;
-			int Identity, Cx, Cy;
+			int Identity, Cx = 0, Cy = 0;
 
 			for (int i = 0; i < GateCount; i++) {
 
@@ -82,8 +91,7 @@ void Load::Execute()
 				a >> label;
 				a >> Cx;
 				a >> Cy;
-				mapGates[i].ID = Identity;
-				mapGates[i].place = i;
+				ID[i] = Identity; 
 
 
 
@@ -143,7 +151,8 @@ void Load::Execute()
 
 				pManager->CompList[i]->m_Label = label;
 				pManager->CompCount++; 
-				pUI->LabelComp(label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[1].y);
+				if (label!="-")
+					pUI->LabelComp(label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[1].y);
 				
 
 			}
@@ -152,16 +161,17 @@ void Load::Execute()
 			int ConnCount;
 			myfile >> ConnCount;//Read number of components 
 			getline(myfile, line);//Discard number of components 
+			
 
 			int S_Comp, T_Comp, P_n;
 			for (int i = 0; i < ConnCount; i++) {
 
 				getline(myfile, line);
 				istringstream a(line);
-				myfile >> S_Comp;
-				myfile >> T_Comp;
-				myfile >> P_n;
-
+				a >> S_Comp;
+				a >> T_Comp;
+				a >> P_n;
+				
 				GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
 				OutputPin* pSrcPin;
 				InputPin pDstPin;
@@ -170,22 +180,27 @@ void Load::Execute()
 				int destinationComp;
 
 				for (int j = 0; j < GateCount; j++) {
-					if (mapGates[j].ID == S_Comp) {
+					if (ID[j] == S_Comp) {
 
-						pSrcPin = pManager->CompList[mapGates[j].place]->m_OutputPin;
+						pSrcPin = pManager->CompList[j]->m_OutputPin;
 						sourceComp = j;
+						cout << j<< endl; 
 						break;
 					}
-
-					if (mapGates[j].ID == T_Comp) {
-
-						pDstPin = pManager->CompList[mapGates[j].place]->m_InputPins[P_n];
-						destinationComp = j;
-						break;
-					}
+							
 
 				}
 
+				for (int j = 0; j < GateCount; j++) {
+
+					if (ID[j] == T_Comp) {
+
+						pDstPin = pManager->CompList[j]->m_InputPins[P_n];
+						destinationComp = j;
+						cout << j; 
+						break;
+					}
+				}
 
 				
 
@@ -273,7 +288,7 @@ void Load::Execute()
 				
 			}
 
-			pUI->PrintMsg("I FINISHED FILE");
+			cout << pManager->CompCount; 
 		}
 
 		else

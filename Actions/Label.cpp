@@ -21,7 +21,7 @@ void Label::Execute()
 		UI* pUI = pManager->GetUI();
 
 		//Print Action Message
-		pUI->PrintMsg("Type your label");
+		pUI->PrintMsg("Type your label.");
 
 		string Label;
 
@@ -30,6 +30,12 @@ void Label::Execute()
 		while (Label.length() > 10)
 		{
 			pUI->PrintMsg("Please enter a string less than TEN characters!");
+			Label = pUI->GetString();
+		}
+
+		while (Label== "-")
+		{
+			pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
 			Label = pUI->GetString();
 		}
 

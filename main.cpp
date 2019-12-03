@@ -26,11 +26,11 @@ int main()
 		if(ActType!= EXIT )
 		AppManager.UpdateInterface();
 
-		/*if (ActType == LOAD) {
+		if (ActType == LOAD) {
 			cout << "i will draw.";
 			AppManager.UpdateInterface();
 			cout << "i am done drawing."; 
-		}*/
+		}
 
 	
 		

@@ -15,7 +15,7 @@ void Save::Execute()
 	UI* pUI = pManager->GetUI();
 
 	//Print Action Message
-	pUI->PrintMsg("Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
+	pUI->PrintMsg("SAVE: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 
 	string name;
 	name = pUI->GetString();
@@ -49,7 +49,7 @@ void Save::Execute()
 				};
 				Cx = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x + pManager->CompList[i]->m_pGfxInfo->PointsList[1].x) / 2;
 				Cy = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y + pManager->CompList[i]->m_pGfxInfo->PointsList[1].y) / 2;
-				myfile << left<< setw(10)<< type << left << setw(10) << i << left << setw(5) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
+				myfile << left << setw(10) << type << left << setw(10) << i << left << setw(5) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
 
 			}
 		}

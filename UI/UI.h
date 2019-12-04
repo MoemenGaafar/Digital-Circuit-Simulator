@@ -71,7 +71,7 @@ class UI
 		
 		ITM_DSN,	//Simulate menu items
 		ITM_TRUTH,	//Truth table menu item
-	
+	ITM_EXIT_SIM,
 		//TODO:Add more items names here
 	
 		ITM_SIM_CNT		//no. of simulation menu items ==> This should be the last line in this enum

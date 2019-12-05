@@ -1,6 +1,7 @@
 #include "SELECT.h"
 #include "..\ApplicationManager.h"
 
+
 Select::Select(ApplicationManager* pApp, int x, int y) :Action(pApp)
 {
 	Cx = x; 
@@ -27,9 +28,10 @@ void Select::Execute()
 			
 			if (Cx > pManager->CompList[i]->m_pGfxInfo->PointsList[0].x && Cx < pManager->CompList[i]->m_pGfxInfo->PointsList[1].x && Cy > pManager->CompList[i]->m_pGfxInfo->PointsList[0].y && Cy < pManager->CompList[i]->m_pGfxInfo->PointsList[1].y) {
 				found = true;
-
+			
 				if (pUI->AppMode == SIMULATION && pManager->CompList[i]->ComponentType == T_SWITCH)
 				{
+					
 					if (pManager->CompList[i]->isON == LOW)
 						pManager->CompList[i]->isON = HIGH;
 
@@ -62,7 +64,7 @@ void Select::Execute()
 			
 
 
-			if (Cx >= x1 && Cx <= x1 + (x2 - x1) / 3 && Cy >=y1-10 && Cy <=y1+10|| Cy >= y1 && Cy <= y2 && Cx >= x1 + (x2 - x1)/3 - 10 && Cx <= x1 + (x2 - x1) / 3 + 10 || Cx >= x1 + (x2 - x1) / 3 && Cx <= x2 && Cy >= y2 - 10 && Cy <= y2 + 10) {
+			if (Cx >= x1 && Cx <= x1 + (x2 - x1) / 3 && Cy >=y1-10 && Cy <=y1+10|| Cy >= y1 && Cy <= y2 && Cx >= x1 + ((x2 - x1)/3) - 20 && Cx <= x1 + ((x2 - x1) / 3) + 20 || Cx >= x1 + (x2 - x1) / 3 && Cx <= x2 && Cy >= y2 - 10 && Cy <= y2 + 10) {
 				found = true;
 				
 				if (pManager->CompList[i]->selected == false) 

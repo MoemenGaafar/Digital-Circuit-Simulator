@@ -1,4 +1,6 @@
 #include "AddConnection.h"
+#include <iostream>
+using namespace std; 
 
 
 AddConnection::AddConnection(ApplicationManager* pApp) :Action(pApp)
@@ -149,6 +151,8 @@ void AddConnection::Execute() {
 			pManager->AddComponent(pC);
 	}
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");
+
+	cout << pGInfo->PointsList[0].x << endl << pGInfo->PointsList[0].y << endl << pGInfo->PointsList[1].x << endl << pGInfo->PointsList[1].y << endl; 
 
 }
 

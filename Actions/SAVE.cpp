@@ -1,5 +1,8 @@
 #include "SAVE.h"
 #include "..\ApplicationManager.h"
+#include <chrono>
+#include <thread>
+
 
 Save::Save(ApplicationManager* pApp) :Action(pApp)
 {
@@ -17,7 +20,7 @@ void Save::Execute()
 	//Print Action Message
 	pUI->PrintMsg("SAVE: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 
-	string name;
+	
 	name = pUI->GetString();
 
 	ofstream myfile;
@@ -49,14 +52,16 @@ void Save::Execute()
 				};
 				Cx = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x + pManager->CompList[i]->m_pGfxInfo->PointsList[1].x) / 2;
 				Cy = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y + pManager->CompList[i]->m_pGfxInfo->PointsList[1].y) / 2;
-				myfile << left << setw(10) << type << left << setw(10) << i << left << setw(5) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
+				myfile << left << setw(10) << type << left << setw(10) << i << left << setw(10) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
 
+				
 			}
 		}
 
 		myfile << ConnCount << endl;
-
-		int S_Comp = 0, T_Comp = 0, DstPin = 0;
+		bool sourceFound = 0, targetFound = 0; 
+		
+		int S_Comp , T_Comp , DstPin ;
 		for (int i = 0; i < pManager->CompCount; i++) {
 
 			if (pManager->CompList[i]->ComponentType == T_CONNECTION) {
@@ -88,17 +93,20 @@ void Save::Execute()
 							if (SrcX == x2 && SrcY == y2-25) {
 								
 								S_Comp = j; 
+								sourceFound = 1; 
 								
 							}
 							else if (DestX == x1 && DestY == y1 + 13) {
 								
 								T_Comp = j;
 								DstPin = 1;
+								targetFound = 1; 
 							}
 							else if (DestX == x1 && DestY == y2 - 13)
 							{
 								T_Comp = j;
 								DstPin = 2;
+								targetFound = 1; 
 							}
 							break;
 						}
@@ -106,12 +114,14 @@ void Save::Execute()
 							if (SrcX == x2-1 && SrcY == y2 - 24) {
 								
 								S_Comp = j;
+								sourceFound = 1; 
 							}
 							else if (DestX == x1 && DestY == y1 + 26)
 							{
 							
 								T_Comp = j;
 								DstPin = 1;
+								targetFound = 1; 
 							}
 							break;
 						}
@@ -119,7 +129,8 @@ void Save::Execute()
 						{
 							if (SrcX == x2 && SrcY == y2 - 25)
 							{
-								S_Comp = 1;
+								S_Comp = j;
+								sourceFound = 1; 
 							}
 							break;
 						}
@@ -129,10 +140,14 @@ void Save::Execute()
 							{
 								T_Comp = j;
 								DstPin = 1;
+								targetFound = 1; 
 								
 							}
 							break;
 						}
+
+						if (sourceFound == 1 && targetFound == 1)
+							break; 
 					  }
 					}
 				}
@@ -147,6 +162,8 @@ void Save::Execute()
 			
 		}
 		pUI->PrintMsg("Circuit saved!");
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		pUI->ClearStatusBar();
 	}
 
 	else pUI->PrintMsg("Error opening file.\n");

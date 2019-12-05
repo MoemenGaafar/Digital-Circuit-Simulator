@@ -272,9 +272,15 @@ void UI::CreateSimulationToolBar()
 {
 	AppMode = SIMULATION;	//Simulation Mode
 
-	//TODO: Write code to draw the simualtion toolbar (similar to that of design toolbar drawing)
+	string MenuItemImages[ITM_SIM_CNT];
+	pWind->SetPen(WHITE, 3);
+	pWind->DrawRectangle(0, 0, width, ToolBarHeight);
+	MenuItemImages[ITM_DSN] = "images\\Menu\\Menu_Design.jpg";
+	MenuItemImages[ITM_TRUTH] = "images\\Menu\\Menu_Truth.jpg";
+	MenuItemImages[ITM_EXIT_SIM] = "images\\Menu\\Menu_Exit.jpg";
 
-
+	for (int i = 0; i < ITM_SIM_CNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * ToolItemWidth, 0, ToolItemWidth, ToolBarHeight);
 }
 
 //======================================================================================//

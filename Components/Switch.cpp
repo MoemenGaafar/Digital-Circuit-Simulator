@@ -4,6 +4,8 @@ Switch::Switch(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_Fa
 {
 	ComponentType = T_SWITCH;
 	isON = LOW; 
+	selected = 1; 
+	m_Label = "-"; 
 }
 
 

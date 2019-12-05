@@ -1,5 +1,6 @@
 #include "AddLED.h"
 #include "..\ApplicationManager.h"
+#include "Label.h"
 
 AddLED::AddLED(ApplicationManager* pApp) :Action(pApp)
 {
@@ -40,4 +41,7 @@ void AddLED::Execute()
 		LED* pA = new LED(pGInfo, Default_FANOUT);
 		pManager->AddComponent(pA);
 	}
+
+	Label temp(pManager);
+	temp.Execute();
 }

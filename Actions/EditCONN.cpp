@@ -167,6 +167,10 @@ void EditConn::Execute()
 				}
 
 				//Ensures that no other connections are connected to this input pin. 
+
+				destX = pGInfo->PointsList[1].x;
+				destY = pGInfo->PointsList[1].y; 
+
 				for (int j = 0; j < i; j++)
 				{
 					if (destX == pManager->CompList[j]->m_pGfxInfo->PointsList[1].x
@@ -194,7 +198,11 @@ void EditConn::Execute()
 			} while (!isAvailable);
 
 
-				inp = component->m_InputPins;
+			if (pin == 2)
+				inp = component->m_InputPins[0];
+			if (pin == 3)
+				inp = component->m_InputPins[1];
+
 				pManager->CompList[i]->setDestPin(inp);
 
 				pUI->ClearStatusBar();
@@ -209,5 +217,9 @@ void EditConn::Execute()
 
 }
 
+void EditConn::Undo()
+{}
 
+void EditConn::Redo()
+{}
 

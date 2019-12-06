@@ -15,7 +15,7 @@ void Save::Execute()
 	UI* pUI = pManager->GetUI();
 
 	//Print Action Message
-	pUI->PrintMsg("Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
+	pUI->PrintMsg("SAVE: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 
 	string name;
 	name = pUI->GetString();
@@ -27,11 +27,11 @@ void Save::Execute()
 		int ConnCount = 0;
 
 		for (int i = 0; i < pManager->CompCount; i++) {
-			if (pManager->CompList[i]->ComponentType != T_CONNECTION)
+			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
 				ConnCount++;
 		}
 
-		myfile << pManager->CompCount - ConnCount;
+		myfile << pManager->CompCount - ConnCount << endl;
 
 		for (int i = 0; i < pManager->CompCount; i++) {
 			if (pManager->CompList[i]->ComponentType != T_CONNECTION) {
@@ -49,14 +49,14 @@ void Save::Execute()
 				};
 				Cx = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x + pManager->CompList[i]->m_pGfxInfo->PointsList[1].x) / 2;
 				Cy = (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y + pManager->CompList[i]->m_pGfxInfo->PointsList[1].y) / 2;
-				myfile << type << setw(10) << i << setw(5) << pManager->CompList[i]->m_Label << setw(12) << Cx << setw(6) << Cy << endl;
+				myfile << left << setw(10) << type << left << setw(10) << i << left << setw(5) << pManager->CompList[i]->m_Label << left << setw(12) << Cx << left << setw(6) << Cy << endl;
 
 			}
 		}
 
-		myfile << ConnCount;
+		myfile << ConnCount << endl;
 
-
+		int S_Comp = 0, T_Comp = 0, DstPin = 0;
 		for (int i = 0; i < pManager->CompCount; i++) {
 
 			if (pManager->CompList[i]->ComponentType == T_CONNECTION) {
@@ -65,8 +65,6 @@ void Save::Execute()
 				int SrcY = pManager->CompList[i]->m_pGfxInfo->PointsList[0].y;
 				int DestX = pManager->CompList[i]->m_pGfxInfo->PointsList[1].x;
 				int DestY = pManager->CompList[i]->m_pGfxInfo->PointsList[1].y;
-
-				int S_Comp, T_Comp, DstPin;
 
 				for (int j = 0; j < pManager->CompCount; j++)
 				{
@@ -87,24 +85,26 @@ void Save::Execute()
 						case T_XOR2:
 						case T_XNOR2:
 						{
-							if (SrcX == x2 && SrcY== y2-25) {
+							if (SrcX == x2 && SrcY == y2-25) {
 								
 								S_Comp = j; 
 								
 							}
-							else if (DestX == x1 && DestY == y2 - 13) {
+							else if (DestX == x1 && DestY == y1 + 13) {
 								
 								T_Comp = j;
 								DstPin = 1;
 							}
-							else if (DestX == x1 && DestY == y2 + 13)
+							else if (DestX == x1 && DestY == y2 - 13)
 							{
 								T_Comp = j;
 								DstPin = 2;
 							}
+							break;
 						}
 						case T_NOT: {
 							if (SrcX == x2-1 && SrcY == y2 - 24) {
+								
 								S_Comp = j;
 							}
 							else if (DestX == x1 && DestY == y1 + 26)
@@ -113,41 +113,40 @@ void Save::Execute()
 								T_Comp = j;
 								DstPin = 1;
 							}
+							break;
 						}
 						case T_SWITCH:
 						{
-							if (DestX == x2 && DestY == y2-25)
+							if (SrcX == x2 && SrcY == y2 - 25)
 							{
-								T_Comp = j;
-							    DstPin = 1;
+								S_Comp = 1;
 							}
+							break;
 						}
 						case T_LED:
 						{
-							if (SrcX == x1+15 && SrcY == y2 - 8)
+							if (DestX == x1 + 15  && DestY == y2 - 8)
 							{
-								S_Comp = j;
+								T_Comp = j;
+								DstPin = 1;
 								
 							}
+							break;
 						}
 					  }
-						break;
 					}
 				}
 
 
 				
 
-				myfile << S_Comp << setw(10) << T_Comp << setw(6) << DstPin << endl; 
+				myfile << left << setw(10) <<S_Comp << left << setw(10) << T_Comp << left << setw(10) << DstPin << endl;
 
 
 			}
 			
 		}
-
-
-
-
+		pUI->PrintMsg("Circuit saved!");
 	}
 
 	else pUI->PrintMsg("Error opening file.\n");

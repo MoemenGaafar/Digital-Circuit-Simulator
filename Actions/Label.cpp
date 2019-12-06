@@ -21,11 +21,23 @@ void Label::Execute()
 		UI* pUI = pManager->GetUI();
 
 		//Print Action Message
-		pUI->PrintMsg("Type your label");
+		pUI->PrintMsg("Type your label.");
 
 		string Label;
 
 		Label = pUI->GetString();
+
+		while (Label.length() > 10)
+		{
+			pUI->PrintMsg("Please enter a string less than TEN characters!");
+			Label = pUI->GetString();
+		}
+
+		while (Label== "-")
+		{
+			pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
+			Label = pUI->GetString();
+		}
 
 
 
@@ -34,7 +46,7 @@ void Label::Execute()
 			if (pManager->CompList[i]->ComponentType != T_CONNECTION) {
 				
 
-					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[1].y);
+					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 					pManager->CompList[i]->m_Label = Label;
 
 				

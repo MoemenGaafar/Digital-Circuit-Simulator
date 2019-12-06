@@ -6,6 +6,7 @@
 #include "..\UI\UI.h"
 #include "..\\Components\InputPin.h"
 
+
 class OutputPin;
 
 //Base class for classes Gate, Switch, and LED.
@@ -20,7 +21,7 @@ public:
 
 	bool selected = 0;
 	Type ComponentType;
-	string m_Label;
+	string m_Label= "-";
 	GraphicsInfo* m_pGfxInfo;  //The parameters required to draw a component
 
 
@@ -34,9 +35,9 @@ public:
 
 	//For AddConnection and EditCONN
 	virtual void setSourcePin(OutputPin* pSrcPin);
-	virtual void setDestPin(InputPin* pDstPin);
+	virtual void setDestPin(InputPin pDstPin);
 	virtual OutputPin* getSourcePin();
-	virtual InputPin* getDestPin();
+	virtual InputPin getDestPin();
 
 
 

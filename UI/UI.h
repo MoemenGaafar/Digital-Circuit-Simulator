@@ -48,17 +48,18 @@ class UI
 		ITM_SWITCH,
 		ITM_LED,
 		ITM_CONNECTION,
+		ITM_LABEL,
 		ITM_UNDO,
 		ITM_REDO,
-		//ITM_MOVE,
-		//ITM_LABEL,
-		//ITM_DEL,
-        //ITM_COPY,
-        //ITM_CUT,
-        //ITM_PASTE,
-		//ITM_SAVE,
-		//ITM_LOAD,
-		//ITM_SIM,	//Simulate menu item
+		ITM_DEL,
+		ITM_MOVE,
+		ITM_EDITCONN,
+        ITM_COPY,
+        ITM_CUT,
+        ITM_PASTE,
+	    ITM_SAVE,
+		ITM_LOAD,
+		ITM_SIM,	//Simulate menu item
 		ITM_EXIT,		//Exit item
 		ITM_DSN_CNT		//no. of design menu items ==> This should be the last line in this enum
 	};
@@ -80,12 +81,6 @@ class UI
 
 
 	
-	
-	static const int	width = 1200, height = 650,	//Window width and height
-						wx = 15 , wy = 15,			//Window starting coordinates
-						StatusBarHeight = 50,	//Status Bar Height
-						ToolBarHeight = 80,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-						ToolItemWidth = 80;		//Width of each item in toolbar menu
 
 	color DrawColor;		//Drawing color
 	color SelectColor;		//Highlighting color
@@ -99,14 +94,21 @@ class UI
 	static const int	GATE_Width = 50,		//Gate Image default width
 						GATE_Height = 50;		//Gate Image default height
 
-	window *pWind;
+	window* pWind;
 	
 public:
+	
+	static const int	width = 1200, height = 650,	//Window width and height
+		wx = 15, wy = 15,			//Window starting coordinates
+		StatusBarHeight = 50,	//Status Bar Height
+		ToolBarHeight = 50,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
+		ToolItemWidth = 50;		//Width of each item in toolbar menu
 	MODE AppMode;		//Application Mode (design or simulation)
 	int PCx, PCy;     // Last point clicked
 	UI();
 	int getGateWidth() const;
 	int getGateHeight() const;	
+	window* getpWind(); 
 	// Input Functions  ---------------------------
 	void GetPointClicked(int &, int &);	//Get coordinate where user clicks
 	string GetString();		//Returns a string entered by the user

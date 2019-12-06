@@ -112,15 +112,23 @@ void AddConnection::Execute() {
 		pin = connectPin(destX, destY);
 	}
 
-	inp = component->m_InputPins;
+	
+	if (pin == 2)
+	    inp = component->m_InputPins[0]; 
+	if (pin == 3)
+		inp = component->m_InputPins[1];
 
 	pUI->ClearStatusBar();
+
+	destX = pGInfo->PointsList[1].x;
+	destY = pGInfo->PointsList[1].y;
 
 	
 	//Check that no other connections are connected to destination pin
 	bool isDestAvailable = 1; 
 	for (int j = 0; j < pManager->CompCount; j++)
 	{
+	
 			if (destX == pManager->CompList[j]->m_pGfxInfo->PointsList[1].x
 				&& destY == pManager->CompList[j]->m_pGfxInfo->PointsList[1].y)
 			{
@@ -143,3 +151,9 @@ void AddConnection::Execute() {
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");
 
 }
+
+void AddConnection::Undo()
+{}
+
+void AddConnection::Redo()
+{}

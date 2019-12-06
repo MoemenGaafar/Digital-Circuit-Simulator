@@ -9,7 +9,7 @@
 class AddConnection : public Action {
 private:
 	int srcX, srcY, destX, destY;
-	InputPin* inp;
+	InputPin inp;
 	OutputPin* outp;
 	Component* component;  
 	GraphicsInfo* pGInfo = new GraphicsInfo(2);

@@ -22,7 +22,7 @@ void AddANDgate2::Execute()
 	pUI->GetPointClicked(Cx, Cy);
 
 	//Clear Status Bar
-	pUI->ClearStatusBar();	
+	pUI->ClearStatusBar();
 	//Calculate the rectangle Corners
 	int gateWidth = pUI->getGateWidth();
 	int gateHeight = pUI->getGateHeight();
@@ -33,7 +33,7 @@ void AddANDgate2::Execute()
 	pGInfo->PointsList[0].y = Cy - gateHeight/2;
 	pGInfo->PointsList[1].x = Cx + gateWidth/2;
 	pGInfo->PointsList[1].y = Cy + gateHeight/2;
-	if (pGInfo->PointsList[0].y < 80 || pGInfo->PointsList[1].y < 80) {
+	if (pGInfo->PointsList[0].y < pUI->ToolBarHeight || pGInfo->PointsList[1].y < pUI->ToolBarHeight) {
 		pUI->PrintMsg("YOU CAN'T PLACE A COMPONENT ON THE TOOLBAR!!");
 	}
 	else {

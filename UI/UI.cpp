@@ -151,7 +151,7 @@ ActionType UI::GetUserAction()
 		{
 		
 		case ITM_DSN: return DSN_MODE;
-		case ITM_EXIT: return EXIT;
+		case ITM_EXIT_SIM: return EXIT;
 
 		default: return DSN_TOOL;	//A click on empty place in desgin toolbar
 		}
@@ -272,9 +272,15 @@ void UI::CreateSimulationToolBar()
 {
 	AppMode = SIMULATION;	//Simulation Mode
 
-	//TODO: Write code to draw the simualtion toolbar (similar to that of design toolbar drawing)
+	string MenuItemImages[ITM_SIM_CNT];
+	pWind->SetPen(WHITE, 3);
+	pWind->DrawRectangle(0, 0, width, ToolBarHeight);
+	MenuItemImages[ITM_DSN] = "images\\Menu\\Menu_Design.jpg";
+	MenuItemImages[ITM_TRUTH] = "images\\Menu\\Menu_Truth.jpg";
+	MenuItemImages[ITM_EXIT_SIM] = "images\\Menu\\Menu_Exit.jpg";
 
-
+	for (int i = 0; i < ITM_SIM_CNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * ToolItemWidth, 0, ToolItemWidth, ToolBarHeight);
 }
 
 //======================================================================================//
@@ -362,7 +368,8 @@ void UI::DrawXOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 void UI::DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 {
 	string GateImage;
-	if (selected)	//use image in the highlighted case
+	
+    if (selected )	//use image in the highlighted case
 		GateImage = "Images\\Gates\\Gate_XNOR2_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\Gate_XNOR2.jpg";
@@ -372,10 +379,13 @@ void UI::DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
-void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected) const
+void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, bool isOn) const
 {
 	string GateImage;
-	if (selected)	//use image in the highlighted case
+
+	if (isOn)	//use image in the on case
+		GateImage = "Images\\Gates\\Switch_ON.jpg";
+	else if (selected)	//use image in the highlighted case
 		GateImage = "Images\\Gates\\Switch_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\Switch_OFF.jpg";

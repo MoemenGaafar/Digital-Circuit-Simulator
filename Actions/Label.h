@@ -8,10 +8,12 @@ class Label : public Action
 {
 protected:
 	int Cx, Cy;
+	Component* component; 
 
 public:
 	Label(ApplicationManager* pApp);
 	virtual ~Label(void);
+	Component* getComponentLabeled(); 
 	ActionType Type = ADD_Label;
 	//Execute action (code depends on action type)
 	virtual void Execute();

@@ -15,6 +15,8 @@ public:
 	Load(ApplicationManager* pApp);
 	virtual ~Load(void);
 	ActionType Type = LOAD;
+	string name;
+	Action* LSave; 
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

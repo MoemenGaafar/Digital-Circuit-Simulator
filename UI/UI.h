@@ -71,7 +71,7 @@ class UI
 		
 		ITM_DSN,	//Simulate menu items
 		ITM_TRUTH,	//Truth table menu item
-	
+	    ITM_EXIT_SIM,
 		//TODO:Add more items names here
 	
 		ITM_SIM_CNT		//no. of simulation menu items ==> This should be the last line in this enum
@@ -136,7 +136,7 @@ public:
 	void DrawNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
-	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
+	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, bool isOn = false) const;
 	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 
 	// Draws Connection

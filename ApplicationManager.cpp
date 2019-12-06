@@ -71,7 +71,7 @@ int ApplicationManager::ReturnSelected() const {
 		}
 		if (SelectedCount == 2)
 		{
-			pUI->PrintMsg("You cannot perform this action for more than 1 component. Please select only 1.");
+			pUI->PrintMsg("You cannot perform this action for more than 1 component. Please select only 1 then try again.");
 			return -1; 
 		}
 	}

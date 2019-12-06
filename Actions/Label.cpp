@@ -10,6 +10,10 @@ Label::~Label(void)
 {
 }
 
+Component* Label::getComponentLabeled() {
+	return component;
+}
+
 void Label::Execute()
 {
 
@@ -20,14 +24,15 @@ void Label::Execute()
 		//Get a Pointer to the user Interfaces
 		UI* pUI = pManager->GetUI();
 
+		component = pManager->CompList[i]; 
 		
-		if (pManager->CompList[i]->ComponentType != T_SWITCH && pManager->CompList[i]->ComponentType != T_LED)
+		if (component->ComponentType != T_SWITCH && component->ComponentType != T_LED)
 		//Print Action Message
 		pUI->PrintMsg("Type in a label other than '-' then click ENTER.");
 
-		if ( pManager->CompList[i]->ComponentType == T_LED)
+		if (component->ComponentType == T_LED)
 		pUI->PrintMsg("All LEDs must have labels at all times. Please type in a nonempty label other than '-' then click ENTER.");
-		if (pManager->CompList[i]->ComponentType == T_SWITCH)
+		if (component->ComponentType == T_SWITCH)
 		pUI->PrintMsg("All switches must have labels at all times. Please type in a nonempty label other than '-' then click ENTER.");
 
 		string Label;
@@ -40,7 +45,7 @@ void Label::Execute()
 			Label = pUI->GetString();
 		}
 
-		if (pManager->CompList[i]->ComponentType != T_SWITCH || pManager->CompList[i]->ComponentType != T_LED) {
+		if (component->ComponentType != T_SWITCH || pManager->CompList[i]->ComponentType != T_LED) {
 			while (Label == "-")
 			{
 				pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
@@ -48,7 +53,7 @@ void Label::Execute()
 			}
 		}
 
-		if (pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) {
+		if (component->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) {
 			while (Label == " " || Label == "-")
 			{
 				pUI->PrintMsg("Switches and LEDs must have valid labels at all times. Please enter a nonempty label other than '-'.");
@@ -69,7 +74,7 @@ void Label::Execute()
 
 
 		
-			if (pManager->CompList[i]->ComponentType != T_CONNECTION) {
+			if (component->ComponentType != T_CONNECTION) {
 				
 
 					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
@@ -78,7 +83,7 @@ void Label::Execute()
 				
 			}
 
-			if (pManager->CompList[i]->ComponentType == T_CONNECTION) {
+			if (component->ComponentType == T_CONNECTION) {
 				
 
 					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);

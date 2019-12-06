@@ -49,7 +49,7 @@ void Load::Execute()
 		if (key == 13) {
 			LSave = new Save(pManager); 
 			LSave->Execute();
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+			std::this_thread::sleep_for(std::chrono::seconds(0));
 		}
 
 		pUI->PrintMsg("LOAD: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");

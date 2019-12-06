@@ -13,7 +13,7 @@ protected:
 public:
 	Label(ApplicationManager* pApp);
 	virtual ~Label(void);
-	Component* getComponentLabeled(); 
+	Component* getComponentLabeled();
 	ActionType Type = ADD_Label;
 	//Execute action (code depends on action type)
 	virtual void Execute();

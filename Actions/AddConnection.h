@@ -16,7 +16,9 @@ private:
 public:
 	AddConnection(ApplicationManager* pApp);
 	virtual ~AddConnection(void);
-	int connectPin(int x, int y);
+	
+	int checkPin(int x, int y); 
+	void connectPin(int x, int y, int r);
 
 	//Execute action (code depends on action type)
 	virtual void Execute();

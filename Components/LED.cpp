@@ -22,6 +22,7 @@ void LED::Operate()
 
 void LED::Draw(UI* pUI)
 {
+	selected = false; // so it's not highlighted when drawn
 	//Call output class and pass gate drawing info to it.
 	pUI->DrawLED(*m_pGfxInfo, selected);
 }

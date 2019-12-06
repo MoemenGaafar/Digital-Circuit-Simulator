@@ -24,4 +24,7 @@ public:
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
+	void AddConnection::Undo();
+	void AddConnection::Redo();
+
 };

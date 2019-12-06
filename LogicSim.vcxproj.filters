@@ -196,6 +196,9 @@
     <ClInclude Include="Actions\PASTE.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\MOVE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\AND2.cpp">
@@ -361,6 +364,7 @@
     <ClCompile Include="Actions\CUT.cpp" />
     <ClCompile Include="Actions\DELETE.cpp" />
     <ClCompile Include="Actions\PASTE.cpp" />
+    <ClCompile Include="Actions\MOVE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

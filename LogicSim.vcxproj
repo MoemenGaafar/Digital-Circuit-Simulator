@@ -79,6 +79,7 @@
     <ClInclude Include="Actions\EditCONN.h" />
     <ClInclude Include="Actions\Label.h" />
     <ClInclude Include="Actions\LOAD.h" />
+    <ClInclude Include="Actions\MOVE.h" />
     <ClInclude Include="Actions\PASTE.h" />
     <ClInclude Include="Actions\REDO.h" />
     <ClInclude Include="Actions\SAVE.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Actions\EditCONN.cpp" />
     <ClCompile Include="Actions\Label.cpp" />
     <ClCompile Include="Actions\LOAD.cpp" />
+    <ClCompile Include="Actions\MOVE.cpp" />
     <ClCompile Include="Actions\PASTE.cpp" />
     <ClCompile Include="Actions\REDO.cpp" />
     <ClCompile Include="Actions\SAVE.cpp" />

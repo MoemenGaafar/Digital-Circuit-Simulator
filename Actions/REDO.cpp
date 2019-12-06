@@ -23,6 +23,15 @@ void Redo::Execute()
 	    pManager->Undone_Comps[pManager->undone_Compcount-1]= NULL;
 		pManager->CompCount++;
 		pManager->undone_Compcount--;
+
+		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
+
+		if (t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
+		{
+			pUI->LabelComp(pManager->CompList[pManager->CompCount - 1]->m_Label,
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
+		}
 	}
 	else
 	{

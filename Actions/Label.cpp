@@ -43,27 +43,19 @@ void Label::Execute()
 
 
 		
-			if (pManager->CompList[i]->ComponentType != T_CONNECTION) {
-				
-
+			if (pManager->CompList[i]->ComponentType != T_CONNECTION)
+			{
 					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 					pManager->CompList[i]->m_Label = Label;
-
-				
 			}
 
-			if (pManager->CompList[i]->ComponentType == T_CONNECTION) {
-				
-
+			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
+			{
 					pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 					pManager->CompList[i]->m_Label = Label;
-
-				
 			}
 
-			
 		
-
 		//Clear Status Bar
 		pUI->ClearStatusBar();
 	}

@@ -6,7 +6,7 @@
 
 class Label : public Action
 {
-private:
+protected:
 	int Cx, Cy;
 
 public:
@@ -15,9 +15,6 @@ public:
 	ActionType Type = ADD_Label;
 	//Execute action (code depends on action type)
 	virtual void Execute();
-
-	
-
 
 };
 

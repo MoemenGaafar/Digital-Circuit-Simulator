@@ -151,9 +151,3 @@ void AddConnection::Execute() {
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");
 
 }
-
-void AddConnection::Undo()
-{}
-
-void AddConnection::Redo()
-{}

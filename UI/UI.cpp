@@ -219,7 +219,7 @@ void UI::ClearDrawingArea() const
 {
 	pWind->SetPen(RED, 1);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, ToolBarHeight, width, height - StatusBarHeight);
+	pWind->DrawRectangle(0, ToolBarHeight + 1, width, height - StatusBarHeight);
 	
 }
 //////////////////////////////////////////////////////////////////////////////////////////

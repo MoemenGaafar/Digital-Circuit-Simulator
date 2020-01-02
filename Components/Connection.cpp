@@ -5,6 +5,7 @@ Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin pDst
 	SrcPin = pSrcPin;
 	DstPin = pDstPin;
 	ComponentType = T_CONNECTION;
+	isON = LOW;
 }
 
 void Connection::setSourcePin(OutputPin *pSrcPin)

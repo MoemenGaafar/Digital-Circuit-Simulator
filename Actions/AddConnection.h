@@ -9,6 +9,7 @@
 class AddConnection : public Action {
 private:
 	int srcX, srcY, destX, destY;
+	int pin;
 	InputPin inp;
 	OutputPin* outp;
 	Component* component;  

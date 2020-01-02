@@ -3,7 +3,7 @@
 
 Label::Label(ApplicationManager * pApp) :Action(pApp)
 {
-
+	Type = ADD_Label;
 }
 
 Label::~Label(void)

@@ -1,4 +1,6 @@
 #include "UNDO.h"
+#include <iostream>
+using namespace std; 
 
 Undo::Undo(ApplicationManager* pApp) :Action(pApp) {};
 
@@ -15,16 +17,31 @@ void Undo::Execute()
 	pUI->PrintMsg("You clicked on Undo.");
 
 		pManager->Undone_Acts[pManager->Undone_count] = pManager->Done_Acts[pManager->executed-1];
+		cout << pManager->Done_Acts[pManager->executed - 1]->Type << endl;
+		cout<< pManager->Undone_Acts[pManager->Undone_count]->Type<<endl ;
 		pManager->Done_Acts[pManager->executed-1]= NULL;
 		pManager->Undone_count++;
 		pManager->executed--;
 
-		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1]; 
+				
 		
-		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
 		enum ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1]->Type;
+		cout << t1 <<endl; 
+
+	 if (t1 == LOAD)
+	 {
+		pUI->ClearDrawingArea();
+		pUI->PrintMsg("entered load.");
+	 }
+
+	 else 
+	 {
+		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
 
 		//Clearing the deleted components/actions on the UI:
+
+		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1];
+		
 
 		if (t == T_CONNECTION)
 		{
@@ -35,18 +52,17 @@ void Undo::Execute()
 		{
 			pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
 			pUI->LabelComp("               ",
-				pManager->CompList[pManager->CompCount-1]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
 				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
-		}
-
-		else if (t1 == LOAD)
-		{
-			pUI->ClearDrawingArea();
 		}
 
 		pManager->CompList[pManager->CompCount - 1] = NULL;
 		pManager->undone_Compcount++;
 		pManager->CompCount--;
+
+	 } 
+
+		
 
 	}
 

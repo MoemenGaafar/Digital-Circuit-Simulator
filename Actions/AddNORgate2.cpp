@@ -3,6 +3,7 @@
 
 AddNORgate2::AddNORgate2(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = ADD_NOR_GATE_2;
 }
 
 AddNORgate2::~AddNORgate2(void)

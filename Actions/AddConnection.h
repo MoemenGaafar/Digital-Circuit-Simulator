@@ -15,7 +15,6 @@ private:
 	GraphicsInfo* pGInfo = new GraphicsInfo(2);
 public:
 	AddConnection(ApplicationManager* pApp);
-	ActionType Type = ADD_CONNECTION;
 	virtual ~AddConnection(void);
 	
 	int checkPin(int x, int y); 

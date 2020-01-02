@@ -13,7 +13,6 @@ private:
 public:
 	AddINV(ApplicationManager* pApp);
 	virtual ~AddINV(void);
-	ActionType Type = ADD_INV;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 };

@@ -13,7 +13,6 @@ private:
 public:
 	AddXORgate2(ApplicationManager* pApp);
 	virtual ~AddXORgate2(void);
-	ActionType Type = ADD_XOR_GATE_2;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

@@ -12,7 +12,6 @@ private:
 	//int x1, y1, x2, y2;	//Two corners of the rectangluar area
 public:
 	AddNANDgate2(ApplicationManager* pApp);
-	ActionType Type = ADD_NAND_GATE_2;
 	virtual ~AddNANDgate2(void);
 
 	//Execute action (code depends on action type)

@@ -19,7 +19,8 @@
 
 Load::Load(ApplicationManager* pApp) :Action(pApp)
 {
-}
+	Type = LOAD;
+} 
 
 Load::~Load(void)
 {
@@ -31,12 +32,15 @@ void Load::Execute()
 
 	//Get a Pointer to the user Interfaces
 	UI* pUI = pManager->GetUI();
+	char key;
 
 	//Print Action Message
-	pUI->PrintMsg("Click enter to save current circuit then load, esc to abort action, or backspace to load without saving.\n");
-
-	char key; 
-	pUI->getpWind()->WaitKeyPress(key);
+	if (pManager->CompCount != 0) {
+		pUI->PrintMsg("Click enter to save current circuit then load, esc to abort action, or backspace to load without saving.\n");
+		pUI->getpWind()->WaitKeyPress(key);
+	}
+	else
+		key = 13; 
 
 	while (key != 13 && key != 27 && key!=8) {
 		pUI->getpWind()->WaitKeyPress(key);

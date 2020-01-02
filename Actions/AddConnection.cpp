@@ -4,6 +4,7 @@
 
 AddConnection::AddConnection(ApplicationManager * pApp) :Action(pApp)
 {
+  Type = ADD_CONNECTION;
 }
 
 AddConnection::~AddConnection(void)

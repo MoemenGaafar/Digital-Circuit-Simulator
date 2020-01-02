@@ -1,8 +1,12 @@
 #include "AddANDgate2.h"
 #include "..\ApplicationManager.h"
+#include <iostream> 
+using namespace std; 
 
 AddANDgate2::AddANDgate2(ApplicationManager *pApp):Action(pApp)
 {
+	Type = ADD_AND_GATE_2;
+	cout << "type: " << Type << endl;
 }
 
 AddANDgate2::~AddANDgate2(void)

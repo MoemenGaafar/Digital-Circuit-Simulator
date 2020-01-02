@@ -3,6 +3,7 @@
 
 Cut::Cut(ApplicationManager* pApp) :Action(pApp)
 {
+	 Type = CUT;
 }
 
 Cut::~Cut(void)

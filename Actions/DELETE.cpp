@@ -3,6 +3,7 @@
 
 Delete::Delete(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = DEL;
 }
 
 Delete::~Delete(void)

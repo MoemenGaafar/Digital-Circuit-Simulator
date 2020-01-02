@@ -13,7 +13,6 @@ private:
 public:
 	AddORgate2(ApplicationManager* pApp);
 	virtual ~AddORgate2(void);
-	ActionType Type = ADD_OR_GATE_2;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

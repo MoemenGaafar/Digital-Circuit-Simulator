@@ -22,6 +22,7 @@ void Undo::Execute()
 		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1]; 
 		
 		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
+		enum ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1]->Type;
 
 		//Clearing the deleted components/actions on the UI:
 
@@ -33,9 +34,12 @@ void Undo::Execute()
 		else if (t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
 		{
 			pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
+			pUI->LabelComp("               ",
+				pManager->CompList[pManager->CompCount-1]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
 		}
 
-		else if (t == LOAD)
+		else if (t1 == LOAD)
 		{
 			pUI->ClearDrawingArea();
 		}

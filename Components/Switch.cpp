@@ -3,13 +3,15 @@
 Switch::Switch(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 {
 	ComponentType = T_SWITCH;
-	isON = LOW; 
+	isON = LOW;
+	selected = 1;
+	
 }
 
 
 void Switch::Operate()
 {
-	
+
 	if ((isON == HIGH))
 		m_OutputPin->setStatus(HIGH);
 	else
@@ -22,7 +24,7 @@ void Switch::Operate()
 void Switch::Draw(UI* pUI)
 {
 	//Call output class and pass gate drawing info to it.
-	pUI->DrawSWITCH(*m_pGfxInfo, selected);
+	pUI->DrawSWITCH(*m_pGfxInfo, selected, isON);
 }
 
 //returns status of outputpin

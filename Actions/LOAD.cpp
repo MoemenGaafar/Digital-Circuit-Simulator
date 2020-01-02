@@ -13,8 +13,7 @@
 #include "SAVE.h"
 #include <chrono>
 #include <thread>
-#include <iostream>
-using namespace std;
+
 
 
 
@@ -50,7 +49,7 @@ void Load::Execute()
 		if (key == 13) {
 			LSave = new Save(pManager); 
 			LSave->Execute();
-			std::this_thread::sleep_for(std::chrono::seconds(2));
+			std::this_thread::sleep_for(std::chrono::seconds(0));
 		}
 
 		pUI->PrintMsg("LOAD: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
@@ -173,7 +172,7 @@ void Load::Execute()
 				a >> S_Comp;
 				a >> T_Comp;
 				a >> P_n;
-				
+
 				GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
 				OutputPin* pSrcPin;
 				InputPin pDstPin;
@@ -188,7 +187,7 @@ void Load::Execute()
 						sourceComp = j;
 						break;
 					}
-							
+
 
 				}
 
@@ -202,7 +201,7 @@ void Load::Execute()
 					}
 				}
 
-				
+
 
 				//Gfx info of connections	
 				Component* comp = pManager->CompList[sourceComp];
@@ -211,7 +210,7 @@ void Load::Execute()
 				int x2 = comp->m_pGfxInfo->PointsList[1].x;
 				int y2 = comp->m_pGfxInfo->PointsList[1].y;
 
-				cout << "source comp" << endl << x2 << endl << y1 << endl; 
+
 
 
 				switch (comp->ComponentType) {
@@ -224,24 +223,24 @@ void Load::Execute()
 				{
 					r_GfxInfo->PointsList[0].x = x2;
 					r_GfxInfo->PointsList[0].y = y2 - 25;
-					break; 
+					break;
 				}
 				case T_NOT:
 				{
 					r_GfxInfo->PointsList[0].x = x2 - 1;
 					r_GfxInfo->PointsList[0].y = y2 - 24;
-					break; 
+					break;
 				}
 
 				case T_SWITCH:
 				{
 					r_GfxInfo->PointsList[0].x = x2;
 					r_GfxInfo->PointsList[0].y = y2 - 25;
-					break; 
+					break;
 				}
 				}
 
-				cout<< "source conns" << endl << r_GfxInfo->PointsList[0].x << endl << r_GfxInfo->PointsList[0].y << endl;
+
 
 				comp = pManager->CompList[destinationComp];
 				x1 = comp->m_pGfxInfo->PointsList[0].x;
@@ -249,7 +248,7 @@ void Load::Execute()
 				x2 = comp->m_pGfxInfo->PointsList[1].x;
 				y2 = comp->m_pGfxInfo->PointsList[1].y;
 
-				cout <<"dest comp" <<  x1 << endl << y1 << endl << y2 << endl; 
+
 
 
 				switch (comp->ComponentType) {
@@ -270,37 +269,35 @@ void Load::Execute()
 						r_GfxInfo->PointsList[1].x = x1;
 						r_GfxInfo->PointsList[1].y = y2 - 13;
 					}
-					break; 
+					break;
 				}
-				case T_NOT: 
+				case T_NOT:
 				{
 
 
 					r_GfxInfo->PointsList[1].x = x1;
 					r_GfxInfo->PointsList[1].y = y1 + 26;
-					break; 
+					break;
 
 				}
 				case T_LED:
 				{
 					r_GfxInfo->PointsList[1].x = x1 + 15;
 					r_GfxInfo->PointsList[1].y = y2 - 8;
-					break; 
+					break;
 				}
 				}
 
-				cout << "dest points" <<endl << r_GfxInfo->PointsList[1].x<< endl << r_GfxInfo->PointsList[1].y;
-				
+
+
 				//Create Connection
 				pManager->CompList[GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
 				pManager->CompCount++;
-				
-				cout << "all conn" << endl << r_GfxInfo->PointsList[0].x << endl << r_GfxInfo->PointsList[0].y << endl << r_GfxInfo->PointsList[1].x
-					<< endl << r_GfxInfo->PointsList[1].y;
-			}
 
-			pUI->PrintMsg("Load Completed!.\n");
-			
+
+
+				pUI->PrintMsg("Load Completed!.\n");
+			}
 		}
 
 		else

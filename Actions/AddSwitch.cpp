@@ -1,5 +1,6 @@
 #include "AddSWITCH.h"
 #include "..\ApplicationManager.h"
+#include "Label.h"
 
 AddSWITCH::AddSWITCH(ApplicationManager* pApp) :Action(pApp)
 {
@@ -40,5 +41,9 @@ void AddSWITCH::Execute()
 		Switch* pA = new Switch(pGInfo, Default_FANOUT);
 		pManager->AddComponent(pA);
 	}
+	
+	
+	Label temp(pManager); 
+	temp.Execute(); 
 }
 

@@ -3,6 +3,8 @@
 LED::LED(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 {
 	ComponentType = T_LED;
+	selected = 1;
+	
 }
 
 

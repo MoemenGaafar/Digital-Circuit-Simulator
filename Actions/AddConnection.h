@@ -15,13 +15,16 @@ private:
 	GraphicsInfo* pGInfo = new GraphicsInfo(2);
 public:
 	AddConnection(ApplicationManager* pApp);
+	ActionType Type = ADD_CONNECTION;
 	virtual ~AddConnection(void);
-	int connectPin(int x, int y);
+	
+	int checkPin(int x, int y); 
+	void connectPin(int x, int y, int r);
 
 	//Execute action (code depends on action type)
 	virtual void Execute();
 
-	virtual void Undo();
-	virtual void Redo();
+	void AddConnection::Undo();
+	void AddConnection::Redo();
 
 };

@@ -20,6 +20,8 @@
 #include "Actions\COPY.h"
 #include "Actions\CUT.h"
 #include "Actions\PASTE.h"
+#include "Actions\MOVE.h"
+
 
 
 
@@ -71,7 +73,7 @@ int ApplicationManager::ReturnSelected() const {
 		}
 		if (SelectedCount == 2)
 		{
-			pUI->PrintMsg("You cannot perform this action for more than 1 component. Please select only 1.");
+			pUI->PrintMsg("You cannot perform this action for more than 1 component. Please select only 1 then try again.");
 			return -1; 
 		}
 	}
@@ -157,7 +159,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		Done_Acts[executed++] = pAct;
 		break;
 
-	case ADD_Label:
+	case ADD_Label: //For adding and editing labels
 		pAct = new Label(this);
 		Done_Acts[executed++] = pAct;
 		break;
@@ -171,9 +173,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Select(this, pUI->PCx, pUI->PCy);
 		break;
 
-		//case DEL:
-		//case MOVE:
-
+	
 	case SAVE:
 		UnselectAll();
 		pAct = new Save(this);
@@ -215,6 +215,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		Done_Acts[executed++] = pAct;
 		break;
 
+	case MOVE:
+		pAct = new Move(this);
+		Done_Acts[executed++] = pAct;
+		break;
+
 	case DSN_MODE:
 		UnselectAll();
 		pUI->CreateDesignToolBar();
@@ -226,18 +231,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pUI->CreateSimulationToolBar();
 		break;
 
-		//clicks here, changes switches, works
-		// see UI for items  
-
+		
 	case EXIT:
 		//ApplicationManager::~ApplicationManager(); 
 		break;
 
-	//  case STATUS_BAR:
-	//	HeldString = pUI->GetString();
-	//  break;
 
-		//case DSN_TOOL: bc msh mafrood y7sal 7aga so htfdal pAct=NULL
 	}
 	if(pAct)
 	{

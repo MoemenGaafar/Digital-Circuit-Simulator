@@ -91,6 +91,41 @@ int ApplicationManager::ReturnSelected() const {
 	
 }
 ////////////////////////////////////////////////////////////////////
+bool ApplicationManager::isAllConnected() const {
+	for (int i = 0; i < CompCount; i++) {
+		switch (CompList[i]->ComponentType) {
+		case T_AND2:
+		case T_OR2:
+		case T_NAND2:
+		case T_NOR2:
+		case T_XOR2:
+		case T_XNOR2:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON
+				|| CompList[i]->GetInputPinStatus(2) == NCON) return 0; break;
+		}
+		case T_NOT:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON) return 0;
+			break;
+		}
+		case T_SWITCH:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON) return 0;
+			break;
+		}
+		case T_LED:
+		{
+			if (CompList[i]->GetInputPinStatus(1) == NCON) return 0;
+			break;
+		}
+		case T_CONNECTION: continue;
+		}
+	}
+	return 1;
+}
+
+////////////////////////////////////////////////////////////////////
 
 void ApplicationManager::ExecuteAction(ActionType ActType)
 {
@@ -227,8 +262,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case SIM_MODE:
 		UnselectAll();
-		//Check all connected first
-		pUI->CreateSimulationToolBar();
+		if (isAllConnected())
+			pUI->CreateSimulationToolBar();
+		else
+			pUI->PrintMsg("One or more components are not connected!");
 		break;
 
 		

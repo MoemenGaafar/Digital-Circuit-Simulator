@@ -143,7 +143,7 @@ void AddConnection::Execute() {
 
 	//Get Center point of the Gate
 	pUI->GetPointClicked(srcX, srcY);
-	int pin = checkPin(srcX, srcY);
+	pin = checkPin(srcX, srcY);
 
 	while (pin != 1) {
 		pUI->PrintMsg("Please click on a valid source pin");
@@ -152,6 +152,7 @@ void AddConnection::Execute() {
 	}
 
 	connectPin(srcX, srcY, 1);
+	Component* outComp = component;
 	outp = component->m_OutputPin;
 
 	pUI->PrintMsg("Connection: Click on the destination pin");
@@ -164,6 +165,7 @@ void AddConnection::Execute() {
 		pin = checkPin(destX, destY);
 	}
 
+	Component* inComp = component;
 
 	if (pin == 2)
 	{
@@ -205,6 +207,8 @@ void AddConnection::Execute() {
 		}
 		else
 			pManager->AddComponent(pC);
+			outComp->m_OutputPin->setStatus(LOW);
+			inComp->m_InputPins[pin - 2].setStatus(LOW);
 	}
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");
 

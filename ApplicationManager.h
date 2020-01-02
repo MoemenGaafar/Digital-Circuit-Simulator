@@ -51,6 +51,9 @@ public:
 	//Checks that only one component is selected and returns its location
 	int ReturnSelected() const; 
 
+	//Checks if all components are connected before running the simulation
+	bool isAllConnected() const;
+
 
 	//destructor
 	~ApplicationManager();

@@ -379,11 +379,11 @@ void UI::DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
-void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, bool isOn) const
+void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, STATUS isOn) const
 {
 	string GateImage;
 
-	if (isOn)	//use image in the on case
+	if (isOn == HIGH)	//use image in the on case
 		GateImage = "Images\\Gates\\Switch_ON.jpg";
 	else if (selected)	//use image in the highlighted case
 		GateImage = "Images\\Gates\\Switch_OFF_Hi.jpg";
@@ -395,10 +395,13 @@ void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, bool isOn) con
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
-void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected) const
+void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected, STATUS isOn) const
 {
 	string GateImage;
-	if (selected)	//use image in the highlighted case
+
+	if (isOn == HIGH)
+		GateImage = "Images\\Gates\\LED_ON.jpg";
+	else if (selected)	//use image in the highlighted case
 		GateImage = "Images\\Gates\\LED_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\LED_OFF.jpg";

@@ -10,7 +10,6 @@ LED::LED(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanOut)
 
 void LED::Operate()
 {
-
 	if ((m_InputPins[0].getStatus() == HIGH))
 		isON = HIGH;
 	else
@@ -23,7 +22,7 @@ void LED::Operate()
 void LED::Draw(UI* pUI)
 {
 	//Call output class and pass gate drawing info to it.
-	pUI->DrawLED(*m_pGfxInfo, selected);
+	pUI->DrawLED(*m_pGfxInfo, selected, isON);
 }
 
 //returns status of outputpin

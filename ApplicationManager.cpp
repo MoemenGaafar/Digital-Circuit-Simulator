@@ -267,7 +267,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		else
 			pUI->PrintMsg("One or more components are not connected!");
 		break;
-
 		
 	case EXIT:
 		//ApplicationManager::~ApplicationManager(); 
@@ -287,9 +286,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
-	for(int i=0; i<CompCount; i++)
-			CompList[i]->Draw(pUI);
+	if(pUI->AppMode == SIMULATION)
+    for(int j = 0; j < 2; j++)
+	for (int i = 0; i < CompCount; i++)
+		CompList[i]->Operate();
 
+for (int i = 0; i < CompCount; i++)
+	CompList[i]->Draw(pUI);
 }
 
 ////////////////////////////////////////////////////////////////////

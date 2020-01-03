@@ -136,8 +136,8 @@ public:
 	void DrawNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
-	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, bool isOn = false) const;
-	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
+	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
+	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
 
 	// Draws Connection
 	void DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected = false) const;

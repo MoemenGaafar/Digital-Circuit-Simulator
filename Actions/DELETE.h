@@ -12,7 +12,6 @@ private:
 public:
 	Delete(ApplicationManager* pApp);
 	virtual ~Delete(void);
-	ActionType Type = DEL;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

@@ -13,7 +13,6 @@ private:
 public:
 	AddLED(ApplicationManager* pApp);
 	virtual ~AddLED(void);
-	ActionType Type = ADD_LED;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

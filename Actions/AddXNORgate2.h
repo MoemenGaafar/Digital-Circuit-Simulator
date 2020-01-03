@@ -13,7 +13,6 @@ private:
 public:
 	AddXNORgate2(ApplicationManager* pApp);
 	virtual ~AddXNORgate2(void);
-	ActionType Type = ADD_XNOR_GATE_2;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

@@ -12,7 +12,6 @@ private:
 public:
 	Copy(ApplicationManager* pApp);
 	virtual ~Copy(void);
-	ActionType Type = COPY;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

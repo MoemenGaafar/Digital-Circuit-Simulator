@@ -13,7 +13,6 @@ private:
 public:
 	AddANDgate2(ApplicationManager *pApp);
 	virtual ~AddANDgate2(void);
-	ActionType Type = ADD_AND_GATE_2;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

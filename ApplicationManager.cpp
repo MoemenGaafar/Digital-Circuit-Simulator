@@ -21,6 +21,8 @@
 #include "Actions\CUT.h"
 #include "Actions\PASTE.h"
 #include "Actions\MOVE.h"
+#include <iostream>
+using namespace std; 
 
 
 
@@ -34,6 +36,15 @@ ApplicationManager::ApplicationManager()
 
 	for(int i=0; i<MaxCompCount; i++)
 		CompList[i] = NULL;
+
+	for (int i = 0; i < MaxCompCount; i++)
+		Undone_Comps[i] = NULL;
+
+	for (int i = 0; i < 100000; i++)
+		Done_Acts[i] = NULL;
+
+	for (int i = 0; i < 100000; i++)
+		Undone_Acts[i] = NULL;
 
 	//Creates the UI Object & Initialize the UI	
 	pUI = new UI;
@@ -296,6 +307,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct->Execute();
 		delete pAct;
 		pAct = NULL;
+		cout << Done_Acts[executed - 1]->Type << endl;
 	}
 }
 ////////////////////////////////////////////////////////////////////

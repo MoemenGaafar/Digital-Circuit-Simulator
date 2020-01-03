@@ -3,6 +3,7 @@
 
 Paste::Paste(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = PASTE;
 }
 
 Paste::~Paste(void)

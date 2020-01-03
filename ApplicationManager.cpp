@@ -21,8 +21,7 @@
 #include "Actions\CUT.h"
 #include "Actions\PASTE.h"
 #include "Actions\MOVE.h"
-#include <iostream>
-using namespace std; 
+#include <cstdio>
 
 
 
@@ -32,8 +31,7 @@ using namespace std;
 
 ApplicationManager::ApplicationManager()
 {
-	CompCount = 0;
-
+	
 	for(int i=0; i<MaxCompCount; i++)
 		CompList[i] = NULL;
 
@@ -41,10 +39,10 @@ ApplicationManager::ApplicationManager()
 		Undone_Comps[i] = NULL;
 
 	for (int i = 0; i < 100000; i++)
-		Done_Acts[i] = NULL;
+		Done_Acts[i] = NI;
 
 	for (int i = 0; i < 100000; i++)
-		Undone_Acts[i] = NULL;
+		Undone_Acts[i] = NI;
 
 	//Creates the UI Object & Initialize the UI	
 	pUI = new UI;
@@ -148,71 +146,59 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		//Unselect any selected before next action 
 		UnselectAll();
 		pAct = new AddINV(this);
-		Done_Acts[executed++] = pAct;
-		break;
+	    break;
 
 	case ADD_AND_GATE_2:
 		UnselectAll();
 		pAct = new AddANDgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_OR_GATE_2:
 		UnselectAll();
 		pAct = new AddORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NAND_GATE_2:
 		UnselectAll();
 		pAct = new AddNANDgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NOR_GATE_2:
 		UnselectAll();
 		pAct = new AddNORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XNOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXNORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Switch:
 		UnselectAll();
 		pAct = new AddSWITCH(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_LED:
 		UnselectAll();
 		pAct = new AddLED(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_CONNECTION:
 		UnselectAll();
 		pAct = new AddConnection(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Label: //For adding and editing labels
 		pAct = new Label(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case EDIT_Conn:
 		pAct = new EditConn(this); 
-		Done_Acts[executed++] = pAct;
 		break; 
 	
 	case SELECT:
@@ -228,7 +214,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case LOAD:
 		UnselectAll();
 		pAct = new Load(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case UNDO:
@@ -243,27 +228,22 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DEL:
 		pAct = new Delete(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case COPY:
 		pAct = new Copy(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case CUT:
 		pAct = new Cut(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case PASTE:
 		pAct = new Paste(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case MOVE:
 		pAct = new Move(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case DSN_MODE:
@@ -281,18 +261,26 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		
 	case EXIT:
-		//ApplicationManager::~ApplicationManager(); 
+
+		for (int i = 0; i < LoadCount; i++) {
+			string Temp = "D:\\temporaryloadfile";
+			Temp += to_string(i);
+			Temp += ".txt";
+			remove(Temp.c_str()); 
+		}
+		
 		break;
 
 
 	}
 	if(pAct)
 	{
-		 
+		if (pAct -> Type != NI)
+			Done_Acts[executed++] = pAct->Type;
+
 		pAct->Execute();
 		delete pAct;
 		pAct = NULL;
-		cout << Done_Acts[executed - 1]->Type << endl;
 	}
 }
 ////////////////////////////////////////////////////////////////////

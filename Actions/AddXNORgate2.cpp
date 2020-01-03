@@ -3,7 +3,7 @@
 
 AddXNORgate2::AddXNORgate2(ApplicationManager* pApp) :Action(pApp)
 {
-     Type = ADD_XNOR_GATE_2;
+     Type = ADD_COMP;
 }
 
 AddXNORgate2::~AddXNORgate2(void)

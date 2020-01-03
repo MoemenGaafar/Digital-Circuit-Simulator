@@ -2,7 +2,9 @@
 
 Redo::Redo(ApplicationManager* pApp) :Action(pApp) {};
 
-Redo::~Redo(void) {};
+Redo::~Redo(void) {
+	delete RSave; 
+};
 
 void Redo::Execute()
 {
@@ -11,26 +13,48 @@ void Redo::Execute()
 
 	if (pManager->Undone_count > 0)
 	{
-	//Print Action Message
-	pUI->PrintMsg("You clicked on Redo.");
+	  //Print Action Message
+	  pUI->PrintMsg("You clicked on Redo.");
+
+	    ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1];
 
 		pManager->Done_Acts[pManager->executed] = pManager->Undone_Acts[pManager->Undone_count-1];
-		pManager->Undone_Acts[pManager->Undone_count-1] = NULL;
+		pManager->Undone_Acts[pManager->Undone_count-1] = NI;
 		pManager->Undone_count--;
 		pManager->executed++;
 
-		pManager->CompList[pManager->CompCount] = pManager->Undone_Comps[pManager->undone_Compcount-1];
-	    pManager->Undone_Comps[pManager->undone_Compcount-1]= NULL;
-		pManager->CompCount++;
-		pManager->undone_Compcount--;
+		if (t1 == ADD_COMP || t1 == ADD_CONNECTION) {
 
-		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
-
-		if (t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
-		{
+			pManager->CompList[pManager->CompCount] = pManager->Undone_Comps[pManager->undone_Compcount - 1];
+			pManager->Undone_Comps[pManager->undone_Compcount - 1] = NULL;
+			pManager->CompCount++;
+			pManager->undone_Compcount--;
+			
 			pUI->LabelComp(pManager->CompList[pManager->CompCount - 1]->m_Label,
 				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
 				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
+			
+
+		}
+
+		else if (t1 == LOAD) {
+
+			string TempName = "D:\\temporaryloadtype1file";
+			TempName += to_string(pManager->LoadCount);
+			TempName += ".txt";
+			RSave->ExecutePart(TempName);
+
+			pManager->UndoneLoadCount--;
+			pManager->LoadCount++;
+
+
+			string TempName2 = "D:\\temporaryloadtype2file";
+			int number = pManager->UndoneLoadCount;
+			TempName2 += to_string(number);
+			TempName2 += ".txt";
+			bool y = RLoad->ExecutePart(TempName2, pUI);
+
+
 		}
 	}
 	else

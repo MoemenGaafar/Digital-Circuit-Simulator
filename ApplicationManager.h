@@ -20,15 +20,17 @@ public:
 	string HeldString;
 	ApplicationManager(); //constructor
 
-	Action* Done_Acts[100000]; //Array of Done actions
-	Action* Undone_Acts[100000]; //Array of undone actions
+	ActionType* Done_Acts = new ActionType[100000]; //Array of Done actions
+	ActionType* Undone_Acts = new ActionType[100000]; //Array of undone actions
 	int executed = 0; //Number of done actions
 	int Undone_count = 0; //Number of undone actions
 
 	Component* CompList[MaxCompCount];	//List of all Components (Array of pointers)
 	Component* Undone_Comps[MaxCompCount]; //Array of undone components
-	int CompCount;		//Actual number of Components
-	int undone_Compcount=0; //Number of undone components
+	int CompCount = 0;		//Actual number of Components
+	int undone_Compcount = 0; //Number of undone components
+	int LoadCount = 0;
+	int UndoneLoadCount = 0; 
 
 	//Reads the required action from the user and returns the corresponding action type
 	ActionType GetUserAction();

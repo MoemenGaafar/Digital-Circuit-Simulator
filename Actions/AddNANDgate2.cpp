@@ -3,7 +3,7 @@
 
 AddNANDgate2::AddNANDgate2(ApplicationManager* pApp) :Action(pApp)
 {
-	Type = ADD_NAND_GATE_2;
+	Type = ADD_COMP;
 }
 
 AddNANDgate2::~AddNANDgate2(void)

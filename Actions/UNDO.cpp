@@ -1,10 +1,13 @@
 #include "UNDO.h"
-#include <iostream>
-using namespace std; 
+
+
 
 Undo::Undo(ApplicationManager* pApp) :Action(pApp) {};
 
-Undo::~Undo(void) {};
+Undo::~Undo(void) {
+	delete USave; 
+	delete ULoad; 
+};
 
 void Undo::Execute()
 {
@@ -17,38 +20,32 @@ void Undo::Execute()
 	pUI->PrintMsg("You clicked on Undo.");
 
 		pManager->Undone_Acts[pManager->Undone_count] = pManager->Done_Acts[pManager->executed-1];
-		cout << pManager->Done_Acts[pManager->executed - 1]->Type << endl;
-		cout<< pManager->Undone_Acts[pManager->Undone_count]->Type<<endl ;
-		pManager->Done_Acts[pManager->executed-1]= NULL;
+		pManager->Done_Acts[pManager->executed-1] = NI;
 		pManager->Undone_count++;
 		pManager->executed--;
 
 				
 		
-		enum ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1]->Type;
-		cout << t1 <<endl; 
-
-	 if (t1 == LOAD)
+		ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1];
+		
+	
+	 if (t1 == ADD_COMP || t1 == ADD_CONNECTION)
 	 {
-		pUI->ClearDrawingArea();
-		pUI->PrintMsg("entered load.");
-	 }
-
-	 else 
-	 {
-		enum Type t = pManager->CompList[pManager->CompCount - 1]->ComponentType;
-
+		
 		//Clearing the deleted components/actions on the UI:
 
 		pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1];
 		
 
-		if (t == T_CONNECTION)
+		if (t1 == ADD_CONNECTION)
 		{
 			pUI->ClearConnection(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
+			pUI->LabelComp("               ",
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
 		}
 
-		else if (t == T_SWITCH || t == T_LED || t == T_NOT || t == T_AND2 || t == T_OR2 || t == T_NAND2 || t == T_NOR2 || t == T_XOR2 || t == T_XNOR2)
+		else 
 		{
 			pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
 			pUI->LabelComp("               ",
@@ -61,6 +58,25 @@ void Undo::Execute()
 		pManager->CompCount--;
 
 	 } 
+
+	 else if (t1 == LOAD)
+	 {
+		 string TempName = "D:\\temporaryloadtype2file";
+		 TempName += to_string(pManager->UndoneLoadCount);
+		 TempName += ".txt";
+		 bool x= USave-> ExecutePart(TempName);
+
+		 pManager->UndoneLoadCount++; 
+		 pManager->LoadCount--; 
+
+		 		 
+		 string TempName2 = "D:\\temporaryloadtype1file";
+		 int number = pManager->LoadCount; 
+		 TempName2 += to_string(number);
+		 TempName2 += ".txt";
+		 bool y= ULoad->ExecutePart(TempName2, pUI);
+
+	 }
 
 		
 

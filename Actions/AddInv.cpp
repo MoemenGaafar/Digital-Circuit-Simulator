@@ -3,7 +3,7 @@
 
 AddINV::AddINV(ApplicationManager* pApp) :Action(pApp)
 {
-	Type = ADD_INV;
+	Type = ADD_COMP;
 }
 
 AddINV::~AddINV(void)

@@ -4,6 +4,7 @@
 
 EditConn::EditConn(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = EDIT_Conn; 
 }
 
 EditConn::~EditConn(void)

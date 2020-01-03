@@ -127,6 +127,21 @@ bool ApplicationManager::isAllConnected() const {
 
 ////////////////////////////////////////////////////////////////////
 
+void ApplicationManager::TurnOffAll() {
+	for (int i = 0; i < CompCount; i++) {
+		switch (CompList[i]->ComponentType) {
+		case T_CONNECTION: {
+			CompList[i]->setInputPinStatus(0,LOW);
+			CompList[i]->Operate();
+			break;}
+		case T_LED:
+		case T_SWITCH: {
+			CompList[i]->isON = LOW;
+			break;
+		}
+		}
+	}
+}
 void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 
@@ -257,6 +272,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DSN_MODE:
 		UnselectAll();
+		TurnOffAll();
 		pUI->CreateDesignToolBar();
 		break;
 
@@ -286,8 +302,8 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
-	if(pUI->AppMode == SIMULATION)
-    for(int j = 0; j < 2; j++)
+	if (pUI->AppMode == SIMULATION)
+    for(int j = 0; j < 50; j++)
 	for (int i = 0; i < CompCount; i++)
 		CompList[i]->Operate();
 

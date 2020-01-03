@@ -175,7 +175,7 @@ void Load::Execute()
 
 				GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
 				OutputPin* pSrcPin;
-				InputPin pDstPin;
+				InputPin* pDstPin;
 
 				int sourceComp;
 				int destinationComp;
@@ -195,7 +195,7 @@ void Load::Execute()
 
 					if (ID[j] == T_Comp) {
 
-						pDstPin = pManager->CompList[j]->m_InputPins[P_n];
+						pDstPin = &pManager->CompList[j]->m_InputPins[P_n];
 						destinationComp = j;
 						break;
 					}

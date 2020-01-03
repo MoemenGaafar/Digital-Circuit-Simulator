@@ -1,9 +1,9 @@
  #include "Connection.h"
 
-Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin& pDstPin):Component(r_GfxInfo)	
+Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin* pDstPin):Component(r_GfxInfo)	
 {
 	SrcPin = pSrcPin;
-	DstPin = &pDstPin;
+	DstPin = pDstPin;
 	ComponentType = T_CONNECTION;
 	isON = LOW;
 }
@@ -15,11 +15,11 @@ OutputPin* Connection::getSourcePin()
 {	return SrcPin;	}
 
 
-void Connection::setDestPin(InputPin &pDstPin)
-{	DstPin = &pDstPin;	}
+void Connection::setDestPin(InputPin* pDstPin)
+{	DstPin = pDstPin;	}
 
-InputPin Connection::getDestPin()
-{	return *DstPin;	}
+InputPin* Connection::getDestPin()
+{	return DstPin;	}
 
 
 void Connection::Operate()

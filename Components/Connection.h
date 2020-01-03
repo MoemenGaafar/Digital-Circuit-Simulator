@@ -13,16 +13,16 @@ class Connection :	public Component
 	InputPin* DstPin;	//The Destination pin of this connection (an input pin of certain Component)
 public:
 	//Connection(const GraphicsInfo &r_GfxInfo, Component *pS=NULL,Component *pD=NULL, int Pin=0);
-	Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin& pDstPin);
+	Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin* pDstPin);
 
 	virtual void Operate() ;	//Calculates the output according to the inputs
 	virtual void Draw(UI* );	//for each component to Draw itself
 
 	
 	void setSourcePin(OutputPin *pSrcPin);
-	void setDestPin(InputPin &pDstPin);
+	void setDestPin(InputPin *pDstPin);
 	OutputPin* getSourcePin();
-	InputPin getDestPin();
+	InputPin* getDestPin();
 
 
 	virtual int GetOutPinStatus();	//returns status of outputpin if LED, return -1

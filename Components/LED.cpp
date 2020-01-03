@@ -35,7 +35,7 @@ int LED::GetOutPinStatus()
 //returns status of Inputpin #n
 int LED::GetInputPinStatus(int n)
 {
-	return  isON;	//n starts from 1 but array index starts from 0.
+	return  m_InputPins[0].getStatus();	//n starts from 1 but array index starts from 0.
 }
 
 //Set status of an input pin ot HIGH or LOW

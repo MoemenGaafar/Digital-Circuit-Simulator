@@ -136,6 +136,21 @@ bool ApplicationManager::isAllConnected() const {
 
 ////////////////////////////////////////////////////////////////////
 
+void ApplicationManager::TurnOffAll() {
+	for (int i = 0; i < CompCount; i++) {
+		switch (CompList[i]->ComponentType) {
+		case T_CONNECTION: {
+			CompList[i]->setInputPinStatus(0,LOW);
+			CompList[i]->Operate();
+			break;}
+		case T_LED:
+		case T_SWITCH: {
+			CompList[i]->isON = LOW;
+			break;
+		}
+		}
+	}
+}
 void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 
@@ -248,6 +263,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DSN_MODE:
 		UnselectAll();
+		TurnOffAll();
 		pUI->CreateDesignToolBar();
 		break;
 
@@ -258,7 +274,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		else
 			pUI->PrintMsg("One or more components are not connected!");
 		break;
-
 		
 	case EXIT:
 
@@ -287,9 +302,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
-	for(int i=0; i<CompCount; i++)
-			CompList[i]->Draw(pUI);
+	if (pUI->AppMode == SIMULATION)
+    for(int j = 0; j < 50; j++)
+	for (int i = 0; i < CompCount; i++)
+		CompList[i]->Operate();
 
+for (int i = 0; i < CompCount; i++)
+	CompList[i]->Draw(pUI);
 }
 
 ////////////////////////////////////////////////////////////////////

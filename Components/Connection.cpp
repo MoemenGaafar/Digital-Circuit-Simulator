@@ -1,6 +1,6 @@
  #include "Connection.h"
 
-Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin pDstPin):Component(r_GfxInfo)	
+Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin* pDstPin):Component(r_GfxInfo)	
 {
 	SrcPin = pSrcPin;
 	DstPin = pDstPin;
@@ -15,17 +15,17 @@ OutputPin* Connection::getSourcePin()
 {	return SrcPin;	}
 
 
-void Connection::setDestPin(InputPin pDstPin)
+void Connection::setDestPin(InputPin* pDstPin)
 {	DstPin = pDstPin;	}
 
-InputPin Connection::getDestPin()
+InputPin* Connection::getDestPin()
 {	return DstPin;	}
 
 
 void Connection::Operate()
 {
 	//Status of connection destination pin = status of connection source pin
-	DstPin.setStatus((STATUS)SrcPin->getStatus());
+	DstPin->setStatus((STATUS)SrcPin->getStatus());
 }
 
 void Connection::Draw(UI* pUI)
@@ -35,7 +35,7 @@ void Connection::Draw(UI* pUI)
 
 int Connection::GetOutPinStatus()	//returns status of outputpin if LED, return -1
 {
-	return DstPin.getStatus();
+	return DstPin->getStatus();
 }
 
 

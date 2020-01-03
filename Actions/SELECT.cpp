@@ -20,8 +20,6 @@ void Select::Execute()
 	bool found = false;
 	int i = 0;
 	
-
-	
 	while (found == false && i < pManager->CompCount) {
 		
 		if (pManager->CompList[i]->ComponentType != T_CONNECTION) {

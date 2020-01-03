@@ -6,8 +6,7 @@
 
 class LED :public Gate
 {
-private:
-	STATUS isON;
+
 public:
     LED(GraphicsInfo* r_pGfxInfo, int r_FanOut);
 	virtual void Operate();	//Calculates the output of the Switch gate

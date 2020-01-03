@@ -171,12 +171,12 @@ void AddConnection::Execute() {
 	if (pin == 2)
 	{
 		connectPin(srcX, srcY, 2);
-		inp = component->m_InputPins[0];
+		inp = &component->m_InputPins[0];
 	}
 	if (pin == 3)
 	{
 		connectPin(srcX, srcY, 3);
-		inp = component->m_InputPins[1];
+		inp = &component->m_InputPins[1];
 	}
 
 	pUI->ClearStatusBar();
@@ -208,6 +208,7 @@ void AddConnection::Execute() {
 		}
 		else
 			pManager->AddComponent(pC);
+
 			outComp->m_OutputPin->setStatus(LOW);
 			inComp->m_InputPins[pin - 2].setStatus(LOW);
 	}

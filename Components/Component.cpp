@@ -12,8 +12,8 @@ Component:: ~Component() {}
 void Component::setSourcePin(OutputPin* pSrcPin) { }
 void Component::setDestPin(InputPin pDstPin) { }
 OutputPin* Component::getSourcePin() { return 0; }
-InputPin Component::getDestPin()
+InputPin* Component::getDestPin()
 {
-InputPin garbage; 
+InputPin* garbage; 
 return garbage;
 }

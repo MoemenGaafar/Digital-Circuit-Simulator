@@ -56,6 +56,10 @@ public:
 	//Checks if all components are connected before running the simulation
 	bool isAllConnected() const;
 
+	//Turns off all LEDs and Switches before going back to design mode
+	void TurnOffAll();
+
+
 
 	//destructor
 	~ApplicationManager();

@@ -11,7 +11,6 @@ Switch::Switch(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_Fa
 
 void Switch::Operate()
 {
-
 	if ((isON == HIGH))
 		m_OutputPin->setStatus(HIGH);
 	else

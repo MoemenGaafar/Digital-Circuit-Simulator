@@ -199,9 +199,9 @@ bool Load::ExecutePart(string name, UI* pUI) {
 			a >> T_Comp;
 			a >> P_n;
 
-			GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
-			OutputPin* pSrcPin;
-			InputPin pDstPin;
+				GraphicsInfo* r_GfxInfo = new GraphicsInfo(2);
+				OutputPin* pSrcPin;
+				InputPin pDstPin;
 
 			int sourceComp;
 			int destinationComp;
@@ -221,11 +221,11 @@ bool Load::ExecutePart(string name, UI* pUI) {
 
 				if (ID[j] == T_Comp) {
 
-					pDstPin = pManager->CompList[j]->m_InputPins[P_n];
-					destinationComp = j;
-					break;
+						pDstPin = pManager->CompList[j]->m_InputPins[P_n];
+						destinationComp = j;
+						break;
+					}
 				}
-			}
 
 
 

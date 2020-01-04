@@ -19,8 +19,10 @@
 #include "Actions\DELETE.h"
 #include "Actions\COPY.h"
 #include "Actions\CUT.h"
-#include "Actions\PASTE.h"
 #include "Actions\MOVE.h"
+#include "Actions\DefMODULE.h"
+#include "Actions\NamedMODULE.h"
+#include "Actions\SaveMODULE.h"
 #include <cstdio>
 
 
@@ -264,13 +266,26 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Cut(this);
 		break;
 
-	case PASTE:
-		pAct = new Paste(this);
-		break;
-
+	
 	case MOVE:
 		pAct = new Move(this);
 		break;
+
+
+	case DefMODULE:
+		UnselectAll();
+		//pAct = new DefModule(this); 
+		break; 
+	
+	case NamedMODULE: 
+		UnselectAll();
+		//pAct = new NamedModule(this);
+		break; 
+
+	case SaveMODULE: 
+		UnselectAll();
+		//pAct = new SaveModule(this);
+		break; 
 
 	case DSN_MODE:
 		UnselectAll();
@@ -288,17 +303,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		
 	case EXIT:
 
+		
 		string Temp; 
 
-		for (int i = 0; i < LoadCount; i++) {
-			Temp = "D:\\temporaryloadtype1file";
+		for (int i = 0; i < UndoneLoadCount+LoadCount; i++) {
+			Temp = "ProgramTXTfiles\\temporaryloadtype1file";
 			Temp += to_string(i);
 			Temp += ".txt";
 			remove(Temp.c_str()); 
 		}
 
-		for (int i = 0; i < UndoneLoadCount; i++) {
-			Temp = "D:\\temporaryloadtype2file";
+		for (int i = 0; i < UndoneLoadCount+LoadCount; i++) {
+			Temp = "ProgramTXTfiles\\temporaryloadtype2file";
 			Temp += to_string(i);
 			Temp += ".txt";
 			remove(Temp.c_str());

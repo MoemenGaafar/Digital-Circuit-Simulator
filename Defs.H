@@ -26,11 +26,14 @@ enum ActionType
 	DEL, //Delete a Component, a Connection
 	COPY,       //Copies a Component
 	CUT,        //Cuts a Component
-	PASTE,      //Pastes a Component
 	MOVE,		//Move a Component, a Connection
 
 	SAVE,		//Save the whole Circuit to a file
 	LOAD,		//Load a Circuit from a file
+
+	DefMODULE,     //Insert the default module 
+	NamedMODULE, //Insert a module named by the user
+	SaveMODULE, //Save designed circuit as a module 
 
 	UNDO,		//Undo the last Action preformed
 	REDO,		//Redo the last Action canceled

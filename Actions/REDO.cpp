@@ -40,7 +40,7 @@ void Redo::Execute()
 
 		else if (t1 == LOAD) {
 
-			string TempName = "D:\\temporaryloadtype1file";
+			string TempName = "ProgramTXTfiles\\temporaryloadtype1file";
 			TempName += to_string(pManager->LoadCount);
 			TempName += ".txt";
 			RSave->ExecutePart(TempName);
@@ -49,11 +49,11 @@ void Redo::Execute()
 			pManager->LoadCount++;
 
 
-			string TempName2 = "D:\\temporaryloadtype2file";
+			string TempName2 = "ProgramTXTfiles\\temporaryloadtype2file";
 			int number = pManager->UndoneLoadCount;
 			TempName2 += to_string(number);
 			TempName2 += ".txt";
-			bool y = RLoad->ExecutePart(TempName2, pUI);
+			bool y = RLoad->ExecutePart(TempName2, pUI, 0);
 
 
 		}

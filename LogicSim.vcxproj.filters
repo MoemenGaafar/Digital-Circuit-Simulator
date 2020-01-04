@@ -193,10 +193,16 @@
     <ClInclude Include="Actions\DELETE.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\PASTE.h">
+    <ClInclude Include="Actions\MOVE.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\MOVE.h">
+    <ClInclude Include="Actions\SaveMODULE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\DefMODULE.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\NamedMODULE.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
   </ItemGroup>
@@ -363,8 +369,10 @@
     <ClCompile Include="Actions\COPY.cpp" />
     <ClCompile Include="Actions\CUT.cpp" />
     <ClCompile Include="Actions\DELETE.cpp" />
-    <ClCompile Include="Actions\PASTE.cpp" />
     <ClCompile Include="Actions\MOVE.cpp" />
+    <ClCompile Include="Actions\SaveMODULE.cpp" />
+    <ClCompile Include="Actions\DefMODULE.cpp" />
+    <ClCompile Include="Actions\NamedModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

@@ -114,13 +114,15 @@ ActionType UI::GetUserAction()
 			case ITM_REDO: return REDO;
 			case ITM_SAVE: return SAVE; 
 			case ITM_LOAD: return LOAD; 
+			case ITM_DefMODULE: return DefMODULE; 
+			case ITM_NamedMODULE: return NamedMODULE;
+			case ITM_SaveMODULE: return SaveMODULE; 
 			case ITM_LABEL: return ADD_Label;
 			case ITM_DEL: return DEL;
 			case ITM_MOVE: return MOVE;
             case ITM_COPY: return COPY;
             case ITM_CUT: return CUT;
-            case ITM_PASTE: return PASTE; 
-			case ITM_SIM: return SIM_MODE; 
+            case ITM_SIM: return SIM_MODE; 
 			case ITM_EDITCONN: return EDIT_Conn;
 			case ITM_EXIT: return EXIT;	
 			
@@ -253,6 +255,9 @@ void UI::CreateDesignToolBar()
 	MenuItemImages[ITM_PASTE] = "images\\Menu\\Menu_Paste.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\Menu\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\Menu\\Menu_Load.jpg";
+	MenuItemImages[ITM_DefMODULE] = "images\\Menu\\Menu_DefModule.jpg";
+	MenuItemImages[ITM_NamedMODULE] = "images\\Menu\\Menu_NamedModule.jpg";
+	MenuItemImages[ITM_SaveMODULE] = "images\\Menu\\Menu_SaveModule.jpg";
 	MenuItemImages[ITM_SIM] = "images\\Menu\\Menu_Simulate.jpg";
 	MenuItemImages[ITM_EDITCONN] = "images\\Menu\\Menu_EditConnect.jpg";
 

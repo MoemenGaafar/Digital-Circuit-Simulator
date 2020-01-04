@@ -57,7 +57,7 @@ void Load::Execute()
 			std::this_thread::sleep_for(std::chrono::seconds(0));
 		}
 
-		string TempName = "D:\\temporaryloadtype1file"; 
+		string TempName = "ProgramTXTfiles\\temporaryloadtype1file"; 
 		TempName += to_string(pManager->LoadCount); 
 		TempName += ".txt"; 
 			LSave->ExecutePart(TempName); 
@@ -67,7 +67,7 @@ void Load::Execute()
 		
 		name = pUI->GetString();
 
-		bool Success = ExecutePart(name, pUI); 
+		bool Success = ExecutePart(name, pUI, 0); 
 
 		if (Success) {
 			
@@ -82,7 +82,7 @@ void Load::Execute()
 }
 
 
-bool Load::ExecutePart(string name, UI* pUI) {
+bool Load::ExecutePart(string name, UI* pUI, int count) {
 
 	ifstream myfile;
 	myfile.open(name.c_str());
@@ -90,7 +90,7 @@ bool Load::ExecutePart(string name, UI* pUI) {
 	{
 		pUI->ClearDrawingArea();
 
-		pManager->CompCount = 0;
+		pManager->CompCount = count;
 		
 		//Calculate the rectangle Corners
 		int gateWidth = pUI->getGateWidth();

@@ -61,7 +61,7 @@ void Undo::Execute()
 
 	 else if (t1 == LOAD)
 	 {
-		 string TempName = "D:\\temporaryloadtype2file";
+		 string TempName = "ProgramTXTfiles\\temporaryloadtype2file";
 		 TempName += to_string(pManager->UndoneLoadCount);
 		 TempName += ".txt";
 		 bool x= USave-> ExecutePart(TempName);
@@ -70,11 +70,11 @@ void Undo::Execute()
 		 pManager->LoadCount--; 
 
 		 		 
-		 string TempName2 = "D:\\temporaryloadtype1file";
+		 string TempName2 = "ProgramTXTfiles\\temporaryloadtype1file";
 		 int number = pManager->LoadCount; 
 		 TempName2 += to_string(number);
 		 TempName2 += ".txt";
-		 bool y= ULoad->ExecutePart(TempName2, pUI);
+		 bool y= ULoad->ExecutePart(TempName2, pUI, 0);
 
 	 }
 

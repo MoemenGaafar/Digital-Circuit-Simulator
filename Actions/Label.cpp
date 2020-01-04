@@ -56,11 +56,27 @@ void Label::Execute()
 			Label = pUI->GetString();
 		}
 		
-
+		bool unique; 
 		
 
 		if (pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) {
-			while (Label == " " || Label == "")
+			
+			do {
+				unique = 1; 
+				for (int k = 0; k < pManager->CompCount; k++) {
+					if ((pManager->CompList[k]->ComponentType == T_SWITCH || pManager->CompList[k]->ComponentType == T_LED ) && Label == pManager->CompList[k]-> m_Label)
+						unique = 0;
+				}
+
+				if (!unique)
+				{
+					pUI->PrintMsg("Switches and LEDs must have unique labels. Please pick a label not used by another switch or LED.");
+					Label = pUI->GetString();
+				} 
+
+			} while (!unique); 
+			
+			while (Label == "" || Label == " " || Label == "  " || Label == "   " || Label == "    " || Label == "     " || Label == "      " || Label == "       " || Label == "        " || Label == "         " || Label == "          ")
 			{
 				pUI->PrintMsg("Switches and LEDs must have valid labels at all times. Please enter a nonempty label other than '-'.");
 				Label = pUI->GetString();
@@ -75,29 +91,39 @@ void Label::Execute()
 					pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
 					Label = pUI->GetString();
 				}
+
+				do {
+					unique = 1;
+					for (int k = 0; k < pManager->CompCount; k++) {
+						if ((pManager->CompList[k]->ComponentType == T_SWITCH || pManager->CompList[k]->ComponentType == T_LED) && Label == pManager->CompList[k]->m_Label)
+							unique = 0;
+					}
+
+					if (!unique)
+					{
+						pUI->PrintMsg("Switches and LEDs must have unique labels. Please pick a label not used by another switch or LED.");
+						Label = pUI->GetString();
+					} 
+
+				} while (!unique);
 			}
 		}
 
 
 
-		if (component->ComponentType != T_CONNECTION) {
-
-
+		if (component->ComponentType != T_CONNECTION) 
 			pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
-			pManager->CompList[i]->m_Label = Label;
+			
 
 
-		}
+		
 
-		if (component->ComponentType == T_CONNECTION) {
-
-
+		if (component->ComponentType == T_CONNECTION) 
 			pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
-			pManager->CompList[i]->m_Label = Label;
+			
+		
 
-
-		}
-
+		pManager->CompList[i]->m_Label = Label;
 		pManager->CompList[i]->selected = 0; 
 
 

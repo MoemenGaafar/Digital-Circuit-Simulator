@@ -19,7 +19,7 @@ public:
 	Save* LSave; 
 	//Execute action (code depends on action type)
 	virtual void Execute();
-	bool ExecutePart(string name, UI* pUI);
+	bool ExecutePart(string name, UI* pUI, int count);
 
 	
 

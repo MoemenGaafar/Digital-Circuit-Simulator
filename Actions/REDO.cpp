@@ -4,6 +4,7 @@ Redo::Redo(ApplicationManager* pApp) :Action(pApp) {};
 
 Redo::~Redo(void) {
 	delete RSave; 
+	delete RLoad; 
 };
 
 void Redo::Execute()
@@ -55,6 +56,34 @@ void Redo::Execute()
 			bool y = RLoad->ExecutePart(TempName2, pUI);
 
 
+		}
+
+		else if (t1 == EDIT_Conn)
+		{
+			pManager->DoneEditConn[pManager->EditConnCount] = new Connection(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->m_pGfxInfo, pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->getSourcePin(), pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->getDestPin());
+
+			pUI->ClearConnection(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount]]->m_pGfxInfo);
+
+			pManager->DoneEditConn[pManager->EditConnCount]->m_Label = pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->m_Label;
+
+			pUI->LabelComp("               ",
+				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount ]]->m_pGfxInfo->PointsList[0].y);
+
+			
+			pManager->EditConnCount++;
+
+			pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]] = new Connection(pManager->UndoneEditConn[pManager->UndoneEditConnCount - 1]->m_pGfxInfo, pManager->UndoneEditConn[pManager->UndoneEditConnCount - 1]->getSourcePin(), pManager->UndoneEditConn[pManager->UndoneEditConnCount - 1]->getDestPin());
+
+			pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_Label = pManager->UndoneEditConn[pManager->UndoneEditConnCount - 1]->m_Label;
+
+			pUI->LabelComp(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount -1]]->m_Label,
+				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].y);
+
+
+			pManager->UndoneEditConnCount--;
+			
 		}
 	}
 	else

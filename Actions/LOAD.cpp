@@ -180,6 +180,7 @@ bool Load::ExecutePart(string name, UI* pUI) {
 			pManager->CompCount++;
 			if (label != "-")
 				pUI->LabelComp(label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
+			pManager->CompList[i]->selected = false; 
 
 
 		}
@@ -324,6 +325,7 @@ bool Load::ExecutePart(string name, UI* pUI) {
 
 			
 		}
+		myfile.close(); 
 		return 1; 
 	}
 

@@ -98,7 +98,7 @@ void Label::Execute()
 
 		}
 
-
+		pManager->CompList[i]->selected = 0; 
 
 
 		//Clear Status Bar

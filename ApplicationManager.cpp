@@ -44,6 +44,16 @@ ApplicationManager::ApplicationManager()
 	for (int i = 0; i < 100000; i++)
 		Undone_Acts[i] = NI;
 
+	for (int i = 0; i < 100000; i++)
+		DoneEditConn[i] = NULL;
+
+	for (int i = 0; i < 100000; i++)
+		UndoneEditConn[i] = NULL;
+
+	
+	
+		
+
 	//Creates the UI Object & Initialize the UI	
 	pUI = new UI;
 
@@ -67,6 +77,7 @@ void ApplicationManager::UnselectAll()
 	    for (int i = 0; i < CompCount; i++)
 			CompList[i]->selected = false;
 		UpdateInterface();
+
 }
 ////////////////////////////////////////////////////////////////////
 
@@ -277,11 +288,20 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		
 	case EXIT:
 
+		string Temp; 
+
 		for (int i = 0; i < LoadCount; i++) {
-			string Temp = "D:\\temporaryloadfile";
+			Temp = "D:\\temporaryloadtype1file";
 			Temp += to_string(i);
 			Temp += ".txt";
 			remove(Temp.c_str()); 
+		}
+
+		for (int i = 0; i < UndoneLoadCount; i++) {
+			Temp = "D:\\temporaryloadtype2file";
+			Temp += to_string(i);
+			Temp += ".txt";
+			remove(Temp.c_str());
 		}
 		
 		break;

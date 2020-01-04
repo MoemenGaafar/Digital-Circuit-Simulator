@@ -78,6 +78,33 @@ void Undo::Execute()
 
 	 }
 
+	 else if (t1 == EDIT_Conn) 
+	 {
+		 pManager->UndoneEditConn[pManager->UndoneEditConnCount] = new Connection(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo, pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]-> getSourcePin(), pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->getDestPin());
+		
+		 pUI->ClearConnection(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo);
+		 
+		 pManager->UndoneEditConn [pManager->UndoneEditConnCount]->m_Label = pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_Label;
+		 
+		 pUI->LabelComp("               ",
+			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].x,
+			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].y);
+
+		 pManager->UndoneEditConnCount++; 
+
+		 
+		 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]] = new Connection(pManager->DoneEditConn[pManager->EditConnCount - 1]->m_pGfxInfo, pManager->DoneEditConn[pManager->EditConnCount - 1]->getSourcePin(), pManager->DoneEditConn[pManager->EditConnCount - 1]->getDestPin());
+		
+		 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_Label = pManager->DoneEditConn[pManager->EditConnCount - 1]->m_Label;
+		
+		 pUI->LabelComp(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]] ->m_Label,
+			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo->PointsList[0].x,
+			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo->PointsList[0].y);
+
+		 
+		 pManager->EditConnCount--; 
+	 }
+
 		
 
 	}

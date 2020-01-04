@@ -455,19 +455,23 @@ void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const
 
 void UI::LabelComp(string l, int x, int y) {
 
-	int MsgX = x + 10;
+	if (l != "-") {
 
-	int MsgY = y - 20;
+		int MsgX = x + 10;
 
-	//Clear Old label
-	pWind->SetPen(BkGrndColor);
-	pWind->SetBrush(BkGrndColor);
-	pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
+		int MsgY = y - 20;
 
-	// Print the Message
-	pWind->SetFont(15, BOLD , BY_NAME, "Arial");
-	pWind->SetPen(BLACK);
-	pWind->DrawString(MsgX, MsgY, l);
+		//Clear Old label
+		pWind->SetPen(BkGrndColor);
+		pWind->SetBrush(BkGrndColor);
+		pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
+
+		// Print the Message
+		pWind->SetFont(15, BOLD, BY_NAME, "Arial");
+		pWind->SetPen(BLACK);
+		pWind->DrawString(MsgX, MsgY, l);
+
+	}
 }
 
 UI::~UI()

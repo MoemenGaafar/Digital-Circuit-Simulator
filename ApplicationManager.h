@@ -7,6 +7,8 @@
 #include "Components\Component.h"
 
 
+
+
 //Main class that manages everything in the application.
 class ApplicationManager
 {
@@ -26,11 +28,19 @@ public:
 	int Undone_count = 0; //Number of undone actions
 
 	Component* CompList[MaxCompCount];	//List of all Components (Array of pointers)
-	Component* Undone_Comps[MaxCompCount]; //Array of undone components
 	int CompCount = 0;		//Actual number of Components
+
+	Component* Undone_Comps[MaxCompCount]; //Array of undone components	
 	int undone_Compcount = 0; //Number of undone components
 	int LoadCount = 0;
 	int UndoneLoadCount = 0; 
+
+	Component* DoneEditConn[100000];
+	Component* UndoneEditConn[100000];
+	int EditConnCount = 0;
+	int UndoneEditConnCount = 0;
+	int* EditConnPlaces = new int[100000];
+		
 
 	//Reads the required action from the user and returns the corresponding action type
 	ActionType GetUserAction();

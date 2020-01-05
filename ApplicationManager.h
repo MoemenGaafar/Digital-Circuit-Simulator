@@ -35,6 +35,11 @@ public:
 	int LoadCount = 0;
 	int UndoneLoadCount = 0; 
 
+	int* ModuleCompCount = new int[100000]; 
+	int* UndoneModuleCompCount = new int[100000];
+	int ModuleCount = 0; 
+	int UndoneModuleCount = 0; 
+
 	Component* DoneEditConn[100000];
 	Component* UndoneEditConn[100000];
 	int EditConnCount = 0;

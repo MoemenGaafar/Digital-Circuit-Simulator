@@ -279,12 +279,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	
 	case NamedMODULE: 
 		UnselectAll();
-		//pAct = new NamedModule(this);
+		pAct = new NamedModule(this);
 		break; 
 
 	case SaveMODULE: 
 		UnselectAll();
-		//pAct = new SaveModule(this);
+		pAct = new SaveModule(this);
 		break; 
 
 	case DSN_MODE:
@@ -338,6 +338,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
+	for (int i = 0; i < CompCount; i++)
+		pUI->LabelComp(CompList[i]->m_Label, CompList[i]->m_pGfxInfo->PointsList[0].x, CompList[i]->m_pGfxInfo->PointsList[0].y);
+
+
 	if (pUI->AppMode == SIMULATION)
     for(int j = 0; j < 50; j++)
 	for (int i = 0; i < CompCount; i++)
@@ -345,6 +349,8 @@ void ApplicationManager::UpdateInterface()
 
 for (int i = 0; i < CompCount; i++)
 	CompList[i]->Draw(pUI);
+
+
 }
 
 ////////////////////////////////////////////////////////////////////

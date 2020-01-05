@@ -479,6 +479,14 @@ void UI::LabelComp(string l, int x, int y) {
 	}
 }
 
+void UI::PrintOnWind(string l, int line) {
+	int x = 10; 
+	int y = 60 + line*20;  
+	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
+	pWind->SetPen(RED);
+	pWind->DrawString(x, y, l);
+}
+
 UI::~UI()
 {
 	delete pWind;

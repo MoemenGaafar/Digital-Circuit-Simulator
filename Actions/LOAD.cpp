@@ -17,6 +17,8 @@
 
 
 
+
+
 Load::Load(ApplicationManager* pApp) :Action(pApp)
 {
 	Type = LOAD;
@@ -41,7 +43,7 @@ void Load::Execute()
 		pUI->getpWind()->WaitKeyPress(key);
 	}
 	else
-		key = 13; 
+		key = 8; 
 
 	while (key != 13 && key != 27 && key!=8) {
 		pUI->getpWind()->WaitKeyPress(key);
@@ -73,7 +75,9 @@ void Load::Execute()
 			
 			pUI->PrintMsg("Load Completed!.\n");
 			pManager->LoadCount++;
+			
 		}
+
 		
 		else
 			pUI->PrintMsg("Error opening file.\n");
@@ -133,54 +137,53 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 
 
 			if (type == "AND2") {
-				pManager->CompList[i] = new AND2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new AND2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "OR2") {
-				pManager->CompList[i] = new OR2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new OR2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "NOR2") {
-				pManager->CompList[i] = new NOR2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new NOR2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "XOR2") {
-				pManager->CompList[i] = new XOR2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new XOR2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "XNOR2") {
-				pManager->CompList[i] = new XNOR2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new XNOR2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "NAND2") {
-				pManager->CompList[i] = new NAND2(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new NAND2(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "LED") {
-				pManager->CompList[i] = new LED(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new LED(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "SWITCH") {
-				pManager->CompList[i] = new Switch(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new Switch(pGInfo, Default_FANOUT);
 			}
 
 
 			if (type == "NOT") {
-				pManager->CompList[i] = new INV(pGInfo, Default_FANOUT);
+				pManager->CompList[count + i] = new INV(pGInfo, Default_FANOUT);
 			}
 
-			pManager->CompList[i]->m_Label = label;
+			pManager->CompList[count + i]->m_Label = label;
 			pManager->CompCount++;
-			if (label != "-")
-				pUI->LabelComp(label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
-			pManager->CompList[i]->selected = false; 
+			
+			pManager->CompList[count + i]->selected = false; 
 
 
 		}
@@ -207,8 +210,8 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			int sourceComp;
 			int destinationComp;
 
-			for (int j = 0; j < GateCount; j++) {
-				if (ID[j] == S_Comp) {
+			for (int j = count; j < GateCount+count; j++) {
+				if (ID[j-count] == S_Comp) {
 
 					pSrcPin = pManager->CompList[j]->m_OutputPin;
 					sourceComp = j;
@@ -217,16 +220,16 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 
 
 			}
+			\
+			for (int j = count; j < GateCount+count; j++) {
 
-			for (int j = 0; j < GateCount; j++) {
-
-				if (ID[j] == T_Comp) {
+				if (ID[j-count] == T_Comp) {
 
 						pDstPin = &pManager->CompList[j]->m_InputPins[P_n];
 						destinationComp = j;
 						break;
-					}
 				}
+			}
 
 
 
@@ -318,7 +321,7 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 
 
 			//Create Connection
-			pManager->CompList[GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
+			pManager->CompList[count + GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
 			pManager->CompCount++;
 
 

@@ -1,7 +1,7 @@
 #ifndef _Def_MODULE_H
 #define _Def_MODULE_H
+#include "NamedMODULE.h"
 
-#include "action.h"
 
 class DefModule : public Action
 {
@@ -12,8 +12,11 @@ private:
 public:
 	DefModule(ApplicationManager* pApp);
 	virtual ~DefModule(void);
+
+	NamedModule* DNamedModule = new NamedModule(pManager); 
+
 	//Execute action (code depends on action type)
-	//virtual void Execute();
+	virtual void Execute();
 
 
 };

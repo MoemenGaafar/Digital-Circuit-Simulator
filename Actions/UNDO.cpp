@@ -97,12 +97,44 @@ void Undo::Execute()
 		
 		 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_Label = pManager->DoneEditConn[pManager->EditConnCount - 1]->m_Label;
 		
-		 pUI->LabelComp(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]] ->m_Label,
-			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo->PointsList[0].x,
-			 pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo->PointsList[0].y);
-
-		 
+		 		 
 		 pManager->EditConnCount--; 
+	 }
+
+	 else if (t1 == NamedMODULE)
+	 {
+
+		 for (int i = 0; i < pManager->ModuleCompCount[pManager->ModuleCount - 1] ; i++) {
+			 pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1];
+
+
+			 if (pManager->CompList[pManager->CompCount - 1]->ComponentType == T_CONNECTION)
+			 {
+				 pUI->ClearConnection(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
+				 pUI->LabelComp("               ",
+					 pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
+					 pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
+			 }
+
+			 else
+			 {
+				 pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
+				 pUI->LabelComp("               ",
+					 pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
+					 pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
+			 }
+
+			 pManager->CompList[pManager->CompCount - 1] = NULL;
+			 pManager->undone_Compcount++;
+			 pManager->CompCount--;
+
+		 }
+		 
+		 pManager->ModuleCount--; 
+		 pManager->UndoneModuleCount++; 
+		 pManager->UndoneModuleCompCount[pManager->UndoneModuleCount - 1] = pManager->ModuleCompCount[pManager->ModuleCount ];
+		 pManager->ModuleCompCount[pManager->ModuleCount ] = 0;
+
 	 }
 
 		

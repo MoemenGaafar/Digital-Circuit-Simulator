@@ -31,11 +31,7 @@ void Redo::Execute()
 			pManager->CompCount++;
 			pManager->undone_Compcount--;
 			
-			pUI->LabelComp(pManager->CompList[pManager->CompCount - 1]->m_Label,
-				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].x,
-				pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
 			
-
 		}
 
 		else if (t1 == LOAD) {
@@ -77,14 +73,26 @@ void Redo::Execute()
 
 			pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_Label = pManager->UndoneEditConn[pManager->UndoneEditConnCount - 1]->m_Label;
 
-			pUI->LabelComp(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount -1]]->m_Label,
-				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].x,
-				pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount-1]]->m_pGfxInfo->PointsList[0].y);
-
-
 			pManager->UndoneEditConnCount--;
 			
 		}
+
+		else if (t1 == NamedMODULE) 
+		{
+			for (int i = 0; i < pManager->UndoneModuleCompCount[pManager->UndoneModuleCount - 1]; i++) {
+				pManager->CompList[pManager->CompCount] = pManager->Undone_Comps[pManager->undone_Compcount - 1];
+				pManager->Undone_Comps[pManager->undone_Compcount - 1] = NULL;
+				pManager->CompCount++;
+				pManager->undone_Compcount--;
+			}
+			pManager->ModuleCount++;
+			pManager->UndoneModuleCount--;
+			pManager->ModuleCompCount[pManager->ModuleCount - 1] = pManager->UndoneModuleCompCount[pManager->UndoneModuleCount];
+			pManager->UndoneModuleCompCount[pManager->UndoneModuleCount] = 0;
+
+		}
+
+		
 	}
 	else
 	{

@@ -150,6 +150,7 @@ public:
 	
 	void PrintMsg(string msg) const;	//Print a message on Status bar
 	void LabelComp(string l, int x, int y);
+	void PrintOnWind(string l, int line); 
 
 	~UI();
 };

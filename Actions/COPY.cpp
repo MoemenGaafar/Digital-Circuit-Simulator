@@ -3,6 +3,7 @@
 
 Copy::Copy(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = COPY;
 }
 
 Copy::~Copy(void)

@@ -3,6 +3,7 @@
 
 AddXORgate2::AddXORgate2(ApplicationManager* pApp) :Action(pApp)
 {
+     Type = ADD_COMP;
 }
 
 AddXORgate2::~AddXORgate2(void)

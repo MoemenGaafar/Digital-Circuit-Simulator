@@ -4,6 +4,7 @@
 
 EditConn::EditConn(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = EDIT_Conn; 
 }
 
 EditConn::~EditConn(void)
@@ -143,9 +144,16 @@ void EditConn::Execute()
 		UI* pUI = pManager->GetUI();
 
 		if (pManager->CompList[i]->ComponentType == T_CONNECTION)
-		{
+        {
+			pManager->DoneEditConn[pManager->EditConnCount] = new Connection(pManager->CompList[i]->m_pGfxInfo, pManager->CompList[i]->getSourcePin(), pManager->CompList[i]->getDestPin());
+			pManager->DoneEditConn[pManager->EditConnCount]->m_Label = pManager->CompList[i]->m_Label; 
+			pManager->EditConnPlaces[pManager->EditConnCount++] = i; 
+
 			//Erase connection from UI to clear space for edited one
 			pUI->ClearConnection(pManager->CompList[i]->m_pGfxInfo); 
+			pUI->LabelComp("               ",
+				pManager->CompList[i]->m_pGfxInfo->PointsList[0].x,
+				pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 
 			//Destination points of old connection (note: no two connections share a dest. point)
 			int oldX = pManager->CompList[i]->m_pGfxInfo->PointsList[1].x; 
@@ -264,6 +272,10 @@ void EditConn::Execute()
 
 				//Change graphics info
 				pManager->CompList[i]->m_pGfxInfo = pGInfo;
+
+				pUI->LabelComp(pManager->CompList[i]->m_Label, 
+					pManager->CompList[i]->m_pGfxInfo->PointsList[0].x,
+					pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 			
 			
 		}

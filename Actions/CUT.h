@@ -12,7 +12,6 @@ private:
 public:
 	Cut(ApplicationManager* pApp);
 	virtual ~Cut(void);
-	ActionType Type = CUT;
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

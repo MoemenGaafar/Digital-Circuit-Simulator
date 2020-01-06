@@ -3,6 +3,7 @@
 
 Move::Move(ApplicationManager* pApp) :Action(pApp)
 {
+	 Type = MOVE;
 }
 
 Move::~Move(void)

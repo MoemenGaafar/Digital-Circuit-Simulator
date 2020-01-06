@@ -2,6 +2,7 @@
 #define _LOAD_
 
 #include "action.h"
+#include "Save.h"
 #include <fstream>
 #include<sstream>
 #include <iomanip>
@@ -14,11 +15,11 @@ class Load : public Action
 public:
 	Load(ApplicationManager* pApp);
 	virtual ~Load(void);
-	ActionType Type = LOAD;
 	string name;
-	Action* LSave; 
+	Save* LSave; 
 	//Execute action (code depends on action type)
 	virtual void Execute();
+	bool ExecutePart(string name, UI* pUI, int count);
 
 	
 

@@ -37,7 +37,7 @@ public:
 	virtual void setSourcePin(OutputPin* pSrcPin);
 	virtual void setDestPin(InputPin pDstPin);
 	virtual OutputPin* getSourcePin();
-	virtual InputPin getDestPin();
+	virtual InputPin* getDestPin();
 
 
 

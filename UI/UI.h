@@ -54,11 +54,14 @@ class UI
 		ITM_DEL,
 		ITM_MOVE,
 		ITM_EDITCONN,
-        ITM_COPY,
-        ITM_CUT,
-        ITM_PASTE,
-	    ITM_SAVE,
+		ITM_COPY,
+		ITM_CUT,
+		ITM_PASTE,
+		ITM_SAVE,
 		ITM_LOAD,
+		ITM_DefMODULE,     //Insert the default module
+		ITM_NamedMODULE, //Insert a module named by the user
+		ITM_SaveMODULE, //Save circuit as module
 		ITM_SIM,	//Simulate menu item
 		ITM_EXIT,		//Exit item
 		ITM_DSN_CNT		//no. of design menu items ==> This should be the last line in this enum
@@ -101,8 +104,8 @@ public:
 	static const int	width = 1200, height = 650,	//Window width and height
 		wx = 15, wy = 15,			//Window starting coordinates
 		StatusBarHeight = 50,	//Status Bar Height
-		ToolBarHeight = 50,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-		ToolItemWidth = 50;		//Width of each item in toolbar menu
+		ToolBarHeight = 45,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
+		ToolItemWidth = 45;		//Width of each item in toolbar menu
 	MODE AppMode;		//Application Mode (design or simulation)
 	int PCx, PCy;     // Last point clicked
 	UI();
@@ -136,8 +139,8 @@ public:
 	void DrawNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
-	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, bool isOn = false) const;
-	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
+	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
+	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
 
 	// Draws Connection
 	void DrawConnection(const GraphicsInfo &r_GfxInfo, bool selected = false) const;
@@ -147,6 +150,7 @@ public:
 	
 	void PrintMsg(string msg) const;	//Print a message on Status bar
 	void LabelComp(string l, int x, int y);
+	void PrintOnWind(string l, int line); 
 
 	~UI();
 };

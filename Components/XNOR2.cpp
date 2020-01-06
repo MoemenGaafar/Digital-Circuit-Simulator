@@ -9,7 +9,7 @@ XNOR2::XNOR2(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 2, r_FanO
 void XNOR2::Operate()
 {
 	//caclulate the output status as the ORing of the two input pins
-	if (m_InputPins[0].getStatus() != m_InputPins[1].getStatus())
+	if (m_InputPins[0].getStatus() == m_InputPins[1].getStatus())
 		m_OutputPin->setStatus(HIGH);
 	else
 		m_OutputPin->setStatus(LOW);

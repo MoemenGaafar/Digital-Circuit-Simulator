@@ -9,13 +9,13 @@
 class AddConnection : public Action {
 private:
 	int srcX, srcY, destX, destY;
-	InputPin inp;
+	int pin;
+	InputPin* inp;
 	OutputPin* outp;
 	Component* component;  
 	GraphicsInfo* pGInfo = new GraphicsInfo(2);
 public:
 	AddConnection(ApplicationManager* pApp);
-	ActionType Type = ADD_CONNECTION;
 	virtual ~AddConnection(void);
 	
 	int checkPin(int x, int y); 

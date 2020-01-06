@@ -3,7 +3,7 @@
 
 Label::Label(ApplicationManager * pApp) :Action(pApp)
 {
-
+	Type = NI;
 }
 
 Label::~Label(void)
@@ -43,62 +43,76 @@ void Label::Execute()
 		Label = pUI->GetString();
 		
 
-		while (Label.length() > 10)
+		while (Label == "-" || Label.length() > 10)
 		{
-			pUI->PrintMsg("Please enter a string less than TEN characters!");
-			Label = pUI->GetString();
-		}
+			while (Label.length() > 10)
+			{
+				pUI->PrintMsg("Please enter a string less than ELEVEN characters!");
+				Label = pUI->GetString();
+			}
 
+			while (Label == "-")
+			{
+				pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
+				Label = pUI->GetString();
+			}
+		} 
 		
-	    while (Label == "-")
-		{
-			pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
-			Label = pUI->GetString();
-		}
 		
-
 		
 
 		if (pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) {
-			while (Label == " " || Label == "")
+			
+			bool unique = 1;
+			for (int k = 0; k < pManager->CompCount; k++) {
+				if ((pManager->CompList[k]->ComponentType == T_SWITCH || pManager->CompList[k]->ComponentType == T_LED) && Label == pManager->CompList[k]->m_Label)
+					unique = 0;
+			}
+			
+			while (!unique || Label.length() > 10 || Label == "-" || Label == "" || Label == " " || Label == "  " || Label == "   " || Label == "    " || Label == "     " || Label == "      " || Label == "       " || Label == "        " || Label == "         " || Label == "          ")
 			{
-				pUI->PrintMsg("Switches and LEDs must have valid labels at all times. Please enter a nonempty label other than '-'.");
-				Label = pUI->GetString();
+				
 				while (Label.length() > 10)
 				{
-					pUI->PrintMsg("Please enter a string less than TEN characters!");
+					pUI->PrintMsg("Please enter a string less than ELEVEN characters!");
 					Label = pUI->GetString();
 				}
+
+				while (Label == "" || Label == " " || Label == "  " || Label == "   " || Label == "    " || Label == "     " || Label == "      " || Label == "       " || Label == "        " || Label == "         " || Label == "          ")
+				{
+					pUI->PrintMsg("Switches and LEDs must have valid labels at all times. Please enter a nonempty label other than '-'.");
+					Label = pUI->GetString();
+				} 
 
 				while (Label == "-")
 				{
 					pUI->PrintMsg("This string is reserved by the program. Please enter a different label.");
 					Label = pUI->GetString();
 				}
+
+				do {
+					unique = 1;
+					for (int k = 0; k < pManager->CompCount; k++) {
+						if ((pManager->CompList[k]->ComponentType == T_SWITCH || pManager->CompList[k]->ComponentType == T_LED) && Label == pManager->CompList[k]->m_Label)
+							unique = 0;
+					}
+
+					if (!unique)
+					{
+						pUI->PrintMsg("Switches and LEDs must have unique labels. Please pick a label not used by another switch or LED.");
+						Label = pUI->GetString();
+					} 
+
+				} while (!unique);
 			}
+
+			
 		}
 
+						
 
-
-		if (component->ComponentType != T_CONNECTION) {
-
-
-			pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
-			pManager->CompList[i]->m_Label = Label;
-
-
-		}
-
-		if (component->ComponentType == T_CONNECTION) {
-
-
-			pUI->LabelComp(Label, pManager->CompList[i]->m_pGfxInfo->PointsList[0].x, pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
-			pManager->CompList[i]->m_Label = Label;
-
-
-		}
-
-
+		pManager->CompList[i]->m_Label = Label;
+		pManager->CompList[i]->selected = 0; 
 
 
 		//Clear Status Bar

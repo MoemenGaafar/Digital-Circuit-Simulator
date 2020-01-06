@@ -114,13 +114,15 @@ ActionType UI::GetUserAction()
 			case ITM_REDO: return REDO;
 			case ITM_SAVE: return SAVE; 
 			case ITM_LOAD: return LOAD; 
+			case ITM_DefMODULE: return DefMODULE; 
+			case ITM_NamedMODULE: return NamedMODULE;
+			case ITM_SaveMODULE: return SaveMODULE; 
 			case ITM_LABEL: return ADD_Label;
 			case ITM_DEL: return DEL;
 			case ITM_MOVE: return MOVE;
             case ITM_COPY: return COPY;
             case ITM_CUT: return CUT;
-            case ITM_PASTE: return PASTE; 
-			case ITM_SIM: return SIM_MODE; 
+            case ITM_SIM: return SIM_MODE; 
 			case ITM_EDITCONN: return EDIT_Conn;
 			case ITM_EXIT: return EXIT;	
 			
@@ -219,7 +221,7 @@ void UI::ClearDrawingArea() const
 {
 	pWind->SetPen(RED, 1);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, ToolBarHeight, width, height - StatusBarHeight);
+	pWind->DrawRectangle(0, ToolBarHeight + 1, width, height - StatusBarHeight);
 	
 }
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -253,6 +255,9 @@ void UI::CreateDesignToolBar()
 	MenuItemImages[ITM_PASTE] = "images\\Menu\\Menu_Paste.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\Menu\\Menu_Save.jpg";
 	MenuItemImages[ITM_LOAD] = "images\\Menu\\Menu_Load.jpg";
+	MenuItemImages[ITM_DefMODULE] = "images\\Menu\\Menu_DefModule.jpg";
+	MenuItemImages[ITM_NamedMODULE] = "images\\Menu\\Menu_NamedModule.jpg";
+	MenuItemImages[ITM_SaveMODULE] = "images\\Menu\\Menu_SaveModule.jpg";
 	MenuItemImages[ITM_SIM] = "images\\Menu\\Menu_Simulate.jpg";
 	MenuItemImages[ITM_EDITCONN] = "images\\Menu\\Menu_EditConnect.jpg";
 
@@ -379,11 +384,11 @@ void UI::DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
-void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, bool isOn) const
+void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, STATUS isOn) const
 {
 	string GateImage;
 
-	if (isOn)	//use image in the on case
+	if (isOn == HIGH)	//use image in the on case
 		GateImage = "Images\\Gates\\Switch_ON.jpg";
 	else if (selected)	//use image in the highlighted case
 		GateImage = "Images\\Gates\\Switch_OFF_Hi.jpg";
@@ -395,10 +400,13 @@ void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, bool isOn) con
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
-void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected) const
+void UI::DrawLED(const GraphicsInfo& r_GfxInfo, bool selected, STATUS isOn) const
 {
 	string GateImage;
-	if (selected)	//use image in the highlighted case
+
+	if (isOn == HIGH)
+		GateImage = "Images\\Gates\\LED_ON.jpg";
+	else if (selected)	//use image in the highlighted case
 		GateImage = "Images\\Gates\\LED_OFF_Hi.jpg";
 	else
 		GateImage = "Images\\Gates\\LED_OFF.jpg";
@@ -452,19 +460,31 @@ void UI::ClearComponent(GraphicsInfo* r_GfxInfo) const
 
 void UI::LabelComp(string l, int x, int y) {
 
-	int MsgX = x + 10;
+	if (l != "-") {
 
-	int MsgY = y - 20;
+		int MsgX = x + 10;
 
-	//Clear Old label
-	pWind->SetPen(BkGrndColor);
-	pWind->SetBrush(BkGrndColor);
-	pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
+		int MsgY = y - 20;
 
-	// Print the Message
-	pWind->SetFont(15, BOLD , BY_NAME, "Arial");
-	pWind->SetPen(BLACK);
-	pWind->DrawString(MsgX, MsgY, l);
+		//Clear Old label
+		pWind->SetPen(BkGrndColor);
+		pWind->SetBrush(BkGrndColor);
+		pWind->DrawRectangle(MsgX, MsgY, MsgX + 95, MsgY + 15);
+
+		// Print the Message
+		pWind->SetFont(15, BOLD, BY_NAME, "Arial");
+		pWind->SetPen(BLACK);
+		pWind->DrawString(MsgX, MsgY, l);
+
+	}
+}
+
+void UI::PrintOnWind(string l, int line) {
+	int x = 10; 
+	int y = 60 + line*20;  
+	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
+	pWind->SetPen(RED);
+	pWind->DrawString(x, y, l);
 }
 
 UI::~UI()

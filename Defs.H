@@ -5,8 +5,9 @@
 
 //All possible actions
 
-enum ActionType 
+enum ActionType
 {
+	
 	ADD_INV,			//Add 1-input Inverter gate
 	ADD_AND_GATE_2,		//Add 2-input AND gate
 	ADD_OR_GATE_2,		//Add 2-input OR gate
@@ -25,11 +26,14 @@ enum ActionType
 	DEL, //Delete a Component, a Connection
 	COPY,       //Copies a Component
 	CUT,        //Cuts a Component
-	PASTE,      //Pastes a Component
 	MOVE,		//Move a Component, a Connection
 
 	SAVE,		//Save the whole Circuit to a file
 	LOAD,		//Load a Circuit from a file
+
+	DefMODULE,     //Insert the default module 
+	NamedMODULE, //Insert a module named by the user
+	SaveMODULE, //Save designed circuit as a module 
 
 	UNDO,		//Undo the last Action preformed
 	REDO,		//Redo the last Action canceled
@@ -42,7 +46,13 @@ enum ActionType
 	STATUS_BAR,		//A click on the status bar
 	DSN_TOOL,	//A click on an empty place in the design tool bar
 
-};
+	
+	//Types used inside action classes to serve undo and redo operations
+	NI,      //Default type for when the action type is inconsequential 
+	ADD_COMP, //For all add gate, switch, or LED actions 
+
+}; 
+
 
 //Possible Status for the pin
 enum STATUS

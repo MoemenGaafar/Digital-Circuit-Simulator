@@ -7,6 +7,8 @@
 #include "Components\Component.h"
 
 
+
+
 //Main class that manages everything in the application.
 class ApplicationManager
 {
@@ -20,15 +22,30 @@ public:
 	string HeldString;
 	ApplicationManager(); //constructor
 
-	Action* Done_Acts[100000]; //Array of Done actions
-	Action* Undone_Acts[100000]; //Array of undone actions
+	ActionType* Done_Acts = new ActionType[100000]; //Array of Done actions
+	ActionType* Undone_Acts = new ActionType[100000]; //Array of undone actions
 	int executed = 0; //Number of done actions
 	int Undone_count = 0; //Number of undone actions
 
 	Component* CompList[MaxCompCount];	//List of all Components (Array of pointers)
-	Component* Undone_Comps[MaxCompCount]; //Array of undone components
-	int CompCount;		//Actual number of Components
-	int undone_Compcount=0; //Number of undone components
+	int CompCount = 0;		//Actual number of Components
+
+	Component* Undone_Comps[MaxCompCount]; //Array of undone components	
+	int undone_Compcount = 0; //Number of undone components
+	int LoadCount = 0;
+	int UndoneLoadCount = 0; 
+
+	int* ModuleCompCount = new int[100000]; 
+	int* UndoneModuleCompCount = new int[100000];
+	int ModuleCount = 0; 
+	int UndoneModuleCount = 0; 
+
+	Component* DoneEditConn[100000];
+	Component* UndoneEditConn[100000];
+	int EditConnCount = 0;
+	int UndoneEditConnCount = 0;
+	int* EditConnPlaces = new int[100000];
+		
 
 	//Reads the required action from the user and returns the corresponding action type
 	ActionType GetUserAction();
@@ -50,6 +67,13 @@ public:
 
 	//Checks that only one component is selected and returns its location
 	int ReturnSelected() const; 
+
+	//Checks if all components are connected before running the simulation
+	bool isAllConnected() const;
+
+	//Turns off all LEDs and Switches before going back to design mode
+	void TurnOffAll();
+
 
 
 	//destructor

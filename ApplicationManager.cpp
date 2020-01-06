@@ -19,8 +19,11 @@
 #include "Actions\DELETE.h"
 #include "Actions\COPY.h"
 #include "Actions\CUT.h"
-#include "Actions\PASTE.h"
 #include "Actions\MOVE.h"
+#include "Actions\DefMODULE.h"
+#include "Actions\NamedMODULE.h"
+#include "Actions\SaveMODULE.h"
+#include <cstdio>
 
 
 
@@ -30,10 +33,28 @@
 
 ApplicationManager::ApplicationManager()
 {
-	CompCount = 0;
-
+	
 	for(int i=0; i<MaxCompCount; i++)
 		CompList[i] = NULL;
+
+	for (int i = 0; i < MaxCompCount; i++)
+		Undone_Comps[i] = NULL;
+
+	for (int i = 0; i < 100000; i++)
+		Done_Acts[i] = NI;
+
+	for (int i = 0; i < 100000; i++)
+		Undone_Acts[i] = NI;
+
+	for (int i = 0; i < 100000; i++)
+		DoneEditConn[i] = NULL;
+
+	for (int i = 0; i < 100000; i++)
+		UndoneEditConn[i] = NULL;
+
+	
+	
+		
 
 	//Creates the UI Object & Initialize the UI	
 	pUI = new UI;
@@ -58,6 +79,7 @@ void ApplicationManager::UnselectAll()
 	    for (int i = 0; i < CompCount; i++)
 			CompList[i]->selected = false;
 		UpdateInterface();
+
 }
 ////////////////////////////////////////////////////////////////////
 
@@ -91,7 +113,57 @@ int ApplicationManager::ReturnSelected() const {
 	
 }
 ////////////////////////////////////////////////////////////////////
+bool ApplicationManager::isAllConnected() const {
+	for (int i = 0; i < CompCount; i++) {
+		switch (CompList[i]->ComponentType) {
+		case T_AND2:
+		case T_OR2:
+		case T_NAND2:
+		case T_NOR2:
+		case T_XOR2:
+		case T_XNOR2:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON
+				|| CompList[i]->GetInputPinStatus(2) == NCON) return 0; break;
+		}
+		case T_NOT:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON) return 0;
+			break;
+		}
+		case T_SWITCH:
+		{
+			if (CompList[i]->GetOutPinStatus() == NCON) return 0;
+			break;
+		}
+		case T_LED:
+		{
+			if (CompList[i]->GetInputPinStatus(1) == NCON) return 0;
+			break;
+		}
+		case T_CONNECTION: continue;
+		}
+	}
+	return 1;
+}
 
+////////////////////////////////////////////////////////////////////
+
+void ApplicationManager::TurnOffAll() {
+	for (int i = 0; i < CompCount; i++) {
+		switch (CompList[i]->ComponentType) {
+		case T_CONNECTION: {
+			CompList[i]->setInputPinStatus(0,LOW);
+			CompList[i]->Operate();
+			break;}
+		case T_LED:
+		case T_SWITCH: {
+			CompList[i]->isON = LOW;
+			break;
+		}
+		}
+	}
+}
 void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 
@@ -102,71 +174,59 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		//Unselect any selected before next action 
 		UnselectAll();
 		pAct = new AddINV(this);
-		Done_Acts[executed++] = pAct;
-		break;
+	    break;
 
 	case ADD_AND_GATE_2:
 		UnselectAll();
 		pAct = new AddANDgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_OR_GATE_2:
 		UnselectAll();
 		pAct = new AddORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NAND_GATE_2:
 		UnselectAll();
 		pAct = new AddNANDgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_NOR_GATE_2:
 		UnselectAll();
 		pAct = new AddNORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_XNOR_GATE_2:
 		UnselectAll();
 		pAct = new AddXNORgate2(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Switch:
 		UnselectAll();
 		pAct = new AddSWITCH(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_LED:
 		UnselectAll();
 		pAct = new AddLED(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_CONNECTION:
 		UnselectAll();
 		pAct = new AddConnection(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case ADD_Label: //For adding and editing labels
 		pAct = new Label(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case EDIT_Conn:
 		pAct = new EditConn(this); 
-		Done_Acts[executed++] = pAct;
 		break; 
 	
 	case SELECT:
@@ -182,7 +242,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case LOAD:
 		UnselectAll();
 		pAct = new Load(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case UNDO:
@@ -197,50 +256,79 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DEL:
 		pAct = new Delete(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case COPY:
 		pAct = new Copy(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
 	case CUT:
 		pAct = new Cut(this);
-		Done_Acts[executed++] = pAct;
 		break;
 
-	case PASTE:
-		pAct = new Paste(this);
-		Done_Acts[executed++] = pAct;
-		break;
-
+	
 	case MOVE:
 		pAct = new Move(this);
-		Done_Acts[executed++] = pAct;
 		break;
+
+
+	case DefMODULE:
+		UnselectAll();
+		//pAct = new DefModule(this); 
+		break; 
+	
+	case NamedMODULE: 
+		UnselectAll();
+		pAct = new NamedModule(this);
+		break; 
+
+	case SaveMODULE: 
+		UnselectAll();
+		pAct = new SaveModule(this);
+		break; 
 
 	case DSN_MODE:
 		UnselectAll();
+		TurnOffAll();
 		pUI->CreateDesignToolBar();
 		break;
 
 	case SIM_MODE:
 		UnselectAll();
-		//Check all connected first
-		pUI->CreateSimulationToolBar();
+		if (isAllConnected())
+			pUI->CreateSimulationToolBar();
+		else
+			pUI->PrintMsg("One or more components are not connected!");
 		break;
-
 		
 	case EXIT:
-		//ApplicationManager::~ApplicationManager(); 
+
+		
+		string Temp; 
+
+		for (int i = 0; i < UndoneLoadCount+LoadCount; i++) {
+			Temp = "ProgramTXTfiles\\temporaryloadtype1file";
+			Temp += to_string(i);
+			Temp += ".txt";
+			remove(Temp.c_str()); 
+		}
+
+		for (int i = 0; i < UndoneLoadCount+LoadCount; i++) {
+			Temp = "ProgramTXTfiles\\temporaryloadtype2file";
+			Temp += to_string(i);
+			Temp += ".txt";
+			remove(Temp.c_str());
+		}
+		
 		break;
 
 
 	}
 	if(pAct)
 	{
-		 
+		if (pAct -> Type != NI)
+			Done_Acts[executed++] = pAct->Type;
+
 		pAct->Execute();
 		delete pAct;
 		pAct = NULL;
@@ -250,8 +338,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
-	for(int i=0; i<CompCount; i++)
-			CompList[i]->Draw(pUI);
+	for (int i = 0; i < CompCount; i++)
+		pUI->LabelComp(CompList[i]->m_Label, CompList[i]->m_pGfxInfo->PointsList[0].x, CompList[i]->m_pGfxInfo->PointsList[0].y);
+
+
+	if (pUI->AppMode == SIMULATION)
+    for(int j = 0; j < 50; j++)
+	for (int i = 0; i < CompCount; i++)
+		CompList[i]->Operate();
+
+for (int i = 0; i < CompCount; i++)
+	CompList[i]->Draw(pUI);
+
 
 }
 

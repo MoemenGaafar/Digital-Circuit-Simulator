@@ -4,6 +4,7 @@
 
 AddLED::AddLED(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = ADD_COMP;
 }
 
 AddLED::~AddLED(void)

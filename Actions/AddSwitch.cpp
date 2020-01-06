@@ -4,6 +4,7 @@
 
 AddSWITCH::AddSWITCH(ApplicationManager* pApp) :Action(pApp)
 {
+	Type = ADD_COMP;
 }
 
 AddSWITCH::~AddSWITCH(void)

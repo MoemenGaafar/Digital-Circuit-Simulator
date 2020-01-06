@@ -19,10 +19,10 @@ private:
 public:
 	Save(ApplicationManager* pApp);
 	virtual ~Save(void);
-	ActionType Type = SAVE;
 	string name;
 	//Execute action (code depends on action type)
 	virtual void Execute();
+	bool ExecutePart(string name); 
 
 	
 

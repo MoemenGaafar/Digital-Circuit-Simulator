@@ -34,8 +34,15 @@ void AddINV::Execute()
 	pGInfo->PointsList[0].y = Cy - gateHeight / 2;
 	pGInfo->PointsList[1].x = Cx + gateWidth / 2;
 	pGInfo->PointsList[1].y = Cy + gateHeight / 2;
-	if (pGInfo->PointsList[0].y < pUI->ToolBarHeight || pGInfo->PointsList[1].y < pUI->ToolBarHeight) {
-		pUI->PrintMsg("YOU CAN'T PLACE A COMPONENT ON THE TOOLBAR!!");
+
+	if (pGInfo->PointsList[0].y  -25< pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight) {
+		if (pGInfo->PointsList[0].y -25 < pUI->ToolBarHeight)
+			pUI->PrintMsg("You cannot place a component on the toolbar. Action aborted.");
+		if (pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
+			pUI->PrintMsg("You cannot place a component on the status bar. Action aborted.");
+
+		pManager->Done_Acts[pManager->executed] = NI;
+		pManager->executed--;
 	}
 	else {
 		INV* pA = new INV(pGInfo, Default_FANOUT);

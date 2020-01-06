@@ -31,6 +31,8 @@
 
 
 
+
+
 ApplicationManager::ApplicationManager()
 {
 	
@@ -274,7 +276,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DefMODULE:
 		UnselectAll();
-		//pAct = new DefModule(this); 
+		pAct = new DefModule(this); 
 		break; 
 	
 	case NamedMODULE: 
@@ -326,10 +328,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	}
 	if(pAct)
 	{
-		if (pAct -> Type != NI)
+		if (pAct->Type != NI)
 			Done_Acts[executed++] = pAct->Type;
 
 		pAct->Execute();
+	
+		
 		delete pAct;
 		pAct = NULL;
 	}

@@ -213,19 +213,17 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			for (int j = count; j < GateCount+count; j++) {
 				if (ID[j-count] == S_Comp) {
 
-					pSrcPin = pManager->CompList[j]->m_OutputPin;
 					sourceComp = j;
 					break;
 				}
 
 
 			}
-			\
+			
 			for (int j = count; j < GateCount+count; j++) {
 
 				if (ID[j-count] == T_Comp) {
 
-						pDstPin = &pManager->CompList[j]->m_InputPins[P_n];
 						destinationComp = j;
 						break;
 				}
@@ -240,8 +238,10 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			int x2 = comp->m_pGfxInfo->PointsList[1].x;
 			int y2 = comp->m_pGfxInfo->PointsList[1].y;
 
-
-
+			pSrcPin = comp->m_OutputPin;
+			comp->m_OutputPin->setStatus(LOW);
+			
+			
 
 			switch (comp->ComponentType) {
 			case T_AND2:
@@ -278,6 +278,9 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			x2 = comp->m_pGfxInfo->PointsList[1].x;
 			y2 = comp->m_pGfxInfo->PointsList[1].y;
 
+			pDstPin = &comp->m_InputPins[P_n-1];
+			comp->m_InputPins[P_n-1].setStatus(LOW);
+			
 
 
 
@@ -323,6 +326,12 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			//Create Connection
 			pManager->CompList[count + GateCount + i] = new Connection(r_GfxInfo, pSrcPin, pDstPin);
 			pManager->CompCount++;
+
+			
+
+			
+			
+			
 
 
 

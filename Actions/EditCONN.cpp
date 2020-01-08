@@ -196,9 +196,12 @@ void EditConn::Execute()
 					pUI->GetPointClicked(srcX, srcY);
 					pin = checkPin(srcX, srcY);
 				}
+				
 				outp = component->m_OutputPin;
 				connectPin(srcX, srcY, 1); 
 				pManager->CompList[i]->setSourcePin(outp);
+				component->m_OutputPin->setStatus(LOW);
+				
 
 			    isAvailable = outp->ConnectTo(pManager->CompList[i]); 
 
@@ -258,24 +261,25 @@ void EditConn::Execute()
 			if (pin == 2)
 			{
 				connectPin(destX, destY, 2);
-				inp = component->m_InputPins[0];
+				inp = &component->m_InputPins[0];
 			}
 			if (pin == 3)
 			{
 				connectPin(destX, destY, 3);
-				inp = component->m_InputPins[1];
+				inp = &component->m_InputPins[1];
 			}
 
 				pManager->CompList[i]->setDestPin(inp);
+				component->m_InputPins[pin - 2].setStatus(LOW);
 
 				pUI->ClearStatusBar();
 
 				//Change graphics info
 				pManager->CompList[i]->m_pGfxInfo = pGInfo;
 
-				pUI->LabelComp(pManager->CompList[i]->m_Label, 
-					pManager->CompList[i]->m_pGfxInfo->PointsList[0].x,
-					pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
+				
+				
+				
 			
 			
 		}

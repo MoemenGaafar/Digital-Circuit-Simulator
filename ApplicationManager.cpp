@@ -24,6 +24,8 @@
 #include "Actions\NamedMODULE.h"
 #include "Actions\SaveMODULE.h"
 #include <cstdio>
+#include <iostream>
+using namespace std; 
 
 
 
@@ -135,13 +137,20 @@ bool ApplicationManager::isAllConnected() const {
 		}
 		case T_SWITCH:
 		{
-			if (CompList[i]->GetOutPinStatus() == NCON) return 0;
+			if (CompList[i]->GetOutPinStatus() == NCON)
+			{
+				cout << i; 
+				return 0;
+			}
 			break;
 		}
 		case T_LED:
 		{
-			if (CompList[i]->GetInputPinStatus(1) == NCON) return 0;
-			break;
+			if (CompList[i]->GetInputPinStatus(1) == NCON) 
+			{
+				cout << i;
+				return 0;
+			}
 		}
 		case T_CONNECTION: continue;
 		}
@@ -332,7 +341,8 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			Done_Acts[executed++] = pAct->Type;
 
 		pAct->Execute();
-	
+
+		
 		
 		delete pAct;
 		pAct = NULL;

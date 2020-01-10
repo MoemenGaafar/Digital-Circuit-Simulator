@@ -8,7 +8,7 @@ Connection::Connection(GraphicsInfo *r_GfxInfo, OutputPin *pSrcPin,InputPin* pDs
 	isON = LOW;
 }
 
-void Connection::setSourcePin(OutputPin *pSrcPin)
+void Connection::setSourcePin(OutputPin* pSrcPin)
 {	SrcPin = pSrcPin;	}
 
 OutputPin* Connection::getSourcePin()

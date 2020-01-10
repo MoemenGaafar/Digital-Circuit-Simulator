@@ -35,7 +35,7 @@ public:
 
 	//For AddConnection and EditCONN
 	virtual void setSourcePin(OutputPin* pSrcPin);
-	virtual void setDestPin(InputPin pDstPin);
+	virtual void setDestPin(InputPin* pDstPin);
 	virtual OutputPin* getSourcePin();
 	virtual InputPin* getDestPin();
 

@@ -6,7 +6,6 @@ Component::Component(GraphicsInfo* r_GfxInfo) {
 
 Component::Component() {}
 
-
 Component:: ~Component() {}
 
 void Component::setSourcePin(OutputPin* pSrcPin) { }

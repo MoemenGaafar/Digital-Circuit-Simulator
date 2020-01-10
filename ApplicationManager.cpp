@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ApplicationManager.h"
 #include "Actions\AddANDgate2.h"
 #include "Actions\AddORgate2.h"
@@ -24,13 +26,6 @@
 #include "Actions\NamedMODULE.h"
 #include "Actions\SaveMODULE.h"
 #include <cstdio>
-
-
-
-
-
-
-
 
 
 ApplicationManager::ApplicationManager()
@@ -344,7 +339,6 @@ void ApplicationManager::UpdateInterface()
 {
 	for (int i = 0; i < CompCount; i++)
 		pUI->LabelComp(CompList[i]->m_Label, CompList[i]->m_pGfxInfo->PointsList[0].x, CompList[i]->m_pGfxInfo->PointsList[0].y);
-
 
 	if (pUI->AppMode == SIMULATION)
     for(int j = 0; j < 50; j++)

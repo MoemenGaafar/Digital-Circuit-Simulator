@@ -1,6 +1,5 @@
 #include "UNDO.h"
-
-
+#include "DELETE.h"
 
 Undo::Undo(ApplicationManager* pApp) :Action(pApp) {};
 
@@ -134,7 +133,7 @@ void Undo::Execute()
 
 	 }
 
-		
+
 
 	}
 

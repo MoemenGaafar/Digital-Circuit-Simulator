@@ -9,7 +9,7 @@ class EditConn : public Action
 private:
 
 	int srcX, srcY, destX, destY;	//Points Clicked
-	InputPin inp;
+	InputPin* inp;
 	OutputPin* outp;
 	Component* component; //Destination component 
 	GraphicsInfo* pGInfo = new GraphicsInfo(2);

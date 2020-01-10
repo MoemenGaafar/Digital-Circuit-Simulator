@@ -189,7 +189,6 @@ void AddConnection::Execute() {
 	bool isDestAvailable = 1;
 	for (int j = 0; j < pManager->CompCount; j++)
 	{
-
 		if (destX == pManager->CompList[j]->m_pGfxInfo->PointsList[1].x
 			&& destY == pManager->CompList[j]->m_pGfxInfo->PointsList[1].y)
 		{
@@ -213,13 +212,4 @@ void AddConnection::Execute() {
 			inComp->m_InputPins[pin - 2].setStatus(LOW);
 	}
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");
-
-
-
 }
-
-void AddConnection::Undo()
-{}
-
-void AddConnection::Redo()
-{}

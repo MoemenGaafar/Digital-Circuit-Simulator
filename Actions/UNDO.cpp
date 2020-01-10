@@ -1,6 +1,5 @@
 #include "UNDO.h"
-
-
+#include "DELETE.h"
 
 Undo::Undo(ApplicationManager* pApp) :Action(pApp) {};
 
@@ -24,10 +23,7 @@ void Undo::Execute()
 		pManager->Undone_count++;
 		pManager->executed--;
 
-				
-		
 		ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1];
-		
 	
 	 if (t1 == ADD_COMP || t1 == ADD_CONNECTION)
 	 {
@@ -124,7 +120,7 @@ void Undo::Execute()
 					 pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
 			 }
 
-			 pManager->CompList[pManager->CompCount - 1] = NULL;
+			 delete[] pManager->CompList[pManager->CompCount - 1];
 			 pManager->undone_Compcount++;
 			 pManager->CompCount--;
 
@@ -137,7 +133,7 @@ void Undo::Execute()
 
 	 }
 
-		
+
 
 	}
 

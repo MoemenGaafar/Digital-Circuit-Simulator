@@ -30,8 +30,6 @@ void Redo::Execute()
 			pManager->Undone_Comps[pManager->undone_Compcount - 1] = NULL;
 			pManager->CompCount++;
 			pManager->undone_Compcount--;
-			
-			
 		}
 
 		else if (t1 == LOAD) {
@@ -43,7 +41,6 @@ void Redo::Execute()
 
 			pManager->UndoneLoadCount--;
 			pManager->LoadCount++;
-
 
 			string TempName2 = "ProgramTXTfiles\\temporaryloadtype2file";
 			int number = pManager->UndoneLoadCount;

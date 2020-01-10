@@ -5,7 +5,8 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
-using namespace std; 
+using namespace std;
+ 
 
 NamedModule:: NamedModule(ApplicationManager* pApp) :Action(pApp) 
 {
@@ -123,7 +124,7 @@ void NamedModule::ExecutePart(string TempName, UI* pUI) {
 	pUI->GetPointClicked(Cx, Cy);
 
 	pUI->ClearStatusBar();
-	
+
 	MLoad->ExecutePart(TempName, pUI, pManager->CompCount);
 
 	int maxX = 0, maxY = 0, minX = pUI->width, minY = pUI->height;
@@ -132,11 +133,6 @@ void NamedModule::ExecutePart(string TempName, UI* pUI) {
 
 		if (pManager->CompList[i]->ComponentType != T_CONNECTION)
 		{
-			cout <<
-				pManager->CompList[i]->m_pGfxInfo->PointsList[0].x << endl <<
-				pManager->CompList[i]->m_pGfxInfo->PointsList[0].y << endl <<
-				pManager->CompList[i]->m_pGfxInfo->PointsList[1].x << endl <<
-				pManager->CompList[i]->m_pGfxInfo->PointsList[1].y << endl;
 
 			if (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x < minX)
 				minX = pManager->CompList[i]->m_pGfxInfo->PointsList[0].x;
@@ -158,50 +154,74 @@ void NamedModule::ExecutePart(string TempName, UI* pUI) {
 
 	centerX = (minX + maxX) / 2;
 	centerY = (minY + maxY) / 2;
-	cout << centerX << " " << centerY << endl;
 
-	for (int i = OldCount; i < pManager->CompCount; i++) {
+	if (Cy + minY - centerY -25 < pUI->ToolBarHeight || Cy + maxY - centerY > pUI->height - pUI->StatusBarHeight)
+	{
+		if (Cy + minY - centerY -25 < pUI->ToolBarHeight)
+			pUI->PrintMsg("This clicked point places a module where it interferes with the  tool bar. Action aborted.");
+		if (Cy + maxY - centerY > pUI->height - pUI->StatusBarHeight)
+			pUI->PrintMsg("This clicked point places a module where it interferes with the  status bar. Action aborted.");
 
-		pManager->CompList[i]->m_pGfxInfo->PointsList[0].x = Cx + (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x - centerX);
-		pManager->CompList[i]->m_pGfxInfo->PointsList[1].x = Cx + (pManager->CompList[i]->m_pGfxInfo->PointsList[1].x - centerX);
-		pManager->CompList[i]->m_pGfxInfo->PointsList[0].y = Cy + (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y - centerY);
-		pManager->CompList[i]->m_pGfxInfo->PointsList[1].y = Cy + (pManager->CompList[i]->m_pGfxInfo->PointsList[1].y - centerY);
+		pManager->CompCount = OldCount;
+
+		for (int i = OldCount; i < pManager->CompCount; i++)
+			pManager->CompList[i] = NULL;
+
+		pManager->Done_Acts[pManager->executed] = NI;
+		pManager->executed--; 
+
 
 	}
 
-
-	bool unique;
-
-	do {
-		unique = 1;
+	else
+	{
 
 		for (int i = OldCount; i < pManager->CompCount; i++) {
 
-			if (pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED)
-			{
+			pManager->CompList[i]->m_pGfxInfo->PointsList[0].x = Cx + (pManager->CompList[i]->m_pGfxInfo->PointsList[0].x - centerX);
+			pManager->CompList[i]->m_pGfxInfo->PointsList[1].x = Cx + (pManager->CompList[i]->m_pGfxInfo->PointsList[1].x - centerX);
+			pManager->CompList[i]->m_pGfxInfo->PointsList[0].y = Cy + (pManager->CompList[i]->m_pGfxInfo->PointsList[0].y - centerY);
+			pManager->CompList[i]->m_pGfxInfo->PointsList[1].y = Cy + (pManager->CompList[i]->m_pGfxInfo->PointsList[1].y - centerY);
 
-				for (int j = 0; j < OldCount; j++) {
+		}
 
-					if ((pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) && pManager->CompList[i]->m_Label == pManager->CompList[j]->m_Label)
-					{
-						unique = 0;
-						pManager->CompList[j]->selected = 1;
-						pManager->UpdateInterface();
-						pUI->PrintMsg("The selected LED/Switch has the same label as a LED/Switch in the module you are inserting and will need to be relabeled.");
-						std::this_thread::sleep_for(std::chrono::seconds(2));
-						MLabel->Execute();
-						pManager->UpdateInterface();
+
+		bool unique;
+
+		do {
+			unique = 1;
+
+			for (int i = OldCount; i < pManager->CompCount; i++) {
+
+				if (pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED)
+				{
+
+					for (int j = 0; j < OldCount; j++) {
+
+						if ((pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) && pManager->CompList[i]->m_Label == pManager->CompList[j]->m_Label)
+						{
+							unique = 0;
+							pManager->CompList[j]->selected = 1;
+							pManager->UpdateInterface();
+							pUI->PrintMsg("The selected LED/Switch has the same label as a LED/Switch in the module you are inserting and will need to be relabeled.");
+							std::this_thread::sleep_for(std::chrono::seconds(2));
+							MLabel->Execute();
+							pManager->UpdateInterface();
+						}
+
 					}
 
 				}
 
 			}
+		} while (!unique);
 
-		}
-	} while (!unique);
+		pManager->ModuleCompCount[pManager->ModuleCount] = (pManager->CompCount) - OldCount;
+		pManager->ModuleCount++;
 
-	pManager->ModuleCompCount[pManager->ModuleCount] = (pManager->CompCount) - OldCount; 
-	pManager->ModuleCount++; 
+		
+	}
+
 
 
 }

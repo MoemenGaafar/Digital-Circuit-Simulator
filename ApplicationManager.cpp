@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ApplicationManager.h"
 #include "Actions\AddANDgate2.h"
 #include "Actions\AddORgate2.h"
@@ -24,11 +26,8 @@
 #include "Actions\NamedMODULE.h"
 #include "Actions\SaveMODULE.h"
 #include <cstdio>
-
-
-
-
-
+#include <iostream>
+using namespace std; 
 
 
 ApplicationManager::ApplicationManager()
@@ -133,13 +132,20 @@ bool ApplicationManager::isAllConnected() const {
 		}
 		case T_SWITCH:
 		{
-			if (CompList[i]->GetOutPinStatus() == NCON) return 0;
+			if (CompList[i]->GetOutPinStatus() == NCON)
+			{
+				cout << i; 
+				return 0;
+			}
 			break;
 		}
 		case T_LED:
 		{
-			if (CompList[i]->GetInputPinStatus(1) == NCON) return 0;
-			break;
+			if (CompList[i]->GetInputPinStatus(1) == NCON) 
+			{
+				cout << i;
+				return 0;
+			}
 		}
 		case T_CONNECTION: continue;
 		}
@@ -274,7 +280,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case DefMODULE:
 		UnselectAll();
-		//pAct = new DefModule(this); 
+		pAct = new DefModule(this); 
 		break; 
 	
 	case NamedMODULE: 
@@ -326,10 +332,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	}
 	if(pAct)
 	{
-		if (pAct -> Type != NI)
+		if (pAct->Type != NI)
 			Done_Acts[executed++] = pAct->Type;
 
 		pAct->Execute();
+
+		
+		
 		delete pAct;
 		pAct = NULL;
 	}
@@ -340,7 +349,6 @@ void ApplicationManager::UpdateInterface()
 {
 	for (int i = 0; i < CompCount; i++)
 		pUI->LabelComp(CompList[i]->m_Label, CompList[i]->m_pGfxInfo->PointsList[0].x, CompList[i]->m_pGfxInfo->PointsList[0].y);
-
 
 	if (pUI->AppMode == SIMULATION)
     for(int j = 0; j < 50; j++)

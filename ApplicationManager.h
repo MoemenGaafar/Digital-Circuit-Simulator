@@ -6,9 +6,6 @@
 #include "Actions\Action.h"
 #include "Components\Component.h"
 
-
-
-
 //Main class that manages everything in the application.
 class ApplicationManager
 {
@@ -19,6 +16,21 @@ private:
 	UI* pUI; //pointer to the UI
 
 public:	
+
+	//Delete's things
+
+	int delcount = 0;
+	Component* Deltd[1000]; //Array of deleted elements for undo purposes
+	int DelConnCount = 0; //For undo purposes
+	Component* DelConn[1000]; //To save the removed connections for undo purposes
+
+	//Cut's things
+
+	int CutConnCount = 0; //For undo purposes
+	Component* CutItem;
+	Component* CutConn[1000]; //To save the removed connections for undo purposes
+	GraphicsInfo* CutpGInf = new GraphicsInfo(2); //To save the old position for undo purposes
+
 	string HeldString;
 	ApplicationManager(); //constructor
 

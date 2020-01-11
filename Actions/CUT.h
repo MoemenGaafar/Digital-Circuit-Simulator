@@ -21,7 +21,8 @@ private:
 public:
 	Cut(ApplicationManager* pApp);
 	virtual ~Cut(void);
-	Component* Cutitm;
+	Component* Cutitm; //To be used in "Cut" execution
+
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

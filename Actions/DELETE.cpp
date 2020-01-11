@@ -14,6 +14,11 @@ Delete::~Delete(void)
 
 void Delete::Execute()
 {
+	pManager->delcount = 0;
+	pManager->DelConnCount = 0;
+
+	//Resetting delete's numbers at the beginning of each delete
+
 	UI* pUI = pManager->GetUI();
 
 	for (int i = 0; i < pManager->CompCount; i++)
@@ -24,10 +29,11 @@ void Delete::Execute()
 			{
 				pUI->ClearComponent(pManager->CompList[i]->m_pGfxInfo);
 				deleted = pManager->CompList[i];
-
+				pManager->Deltd[pManager->delcount++] = deleted;
+				pUI->LabelComp("            ", deleted->m_pGfxInfo->PointsList[0].x, deleted->m_pGfxInfo->PointsList[0].y);
 				//Finding connections to clear them
 
-//For the connections of the output pin and the 1st input pin.
+                //For the connections of the output pin and the 1st input pin.
 				GraphicsInfo* pGInfo1 = new GraphicsInfo(2);
 
 				//For the connections of the output pin and the 2nd input pin, if exists.
@@ -105,6 +111,7 @@ void Delete::Execute()
 									&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
 							{
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -115,6 +122,7 @@ void Delete::Execute()
 								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y)))
 							{
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -125,6 +133,7 @@ void Delete::Execute()
 								(pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
 							{
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -152,6 +161,7 @@ void Delete::Execute()
 				//Print Action Message
 
 				pUI->PrintMsg("You deleted the selected component.");
+				pManager->delcount = pManager->delcount + 1;
 			}
 
 			else if (pManager->CompList[i]->ComponentType == T_CONNECTION)
@@ -173,7 +183,7 @@ void Delete::Execute()
 				pManager->CompCount = pManager->CompCount - 1;
 
 				i = -1;
-
+				pManager->delcount = pManager->delcount + 1;
 				//Print Action Message
 
 				pUI->PrintMsg("You deleted the selected connection.");

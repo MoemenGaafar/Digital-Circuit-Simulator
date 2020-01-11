@@ -3,6 +3,8 @@
 
 #include "action.h"
 #include "..\Components\Component.h"
+#include "..\Components\OutputPin.h"
+#include "..\Components\InputPin.h"
 
 class Delete : public Action
 {

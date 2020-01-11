@@ -14,8 +14,8 @@ Delete::~Delete(void)
 
 void Delete::Execute()
 {
-	pManager->delcount = 0;
-	pManager->DelConnCount = 0;
+	//pManager->delcount = 0;
+	//pManager->DelConnCount = 0;
 
 	//Resetting delete's numbers at the beginning of each delete
 
@@ -29,7 +29,7 @@ void Delete::Execute()
 			{
 				pUI->ClearComponent(pManager->CompList[i]->m_pGfxInfo);
 				deleted = pManager->CompList[i];
-				pManager->Deltd[pManager->delcount++] = deleted;
+				//pManager->Deltd[pManager->delcount++] = deleted;
 				pUI->LabelComp("            ", deleted->m_pGfxInfo->PointsList[0].x, deleted->m_pGfxInfo->PointsList[0].y);
 				//Finding connections to clear them
 
@@ -93,7 +93,7 @@ void Delete::Execute()
 					break;
 				}
 
-				//Finding the connections associated with the cut component and removing them
+				//Finding the connections associated with the deleted component and removing them
 
 				int c = 0;
 
@@ -110,8 +110,36 @@ void Delete::Execute()
 								|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[1].x)
 									&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
 							{
+								int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+								int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+								OutputPin* Src = pManager->CompList[n]->getSourcePin();
+								InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+								int num = Src->m_Conn;
+								Src->m_Conn--;
+
+								for (int j = 0; j < num; j++)
+								{
+									if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+										&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+									{
+										//Delete connection from source pin's array
+										for (int m = j; m < num; m++)
+											Src->m_Connections[m] = Src->m_Connections[m + 1];
+										break;
+									}
+								}
+
+								if (num - 1 == 0) //Source pin is only freed from last connection
+								{
+									Src->setStatus(NCON);
+								}
+
+								Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
+								//pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -121,8 +149,36 @@ void Delete::Execute()
 							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
 								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
 							{
+								int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+								int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+								OutputPin* Src = pManager->CompList[n]->getSourcePin();
+								InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+								int num = Src->m_Conn;
+								Src->m_Conn--;
+
+								for (int j = 0; j < num; j++)
+								{
+									if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+										&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+									{
+										//Delete connection from source pin's array
+										for (int m = j; m < num; m++)
+											Src->m_Connections[m] = Src->m_Connections[m + 1];
+										break;
+									}
+								}
+
+								if (num - 1 == 0) //Source pin is only freed from last connection
+								{
+									Src->setStatus(NCON);
+								}
+
+								Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
+								//pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -132,8 +188,36 @@ void Delete::Execute()
 							if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
 								(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
 							{
+								int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+								int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+								OutputPin* Src = pManager->CompList[n]->getSourcePin();
+								InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+								int num = Src->m_Conn;
+								Src->m_Conn--;
+
+								for (int j = 0; j < num; j++)
+								{
+									if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+										&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+									{
+										//Delete connection from source pin's array
+										for (int m = j; m < num; m++)
+											Src->m_Connections[m] = Src->m_Connections[m + 1];
+										break;
+									}
+								}
+
+								if (num - 1 == 0) //Source pin is only freed from last connection
+								{
+									Src->setStatus(NCON);
+								}
+
+								Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
+								//pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
@@ -156,12 +240,13 @@ void Delete::Execute()
 				pManager->CompList[pManager->CompCount - c - 1] = NULL;
 				pManager->CompCount = pManager->CompCount - c - 1;
 
-				i = -1;
+				i = -1; //Resetting the loop because complist was resorted
 
 				//Print Action Message
 
 				pUI->PrintMsg("You deleted the selected component.");
-				pManager->delcount = pManager->delcount + 1;
+
+				//pManager->delcount = pManager->delcount + 1;
 			}
 
 			else if (pManager->CompList[i]->ComponentType == T_CONNECTION)
@@ -182,8 +267,9 @@ void Delete::Execute()
 				pManager->CompList[pManager->CompCount-1] = NULL;
 				pManager->CompCount = pManager->CompCount - 1;
 
-				i = -1;
-				pManager->delcount = pManager->delcount + 1;
+				i = -1; //Resetting the loop because complist was resorted
+
+				//pManager->delcount = pManager->delcount + 1;
 				//Print Action Message
 
 				pUI->PrintMsg("You deleted the selected connection.");

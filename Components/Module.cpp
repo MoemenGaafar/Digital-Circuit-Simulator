@@ -6,6 +6,18 @@ Module::Module(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 5, r_Fa
 	
 }
 
+int Module::GetOutPinStatus()
+{
+	return m_OutputPin->getStatus();
+}
+
+
+//returns status of Inputpin #n
+int Module::GetInputPinStatus(int n)
+{
+	return m_InputPins[n - 1].getStatus();	//n starts from 1 but array index starts from 0.
+}
+
  void Module::Operate()
 {
 	 int place; 
@@ -21,8 +33,8 @@ Module::Module(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 5, r_Fa
 	 pManager->CompList[place - 36 - 25]->m_InputPins[0].setStatus(m_InputPins[2].getStatus());
 	 pManager->CompList[place - 36 - 23]->m_InputPins[0].setStatus(m_InputPins[3].getStatus());
 	 pManager->CompList[place - 36 - 21]->m_InputPins[0].setStatus(m_InputPins[4].getStatus());
-	
-	
+
+	 	
 }
 
 
@@ -33,18 +45,7 @@ void Module::Draw(UI* pUI)
 	pUI->DrawModule(*m_pGfxInfo, selected); 
 }
 
-//returns status of outputpin
-int Module::GetOutPinStatus()
-{
-	return m_OutputPin->getStatus();
-}
 
-
-//returns status of Inputpin #n
-int Module::GetInputPinStatus(int n)
-{
-	return m_InputPins[n - 1].getStatus();	//n starts from 1 but array index starts from 0.
-}
 
 //Set status of an input pin ot HIGH or LOW
 void Module::setInputPinStatus(int n, STATUS s)

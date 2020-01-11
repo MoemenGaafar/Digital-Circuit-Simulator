@@ -62,7 +62,7 @@ void Undo::Execute()
 			string TempName = "ProgramTXTfiles\\temporaryloadtype2file";
 			TempName += to_string(pManager->UndoneLoadCount);
 			TempName += ".txt";
-			bool x = USave->ExecutePart(TempName);
+			bool x = USave->ExecutePart(TempName, pUI);
 
 			pManager->UndoneLoadCount++;
 			pManager->LoadCount--;

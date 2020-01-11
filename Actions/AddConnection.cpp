@@ -270,22 +270,27 @@ void AddConnection::Execute() {
 	if (pin == 10)
 	{
 		inp = &component->m_InputPins[0];
+		component->m_InputPins[0].setStatus(LOW);
 	}
 	if (pin == 11)
 	{
 		inp = &component->m_InputPins[1];
+		component->m_InputPins[1].setStatus(LOW);
 	}
 	if (pin == 12)
 	{
 		inp = &component->m_InputPins[2];
+		component->m_InputPins[2].setStatus(LOW);
 	}
 	if (pin == 13)
 	{
 		inp = &component->m_InputPins[3];
+		component->m_InputPins[3].setStatus(LOW);
 	}
 	if (pin == 14)
 	{
 		inp = &component->m_InputPins[4];
+		component->m_InputPins[4].setStatus(LOW);
 	}
 	
 
@@ -319,6 +324,7 @@ void AddConnection::Execute() {
 			pManager->AddComponent(pC);
 
 			outComp->m_OutputPin->setStatus(LOW);
+			if (inComp->ComponentType!= T_Module)
 			inComp->m_InputPins[pin - 2].setStatus(LOW);
 	}
 	else pUI->PrintMsg("Connection failed: Destination gate already has an input.");

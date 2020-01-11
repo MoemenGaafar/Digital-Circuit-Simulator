@@ -123,18 +123,28 @@ bool ApplicationManager::isAllConnected() const {
 		case T_XNOR2:
 		{
 			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON
-				|| CompList[i]->GetInputPinStatus(2) == NCON) return 0; break;
+				|| CompList[i]->GetInputPinStatus(2) == NCON)
+			{
+				return 0;
+				cout << i << endl;
+			}
+			break;
+
 		}
 		case T_NOT:
 		{
-			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON) return 0;
+			if (CompList[i]->GetOutPinStatus() == NCON || CompList[i]->GetInputPinStatus(1) == NCON)
+			{
+				return 0;
+				cout << i; 
+			}
 			break;
 		}
 		case T_SWITCH:
 		{
 			if (CompList[i]->GetOutPinStatus() == NCON)
 			{
-				cout << i; 
+				cout << i << endl; 
 				return 0;
 			}
 			break;
@@ -143,9 +153,24 @@ bool ApplicationManager::isAllConnected() const {
 		{
 			if (CompList[i]->GetInputPinStatus(1) == NCON) 
 			{
-				cout << i;
+				cout << i << endl;
 				return 0;
 			}
+		}
+		case T_Module: 
+		case T_ModuleB: 
+		{
+			if (CompList[i]->GetInputPinStatus(1) == NCON || CompList[i]->GetInputPinStatus(2) == NCON ||
+				CompList[i]->GetInputPinStatus(3) == NCON || CompList[i]->GetInputPinStatus(4) == NCON ||
+				CompList[i]->GetInputPinStatus(5) == NCON || CompList[i]->GetOutPinStatus() == NCON )
+			{
+				
+				cout << i << endl; 
+				return 0;
+			}
+
+
+			break; 
 		}
 		case T_CONNECTION: continue;
 		}

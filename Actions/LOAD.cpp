@@ -62,7 +62,7 @@ void Load::Execute()
 		string TempName = "ProgramTXTfiles\\temporaryloadtype1file"; 
 		TempName += to_string(pManager->LoadCount); 
 		TempName += ".txt"; 
-			LSave->ExecutePart(TempName); 
+			LSave->ExecutePart(TempName, pUI); 
 
 		pUI->PrintMsg("LOAD: Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 

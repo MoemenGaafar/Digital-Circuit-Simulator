@@ -37,7 +37,7 @@ void Redo::Execute()
 			string TempName = "ProgramTXTfiles\\temporaryloadtype1file";
 			TempName += to_string(pManager->LoadCount);
 			TempName += ".txt";
-			RSave->ExecutePart(TempName);
+			RSave->ExecutePart(TempName,pUI);
 
 			pManager->UndoneLoadCount--;
 			pManager->LoadCount++;

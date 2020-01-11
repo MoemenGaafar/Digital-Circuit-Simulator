@@ -132,7 +132,7 @@ void SaveModule::Execute()
 		string TempName = "ProgramTXTfiles\\Modulefile";
 		TempName += to_string(ModuleCount);
 		TempName += ".txt";
-		MSave->ExecutePart(TempName);
+		MSave->ExecutePart(TempName, pUI);
 
 		pUI->PrintMsg("Module saved!");
 		

@@ -207,6 +207,7 @@ void Cut::Execute()
 				pManager->UnselectAll();
 				pManager->Done_Acts[pManager->executed-1] = CUT;
 				pUI->PrintMsg("Cut component pasted successfully.");
+				break;
 			}
 		}
 

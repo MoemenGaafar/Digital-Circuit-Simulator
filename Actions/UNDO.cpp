@@ -57,7 +57,6 @@ void Undo::Execute()
 			pManager->CompCount--;
 		}
 
-
 		else if (t1 == LOAD)
 		{
 			string TempName = "ProgramTXTfiles\\temporaryloadtype2file";

@@ -5,6 +5,7 @@
 #include "..\Defs.h"
 #include "..\UI\UI.h"
 #include "..\\Components\InputPin.h"
+#include "..//ApplicationManager.h"
 
 
 class OutputPin;
@@ -16,9 +17,11 @@ class Component
 private:
 
 protected:
+	
 
 public:
 
+	ApplicationManager* pManager = NULL;
 	bool selected = 0;
 	bool inModule = 0; 
 	Type ComponentType;
@@ -39,6 +42,8 @@ public:
 	virtual void setDestPin(InputPin* pDstPin);
 	virtual OutputPin* getSourcePin();
 	virtual InputPin* getDestPin();
+
+	virtual void setPins(ApplicationManager* pManager);
 
 
 

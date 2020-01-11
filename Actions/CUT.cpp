@@ -20,8 +20,14 @@ void Cut::Execute()
 
 	for (int i = 0; i < pManager->CompCount; i++)
 	{
-		if (pManager->CompList[i]->selected == true)
+		if (pManager->CompList[i]->selected)
 		{
+			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
+			{
+				pUI->PrintMsg("Cannot Cut/Paste a Connection. Please select a Component to Cut/Paste.");
+				break;
+			}
+
 			Cutitm = pManager->CompList[i];
 
 			pUI->ClearComponent(Cutitm->m_pGfxInfo);
@@ -153,7 +159,7 @@ void Cut::Execute()
 				}
 			}
 
-			pManager->CompCount = pManager->CompCount - c;
+			pManager->CompCount = pManager->CompCount-c;
 
 			//Setting new position to paste a component
 
@@ -201,6 +207,7 @@ void Cut::Execute()
 				pManager->UnselectAll();
 				pManager->Done_Acts[pManager->executed-1] = CUT;
 				pUI->PrintMsg("Cut component pasted successfully.");
+				break;
 			}
 		}
 

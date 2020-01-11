@@ -16,3 +16,5 @@ InputPin* Component::getDestPin()
 InputPin* garbage; 
 return garbage;
 }
+
+void Component::setPins(ApplicationManager* pManager) {}; 

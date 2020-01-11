@@ -342,8 +342,17 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		if (pAct->Type == DefMODULE)
 		{
-			for (int i = CompCount - 58; i < CompCount-1; i++)
-				CompList[i]->inModule = 1; 
+			for (int i = CompCount - 74; i < CompCount - 2; i++)
+			{
+				CompList[i]->inModule = 1;
+				if (CompList[i]->ComponentType != T_CONNECTION) {
+					CompList[i]->m_OutputPin->setStatus(LOW);
+					if (CompList[i]->ComponentType == T_NOT)
+						CompList[i]->m_InputPins[0].setStatus(LOW);
+				}
+
+			}
+			
 		}
 
 

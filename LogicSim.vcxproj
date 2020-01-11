@@ -119,6 +119,7 @@
     <ClInclude Include="Components\INV.h" />
     <ClInclude Include="Components\LED.h" />
     <ClInclude Include="Components\Module.h" />
+    <ClInclude Include="Components\ModuleB.h" />
     <ClInclude Include="Components\NAND2.h" />
     <ClInclude Include="Components\NOR2.h" />
     <ClInclude Include="Components\OR2.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Components\INV.cpp" />
     <ClCompile Include="Components\LED.cpp" />
     <ClCompile Include="Components\Module.cpp" />
+    <ClCompile Include="Components\ModuleB.cpp" />
     <ClCompile Include="Components\NAND2.cpp" />
     <ClCompile Include="Components\NOR2.cpp" />
     <ClCompile Include="Components\OR2.cpp" />

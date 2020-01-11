@@ -1,9 +1,6 @@
 4
-SWITCH    0         sss       277         239   
-SWITCH    1         ll        251         372   
-XOR2      2         -         445         301   
-LED       3         kllll     637         296   
-3
-0         2         1         
-1         2         2         
-2         3         1         
+XNOR2     0         -         363         323   
+SWITCH    1         gh        571         373   
+LED       2         hjj       460         238   
+NOR2      3         -         721         167   
+0

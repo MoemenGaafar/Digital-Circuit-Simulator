@@ -18,6 +18,12 @@ void Copy::Execute()
 	{
 		if (pManager->CompList[i]->selected == true)
 		{
+			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
+			{
+				pUI->PrintMsg("Cannot Copy a connection! Please select a component to Copy.");
+				break;
+			}
+		
 			if (pManager->CompList[i]->ComponentType != T_CONNECTION)
 			{
 				//Print Action Message
@@ -100,6 +106,7 @@ void Copy::Execute()
 
 					pManager->UnselectAll();
 					pUI->PrintMsg("Copied component pasted successfully.");
+					break;
 				}
 			}
 		}

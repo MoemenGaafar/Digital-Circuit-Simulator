@@ -15,12 +15,12 @@ Module::Module(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 5, r_Fa
 	 } 
 
 
-	 m_OutputPin->setStatus(pManager->CompList[place - 36 - 29]->m_OutputPin->getStatus());
-	 pManager->CompList[place - 36 - 28]->m_InputPins[0].setStatus(m_InputPins[0].getStatus());
-	 pManager->CompList[place - 36 - 26]->m_InputPins[0].setStatus(m_InputPins[1].getStatus());
-	 pManager->CompList[place - 36 - 24]->m_InputPins[0].setStatus(m_InputPins[2].getStatus());
-	 pManager->CompList[place - 36 - 22]->m_InputPins[0].setStatus(m_InputPins[3].getStatus());
-	 pManager->CompList[place - 36 - 20]->m_InputPins[0].setStatus(m_InputPins[4].getStatus());
+	 m_OutputPin->setStatus(pManager->CompList[place - 36 - 30]->m_OutputPin->getStatus());
+	 pManager->CompList[place - 36 - 29]->m_InputPins[0].setStatus(m_InputPins[0].getStatus());
+	 pManager->CompList[place - 36 - 27]->m_InputPins[0].setStatus(m_InputPins[1].getStatus());
+	 pManager->CompList[place - 36 - 25]->m_InputPins[0].setStatus(m_InputPins[2].getStatus());
+	 pManager->CompList[place - 36 - 23]->m_InputPins[0].setStatus(m_InputPins[3].getStatus());
+	 pManager->CompList[place - 36 - 21]->m_InputPins[0].setStatus(m_InputPins[4].getStatus());
 	
 	
 }

@@ -329,14 +329,6 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			pManager->CompCount++;
 
 			
-
-			
-			
-			
-
-
-
-			
 		}
 		myfile.close(); 
 		return 1; 

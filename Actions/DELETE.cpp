@@ -21,12 +21,16 @@ void Delete::Execute()
 
 	UI* pUI = pManager->GetUI();
 
+	bool found = 0; 
+
 	for (int i = 0; i < pManager->CompCount; i++)
 	{
 		if (pManager->CompList[i]->selected)
 		{
+			found = 1;
 			if (pManager->CompList[i]->ComponentType != T_CONNECTION)
 			{
+				 
 				pUI->ClearComponent(pManager->CompList[i]->m_pGfxInfo);
 				deleted = pManager->CompList[i];
 				//pManager->Deltd[pManager->delcount++] = deleted;
@@ -36,8 +40,11 @@ void Delete::Execute()
                 //For the connections of the output pin and the 1st input pin.
 				GraphicsInfo* pGInfo1 = new GraphicsInfo(2);
 
-				//For the connections of the output pin and the 2nd input pin, if exists.
+				//For the connections of the output pin and the 2nd and further input pin, if exists.
 				GraphicsInfo* pGInfo2 = new GraphicsInfo(2);
+				GraphicsInfo* pGInfo3 = new GraphicsInfo(2);
+				GraphicsInfo* pGInfo4 = new GraphicsInfo(2);
+				
 
 				//Setting the points
 				int x1 = deleted->m_pGfxInfo->PointsList[0].x;
@@ -91,6 +98,28 @@ void Delete::Execute()
 					pGInfo1->PointsList[1].x = x1 + 15;
 					pGInfo1->PointsList[1].y = y2 - 8;
 					break;
+
+				case T_Module: 
+					pGInfo1->PointsList[0].x = x1;
+					pGInfo1->PointsList[0].y = y1 +13;
+					pGInfo1->PointsList[1].x = x1;
+					pGInfo1->PointsList[1].y = y1 + 33;
+
+					pGInfo2->PointsList[0].x = x1;
+					pGInfo2->PointsList[0].y = y1 + 55;
+					pGInfo2->PointsList[1].x = x1;
+					pGInfo2->PointsList[1].y = y1 + 71;
+
+					pGInfo3->PointsList[0].x = x1;
+					pGInfo3->PointsList[0].y = y2 - 10;
+					pGInfo3->PointsList[1].x = x2;
+					pGInfo3->PointsList[1].y = y1 + 25;
+
+					pGInfo4->PointsList[0].x = x2;
+					pGInfo4->PointsList[0].y = y2 - 34;
+
+					break; 
+
 				}
 
 				//Finding the connections associated with the deleted component and removing them
@@ -101,7 +130,7 @@ void Delete::Execute()
 				{
 					if (pManager->CompList[n]->ComponentType == T_CONNECTION)
 					{
-						if ((deleted->ComponentType != T_LED) && (deleted->ComponentType != T_SWITCH))
+						if ((deleted->ComponentType != T_LED) && (deleted->ComponentType != T_SWITCH) && deleted->ComponentType != T_Module)
 						{
 							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
 								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
@@ -143,6 +172,61 @@ void Delete::Execute()
 								pManager->CompList[n] = NULL;
 								c = c + 1;
 							}
+						}
+						else if (deleted->ComponentType == T_Module)
+						{
+							if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[0].x &&
+								pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[0].y)
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y)
+
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[0].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[0].y)
+
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[1].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)
+
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo3->PointsList[0].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo3->PointsList[0].y)
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo3->PointsList[1].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo3->PointsList[1].y)
+
+								|| (pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo4->PointsList[0].x &&
+									pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo4->PointsList[0].y))
+							{
+								int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+								int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+								OutputPin* Src = pManager->CompList[n]->getSourcePin();
+								InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+								int num = Src->m_Conn;
+								Src->m_Conn--;
+
+								for (int j = 0; j < num; j++)
+								{
+									if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+										&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+									{
+										//Delete connection from source pin's array
+										for (int m = j; m < num; m++)
+											Src->m_Connections[m] = Src->m_Connections[m + 1];
+										break;
+									}
+								}
+
+								if (num - 1 == 0) //Source pin is only freed from last connection
+								{
+									Src->setStatus(NCON);
+								}
+
+								Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
+								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+								//pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
+								pManager->CompList[n] = NULL;
+								c = c + 1;
+							} 
 						}
 						else if (deleted->ComponentType != T_LED)
 						{
@@ -225,20 +309,41 @@ void Delete::Execute()
 					}
 				}
 
-				pManager->CompList[i] = NULL;
+				if (pManager->CompList[i]->ComponentType != T_Module) {
+					pManager->CompList[i] = NULL;
 
-				int k = 0;
-				for (int j = 0; j < pManager->CompCount; j++)
-				{
-					if (pManager->CompList[j] != NULL)
+					int k = 0;
+					for (int j = 0; j < pManager->CompCount; j++)
 					{
-						pManager->CompList[k] = pManager->CompList[j];
-						k = k + 1;
+						if (pManager->CompList[j] != NULL)
+						{
+							pManager->CompList[k] = pManager->CompList[j];
+							k = k + 1;
+						}
 					}
-				}
 
-				pManager->CompList[pManager->CompCount - c - 1] = NULL;
-				pManager->CompCount = pManager->CompCount - c - 1;
+					pManager->CompList[pManager->CompCount - c - 1] = NULL;
+					pManager->CompCount = pManager->CompCount - c - 1;
+				} 
+				else if (pManager->CompList[i]->ComponentType == T_Module)
+				{
+					
+					for (int m = i - 72; m < i + 2; m++)
+						pManager->CompList[m] = NULL; 
+
+					int k = 0;
+					for (int j = 0; j < pManager->CompCount; j++)
+					{
+						if (pManager->CompList[j] != NULL)
+						{
+							pManager->CompList[k] = pManager->CompList[j];
+							k = k + 1;
+						}
+					}
+
+					pManager->CompCount = pManager->CompCount - c - 74;
+
+				}
 
 				i = -1; //Resetting the loop because complist was resorted
 
@@ -276,10 +381,11 @@ void Delete::Execute()
 			}
 			pUI->PrintMsg("You deleted the selected component(s).");
 		}
-		else
-		{
+		
+	}
+	if (!found)
+	{
 		pUI->PrintMsg("Nothing is selected. Please select a component to delete.");
-		}
 	}
 }
 

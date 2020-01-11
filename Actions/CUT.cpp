@@ -94,6 +94,7 @@ void Cut::Execute()
 
 			//Finding the connections associated with the cut component and removing them
 
+			int c = 0;
 			for (int n = 0; n < pManager->CompCount; n++)
 			{
 				if (pManager->CompList[n]->ComponentType == T_CONNECTION)
@@ -110,6 +111,7 @@ void Cut::Execute()
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
 					}
 					else if (Cutitm->ComponentType != T_LED)
@@ -120,6 +122,7 @@ void Cut::Execute()
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
 					}
 					else if (Cutitm->ComponentType != T_SWITCH)
@@ -130,6 +133,7 @@ void Cut::Execute()
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
 					}
 				}
@@ -147,8 +151,9 @@ void Cut::Execute()
 					pManager->CompList[k] = pManager->CompList[j];
 					k = k + 1;
 				}
-				pManager->CompCount = k + 1;
 			}
+
+			pManager->CompCount = pManager->CompCount - c;
 
 			//Setting new position to paste a component
 

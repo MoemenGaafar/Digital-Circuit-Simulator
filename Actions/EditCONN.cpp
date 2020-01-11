@@ -37,6 +37,10 @@ void EditConn::Execute()
 				pManager->CompList[i]->m_pGfxInfo->PointsList[0].x,
 				pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
 
+			//Unconnect the destination pin of the removed connection
+			
+			pManager->CompList[i]->getDestPin()->setStatus(NCON);
+
 			//Destination points of old connection (note: no two connections share a dest. point)
 			int oldX = pManager->CompList[i]->m_pGfxInfo->PointsList[1].x; 
 			int oldY = pManager->CompList[i]->m_pGfxInfo->PointsList[1].y;
@@ -44,20 +48,24 @@ void EditConn::Execute()
 			//int to hold the source pin's number of connections
 			int Num_Conn = pManager->CompList[i]->getSourcePin()->m_Conn; 
 
-			//Find the connection in its original source pin's array of connections by comparing dest. points
+			 //Find the connection in its original source pin's array of connections by comparing dest. points
 			for (int j = 0; j < Num_Conn; j++) 
 			{
 				if (pManager->CompList[i]->getSourcePin()->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
 					&& pManager->CompList[i]->getSourcePin()->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
-				{
+				{ 
 					//Delete connection from source pin's array
 					for (int m = j; m < Num_Conn; m++)
-						pManager->CompList[i]->getSourcePin()->m_Connections[m] = pManager->CompList[i]->getSourcePin()->m_Connections[m]; 
+						pManager->CompList[i]->getSourcePin()->m_Connections[m] = pManager->CompList[i]->getSourcePin()->m_Connections[m+1];
+					break; 
 				}
-			}
+			} 
 
 			//Subtract 1 from number of connections connected to original source pin
 			pManager->CompList[i]->getSourcePin()->m_Conn--; 
+			if (Num_Conn -1 ==0)
+				pManager->CompList[i]->getSourcePin()->setStatus(NCON);
+			
 			
 			
 			int pin;
@@ -73,16 +81,33 @@ void EditConn::Execute()
 				pUI->GetPointClicked(srcX, srcY);
 				pin = EditAdd->checkPin(srcX, srcY);
 
-				while (pin != 1) {
+				while (pin != 1 && pin != 15 && pin != 16) {
 					pUI->PrintMsg("Please click on a valid source pin");
 					pUI->GetPointClicked(srcX, srcY);
 					pin = EditAdd->checkPin(srcX, srcY);
 				}
 				
-				outp = EditAdd->component->m_OutputPin;
-				EditAdd->connectPin(srcX, srcY, 1); 
-				pManager->CompList[i]->setSourcePin(outp);
+				
+				Component* outComp = EditAdd->component;
+				if (EditAdd->component->ComponentType != T_Module || (EditAdd->component->ComponentType == T_Module && pin == 15)) {
+					outp =EditAdd->component->m_OutputPin;
+				}
+				else if (EditAdd->component->ComponentType == T_Module && pin == 16)
+				{
+					int place;
+					for (int i = 0; i < pManager->CompCount; i++) {
+						if (EditAdd->component->m_pGfxInfo->PointsList[0].x == pManager->CompList[i]->m_pGfxInfo->PointsList[0].x && EditAdd->component->m_pGfxInfo->PointsList[1].x == pManager->CompList[i]->m_pGfxInfo->PointsList[1].x)
+							place = i;
+					}
+
+					outp = pManager->CompList[place + 1]->m_OutputPin;
+
+				}
+				
+				EditAdd->connectPin(srcX, srcY, pin); 
+				
 				EditAdd->component->m_OutputPin->setStatus(LOW);
+				pManager->CompList[i]->setSourcePin(outp);
 				
 
 			    isAvailable = outp->ConnectTo(pManager->CompList[i]); 
@@ -102,7 +127,7 @@ void EditConn::Execute()
 				pUI->GetPointClicked(destX, destY);
 				pin = EditAdd->checkPin(destX, destY);
 
-				while (pin != 2 && pin != 3) {
+				while (pin != 2 && pin != 3 && pin != 10 && pin != 11 && pin != 12 && pin != 13 && pin != 14) {
 					pUI->PrintMsg("Please click on a valid destination pin");
 					pUI->GetPointClicked(destX, destY);
 					pin = EditAdd->checkPin(destX, destY);
@@ -140,16 +165,43 @@ void EditConn::Execute()
 			} while (!isAvailable);
 
 
+			EditAdd->connectPin(srcX, srcY, pin);
+
 			if (pin == 2)
 			{
-				EditAdd->connectPin(destX, destY, 2);
 				inp = &EditAdd->component->m_InputPins[0];
 			}
 			if (pin == 3)
 			{
-				EditAdd->connectPin(destX, destY, 3);
 				inp = &EditAdd->component->m_InputPins[1];
 			}
+			if (pin == 10)
+			{
+				inp = &EditAdd->component->m_InputPins[0];
+				EditAdd->component->m_InputPins[0].setStatus(LOW);
+			}
+			if (pin == 11)
+			{
+				inp = &EditAdd->component->m_InputPins[1];
+				EditAdd->component->m_InputPins[1].setStatus(LOW);
+			}
+			if (pin == 12)
+			{
+				inp = &EditAdd-> component->m_InputPins[2];
+				EditAdd->component->m_InputPins[2].setStatus(LOW);
+			}
+			if (pin == 13)
+			{
+				inp = &EditAdd->component->m_InputPins[3];
+				EditAdd->component->m_InputPins[3].setStatus(LOW);
+			}
+			if (pin == 14)
+			{
+				inp = &EditAdd-> component->m_InputPins[4];
+				EditAdd->component->m_InputPins[4].setStatus(LOW);
+			}
+
+
 
 				pManager->CompList[i]->setDestPin(inp);
 				EditAdd->component->m_InputPins[pin - 2].setStatus(LOW);

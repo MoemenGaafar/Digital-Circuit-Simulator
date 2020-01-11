@@ -154,7 +154,7 @@ void TruthTable::Execute() {
 	else {
 		pUI->PrintMsg("You have more than 5 switches or LEDs. Truth table must be saved to a file.\n");
 		ofstream outFile;
-		std::this_thread::sleep_for(std::chrono::seconds(3));
+		std::this_thread::sleep_for(std::chrono::seconds(2));
 		pUI->PrintMsg("Type in a file's name with directory. Use 2 backslashes. Click enter when done.\n");
 		string name = pUI->GetString();
 		outFile.open(name.c_str());

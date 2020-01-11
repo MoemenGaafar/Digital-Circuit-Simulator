@@ -208,6 +208,9 @@
     <ClInclude Include="Components\Module.h">
       <Filter>CMUgrahpics Library</Filter>
     </ClInclude>
+    <ClInclude Include="Actions\TruthTable.h">
+      <Filter>CMUgrahpics Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\AND2.cpp">
@@ -377,6 +380,7 @@
     <ClCompile Include="Actions\DefMODULE.cpp" />
     <ClCompile Include="Actions\NamedModule.cpp" />
     <ClCompile Include="Components\Module.cpp" />
+    <ClCompile Include="Actions\TruthTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

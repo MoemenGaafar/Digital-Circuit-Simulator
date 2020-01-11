@@ -98,9 +98,9 @@ class UI
 		                GATE_Height = 50;		//Gate Image default height
 	                    
 
-	window* pWind;
 	
 public:
+	window* pWind;
 	
 	static const int	width = 1200, height = 650,	//Window width and height
 		wx = 15, wy = 15,			//Window starting coordinates

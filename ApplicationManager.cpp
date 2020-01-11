@@ -25,6 +25,7 @@
 #include "Actions\DefMODULE.h"
 #include "Actions\NamedMODULE.h"
 #include "Actions\SaveMODULE.h"
+#include "Actions\TruthTable.h"
 #include <cstdio>
 #include <iostream>
 using namespace std; 
@@ -306,7 +307,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		else
 			pUI->PrintMsg("One or more components are not connected!");
 		break;
-		
+	case TRUTH:
+		pAct = new TruthTable(this);
+		break;
 	case EXIT:
 
 		

@@ -12,6 +12,9 @@ Cut::~Cut(void)
 
 void Cut::Execute()
 {
+	//Resetting Cut's numbers at the beginning of each new cut
+	pManager->CutConnCount = 0;
+
 	//Get a Pointer to the user Interfaces
 	UI* pUI = pManager->GetUI();
 
@@ -22,6 +25,8 @@ void Cut::Execute()
 			Cutitm = pManager->CompList[i];
 
 			pUI->ClearComponent(Cutitm->m_pGfxInfo);
+
+			pUI->LabelComp("            ", Cutitm->m_pGfxInfo->PointsList[0].x, Cutitm->m_pGfxInfo->PointsList[0].y);
 
 			pUI->PrintMsg("You cut the selected component. Click where you'd like to paste.");
 
@@ -103,6 +108,7 @@ void Cut::Execute()
 								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
 						{
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 						}
 					}
@@ -112,6 +118,7 @@ void Cut::Execute()
 							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y)))
 						{
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 						}
 					}
@@ -121,12 +128,14 @@ void Cut::Execute()
 							(pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
 						{
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 						}
 					}
 				}
 			}
 
+			pManager->CutpGInf = pManager->CompList[i]->m_pGfxInfo;
 			pManager->CompList[i] = NULL;
 			//Re-sorting the component list
 			int k = 0;
@@ -175,12 +184,13 @@ void Cut::Execute()
 
 			else
 			{
+				pManager->CutItem = Cutitm; //Copying the old cut item with its old position
 				Cutitm->m_pGfxInfo = pGInfo;
 				pManager->CompList[pManager->CompCount - 1] = Cutitm;
 				pManager->UnselectAll();
+				pManager->Done_Acts[pManager->executed-1] = CUT;
 				pUI->PrintMsg("Cut component pasted successfully.");
 			}
-
 		}
 
 		//In case no component is selected for cutting

@@ -10,9 +10,11 @@ private:
 	
 
 public:
-	Component* deleted;
+	Component* deleted; //To be used in "Delete"s execution
+	
 	Delete(ApplicationManager* pApp);
 	virtual ~Delete(void);
+
 	//Execute action (code depends on action type)
 	virtual void Execute();
 

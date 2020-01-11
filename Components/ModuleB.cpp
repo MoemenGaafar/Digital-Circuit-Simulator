@@ -11,6 +11,26 @@ void ModuleB::Draw(UI* pUI)
 {
 }
 
+
+void ModuleB::Operate()
+{
+	int place;
+	for (int i = 0; i < pManager->CompCount; i++) {
+		if (m_pGfxInfo->PointsList[0].x == pManager->CompList[i]->m_pGfxInfo->PointsList[0].x && m_pGfxInfo->PointsList[1].x == pManager->CompList[i]->m_pGfxInfo->PointsList[1].x)
+			place = i;
+	}
+
+
+	m_OutputPin->setStatus(pManager->CompList[place - 20 - 1]->m_OutputPin->getStatus());
+	pManager->CompList[place - 36 - 1]->m_InputPins[0].setStatus(m_InputPins[0].getStatus());
+	pManager->CompList[place - 34 - 1]->m_InputPins[0].setStatus(m_InputPins[1].getStatus());
+	pManager->CompList[place - 32 - 1]->m_InputPins[0].setStatus(m_InputPins[2].getStatus());
+	pManager->CompList[place - 30 - 1]->m_InputPins[0].setStatus(m_InputPins[3].getStatus());
+	pManager->CompList[place - 28 - 1]->m_InputPins[0].setStatus(m_InputPins[4].getStatus());
+
+	
+}
+
 //returns status of outputpin
 int ModuleB::GetOutPinStatus()
 {

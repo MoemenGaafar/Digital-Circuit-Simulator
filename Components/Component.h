@@ -17,9 +17,11 @@ class Component
 private:
 
 protected:
+	
 
 public:
 
+	ApplicationManager* pManager = NULL;
 	bool selected = 0;
 	bool inModule = 0; 
 	Type ComponentType;

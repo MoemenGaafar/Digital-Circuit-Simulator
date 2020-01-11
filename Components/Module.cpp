@@ -6,6 +6,25 @@ Module::Module(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 5, r_Fa
 	
 }
 
+ void Module::Operate()
+{
+	 int place; 
+	 for (int i=0; i < pManager ->CompCount; i++){
+	 	 if (m_pGfxInfo->PointsList[0].x== pManager->CompList[i]->m_pGfxInfo->PointsList[0].x && m_pGfxInfo->PointsList[1].x == pManager->CompList[i]->m_pGfxInfo->PointsList[1].x)
+			 place = i;
+	 } 
+
+
+	 m_OutputPin->setStatus(pManager->CompList[place - 36 - 29]->m_OutputPin->getStatus());
+	 pManager->CompList[place - 36 - 28]->m_InputPins[0].setStatus(m_InputPins[0].getStatus());
+	 pManager->CompList[place - 36 - 26]->m_InputPins[0].setStatus(m_InputPins[1].getStatus());
+	 pManager->CompList[place - 36 - 24]->m_InputPins[0].setStatus(m_InputPins[2].getStatus());
+	 pManager->CompList[place - 36 - 22]->m_InputPins[0].setStatus(m_InputPins[3].getStatus());
+	 pManager->CompList[place - 36 - 20]->m_InputPins[0].setStatus(m_InputPins[4].getStatus());
+	
+	
+}
+
 
 // Function Draw
 void Module::Draw(UI* pUI)

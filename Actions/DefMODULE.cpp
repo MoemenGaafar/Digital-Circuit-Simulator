@@ -36,8 +36,8 @@ void DefModule::Execute()
 
 	pGInfo->PointsList[0].x = Cx - 2*gateWidth ;
 	pGInfo->PointsList[0].y = Cy - gateHeight;
-	pGInfo->PointsList[1].x = Cx + gateWidth;
-	pGInfo->PointsList[1].y = Cy + 2*gateHeight;
+	pGInfo->PointsList[1].x = Cx + 2*gateWidth;
+	pGInfo->PointsList[1].y = Cy + gateHeight;
 
 	if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight) {
 		if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight)
@@ -71,11 +71,18 @@ void DefModule::Execute()
 		}
 			   		 	  	  
 		Module* pA = new Module(pGInfo, Default_FANOUT);
-
-		pA-> m_OutputPin = pManager->CompList[pManager->CompCount - 29]->m_OutputPin;
+		pA->pManager = pManager; 
 		pManager->AddComponent(pA);
 
-		ModuleB* pB = new ModuleB(pGInfo, Default_FANOUT);
+		GraphicsInfo* pGInfo2 = new GraphicsInfo(2);
+
+		pGInfo2->PointsList[0].x = Cx;
+		pGInfo2->PointsList[0].y = Cy;
+		pGInfo2->PointsList[1].x = Cx;
+		pGInfo2->PointsList[1].y = Cy;
+
+		ModuleB* pB = new ModuleB(pGInfo2, Default_FANOUT);
+		pB->pManager = pManager;
 		pManager->AddComponent(pB);
 		
 	}

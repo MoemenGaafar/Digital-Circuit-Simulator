@@ -10,7 +10,7 @@ class Module :public Gate
 {
 public:
 	Module(GraphicsInfo* r_pGfxInfo, int r_FanOut);
-	virtual void Operate() {};	//Calculates the output of the AND gate
+	virtual void Operate();	//Calculates the output of the AND gate
 	virtual void Draw(UI*);	//Draws 2-input gate
 	
 

@@ -36,7 +36,8 @@ void AddLED::Execute()
 	pGInfo->PointsList[1].x = Cx + gateWidth / 2;
 	pGInfo->PointsList[1].y = Cy + gateHeight / 2;
 
-	if (pGInfo->PointsList[0].y -25 < pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight) {
+	if (pGInfo->PointsList[0].y -25 < pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
+	{
 		if (pGInfo->PointsList[0].y -25 < pUI->ToolBarHeight)
 			pUI->PrintMsg("You cannot place a component on the toolbar. Action aborted.");
 		if (pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
@@ -45,7 +46,8 @@ void AddLED::Execute()
 		pManager->Done_Acts[pManager->executed] = NI;
 		pManager->executed--;
 	}
-	else {
+	else
+	{
 		LED* pA = new LED(pGInfo, Default_FANOUT);
 		pManager->AddComponent(pA);
 	}

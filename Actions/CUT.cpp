@@ -114,8 +114,8 @@ void Cut::Execute()
 					}
 					else if (Cutitm->ComponentType != T_LED)
 					{
-						if (((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x)
-							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y)))
+						if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
+							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
 						{
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
@@ -124,8 +124,8 @@ void Cut::Execute()
 					}
 					else if (Cutitm->ComponentType != T_SWITCH)
 					{
-						if ((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x) &&
-							(pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
+						if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
+							(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
 						{
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
@@ -187,6 +187,12 @@ void Cut::Execute()
 				pManager->CutItem = Cutitm; //Copying the old cut item with its old position
 				Cutitm->m_pGfxInfo = pGInfo;
 				pManager->CompList[pManager->CompCount - 1] = Cutitm;
+				if ((pManager->CompList[pManager->CompCount - 1]->ComponentType == T_LED) ||
+					(pManager->CompList[pManager->CompCount - 1]->ComponentType == T_SWITCH))
+				{
+					Label temp(pManager);
+					temp.Execute();
+				}
 				pManager->UnselectAll();
 				pManager->Done_Acts[pManager->executed-1] = CUT;
 				pUI->PrintMsg("Cut component pasted successfully.");

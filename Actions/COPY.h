@@ -13,6 +13,7 @@
 #include "..\Components\OR2.h"
 #include "..\Components\XNOR2.h"
 #include "..\Components\XOR2.h"
+#include "Label.h"
 
 class Copy : public Action
 {

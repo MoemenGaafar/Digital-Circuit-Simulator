@@ -118,8 +118,8 @@ void Delete::Execute()
 						}
 						else if (deleted->ComponentType != T_LED)
 						{
-							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x)
-								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y)))
+							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
+								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
 							{
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];
@@ -129,8 +129,8 @@ void Delete::Execute()
 						}
 						else if (deleted->ComponentType != T_SWITCH)
 						{
-							if ((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x) &&
-								(pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
+							if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
+								(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
 							{
 								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
 								pManager->DelConn[pManager->DelConnCount++] = pManager->CompList[n];

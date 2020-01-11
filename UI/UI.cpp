@@ -153,6 +153,7 @@ ActionType UI::GetUserAction()
 		{
 		
 		case ITM_DSN: return DSN_MODE;
+		case ITM_TRUTH: return TRUTH;
 		case ITM_EXIT_SIM: return EXIT;
 
 		default: return DSN_TOOL;	//A click on empty place in desgin toolbar

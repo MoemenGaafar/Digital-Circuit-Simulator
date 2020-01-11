@@ -86,6 +86,7 @@
     <ClInclude Include="Actions\SAVE.h" />
     <ClInclude Include="Actions\SaveMODULE.h" />
     <ClInclude Include="Actions\SELECT.h" />
+    <ClInclude Include="Actions\TruthTable.h" />
     <ClInclude Include="Actions\UNDO.h" />
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -154,6 +155,7 @@
     <ClCompile Include="Actions\SAVE.cpp" />
     <ClCompile Include="Actions\SaveMODULE.cpp" />
     <ClCompile Include="Actions\SELECT.cpp" />
+    <ClCompile Include="Actions\TruthTable.cpp" />
     <ClCompile Include="Actions\UNDO.cpp" />
     <ClCompile Include="ApplicationManager.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">

@@ -40,6 +40,7 @@ enum ActionType
 
 	DSN_MODE,	//Switch to Design mode
 	SIM_MODE,	//Switch to Simulatiom mode
+	TRUTH,
 
 	EXIT,		//Exit the application
 

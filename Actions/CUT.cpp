@@ -13,7 +13,7 @@ Cut::~Cut(void)
 void Cut::Execute()
 {
 	//Resetting Cut's numbers at the beginning of each new cut
-	pManager->CutConnCount = 0;
+	//pManager->CutConnCount = 0;
 
 	//Get a Pointer to the user Interfaces
 	UI* pUI = pManager->GetUI();
@@ -114,8 +114,36 @@ void Cut::Execute()
 							|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[1].x)
 								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
 						{
+							int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+							int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+							OutputPin* Src = pManager->CompList[n]->getSourcePin();
+							InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+							int num = Src->m_Conn;
+							Src->m_Conn--;
+
+							for (int j = 0; j < num; j++)
+							{
+								if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+									&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+								{
+									//Delete connection from source pin's array
+									for (int m = j; m < num; m++)
+										Src->m_Connections[m] = Src->m_Connections[m + 1];
+									break;
+								}
+							}
+
+							if (num - 1 == 0) //Source pin is only freed from last connection
+							{
+								Src->setStatus(NCON);
+							}
+
+							Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							//pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 							c = c + 1;
 						}
@@ -125,8 +153,36 @@ void Cut::Execute()
 						if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
 							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
 						{
+							int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+							int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+							OutputPin* Src = pManager->CompList[n]->getSourcePin();
+							InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+							int num = Src->m_Conn;
+							Src->m_Conn--;
+
+							for (int j = 0; j < num; j++)
+							{
+								if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+									&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+								{
+									//Delete connection from source pin's array
+									for (int m = j; m < num; m++)
+										Src->m_Connections[m] = Src->m_Connections[m + 1];
+									break;
+								}
+							}
+
+							if (num - 1 == 0) //Source pin is only freed from last connection
+							{
+								Src->setStatus(NCON);
+							}
+
+							Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							//pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 							c = c + 1;
 						}
@@ -136,8 +192,36 @@ void Cut::Execute()
 						if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
 							(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
 						{
+							int oldX = pManager->CompList[n]->m_pGfxInfo->PointsList[1].x;
+							int oldY = pManager->CompList[n]->m_pGfxInfo->PointsList[1].y;
+
+							OutputPin* Src = pManager->CompList[n]->getSourcePin();
+							InputPin* Dst = pManager->CompList[n]->getDestPin();
+
+							int num = Src->m_Conn;
+							Src->m_Conn--;
+
+							for (int j = 0; j < num; j++)
+							{
+								if (Src->m_Connections[j]->m_pGfxInfo->PointsList[1].x == oldX
+									&& Src->m_Connections[j]->m_pGfxInfo->PointsList[1].y == oldY)
+								{
+									//Delete connection from source pin's array
+									for (int m = j; m < num; m++)
+										Src->m_Connections[m] = Src->m_Connections[m + 1];
+									break;
+								}
+							}
+
+							if (num - 1 == 0) //Source pin is only freed from last connection
+							{
+								Src->setStatus(NCON);
+							}
+
+							Dst->setStatus(NCON); //Freeing the associated destination pin to the connection
+
 							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							//pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
 							pManager->CompList[n] = NULL;
 							c = c + 1;
 						}
@@ -145,7 +229,8 @@ void Cut::Execute()
 				}
 			}
 
-			pManager->CutpGInf = pManager->CompList[i]->m_pGfxInfo;
+			//pManager->CutpGInf = pManager->CompList[i]->m_pGfxInfo;
+
 			pManager->CompList[i] = NULL;
 			//Re-sorting the component list
 			int k = 0;
@@ -195,7 +280,8 @@ void Cut::Execute()
 
 			else
 			{
-				pManager->CutItem = Cutitm; //Copying the old cut item with its old position
+				//pManager->CutItem = Cutitm; //Setting pointer CutItem to the old cut item with its old position
+
 				Cutitm->m_pGfxInfo = pGInfo;
 				pManager->CompList[pManager->CompCount - 1] = Cutitm;
 				if ((pManager->CompList[pManager->CompCount - 1]->ComponentType == T_LED) ||

@@ -34,7 +34,7 @@ void Undo::Execute()
 		{
 			//Clearing the deleted components/actions on the UI:
 
-			if (t1 == ADD_CONNECTION)
+			if ((t1 == ADD_CONNECTION) && (pManager->CompCount > 0))
 			{
 				pUI->ClearConnection(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);
 				pUI->LabelComp("               ",
@@ -42,7 +42,7 @@ void Undo::Execute()
 					pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo->PointsList[0].y);
 			}
 
-			else
+			else if (pManager->CompCount > 0)
 			{
 				pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[pManager->CompCount - 1];
 				pUI->ClearComponent(pManager->CompList[pManager->CompCount - 1]->m_pGfxInfo);

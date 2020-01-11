@@ -83,7 +83,21 @@ void Copy::Execute()
 						break;
 					}
 
-					pManager->AddComponent(copied);
+					pManager->UnselectAll();
+					copied->selected = true;
+
+					if ((copied->ComponentType == T_LED) ||
+						(copied->ComponentType == T_SWITCH))
+					{
+						pManager->AddComponent(copied);
+						Label temp(pManager);
+						temp.Execute();
+					}
+					else
+					{
+						pManager->AddComponent(copied);
+					}
+
 					pManager->UnselectAll();
 					pUI->PrintMsg("Copied component pasted successfully.");
 				}

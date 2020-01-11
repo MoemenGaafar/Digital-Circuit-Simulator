@@ -13,14 +13,16 @@ Copy::~Copy(void)
 void Copy::Execute()
 {
 	//Get a Pointer to the user Interfaces
+
 	UI* pUI = pManager->GetUI();
+
 	for (int i = 0; i < pManager->CompCount; i++)
 	{
-		if (pManager->CompList[i]->selected == true)
+		if (pManager->CompList[i]->selected)
 		{
 			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
 			{
-				pUI->PrintMsg("Cannot Copy a connection! Please select a component to Copy.");
+				pUI->PrintMsg("Cannot Copy/Paste a connection! Please select a Component to Copy/Paste.");
 				break;
 			}
 		

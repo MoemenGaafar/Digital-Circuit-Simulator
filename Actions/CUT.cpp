@@ -20,197 +20,200 @@ void Cut::Execute()
 
 	for (int i = 0; i < pManager->CompCount; i++)
 	{
-		if (pManager->CompList[i]->selected == true)
+		if (pManager->CompList[i]->selected)
 		{
-				Cutitm = pManager->CompList[i];
+			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
+			{
+				pUI->PrintMsg("Cannot Cut/Paste a Connection. Please select a Component to Cut/Paste.");
+				break;
+			}
 
-				pUI->ClearComponent(Cutitm->m_pGfxInfo);
+			Cutitm = pManager->CompList[i];
 
-				pUI->LabelComp("            ", Cutitm->m_pGfxInfo->PointsList[0].x, Cutitm->m_pGfxInfo->PointsList[0].y);
+			pUI->ClearComponent(Cutitm->m_pGfxInfo);
 
-				pUI->PrintMsg("You cut the selected component. Click where you'd like to paste.");
+			pUI->LabelComp("            ", Cutitm->m_pGfxInfo->PointsList[0].x, Cutitm->m_pGfxInfo->PointsList[0].y);
 
-				//Finding connections to clear them
+			pUI->PrintMsg("You cut the selected component. Click where you'd like to paste.");
 
-				//For the connections of the output pin and the 1st input pin.
-				GraphicsInfo* pGInfo1 = new GraphicsInfo(2);
+			//Finding connections to clear them
 
-				//For the connections of the output pin and the 2nd input pin, if exists.
-				GraphicsInfo* pGInfo2 = new GraphicsInfo(2);
+			//For the connections of the output pin and the 1st input pin.
+			GraphicsInfo* pGInfo1 = new GraphicsInfo(2);
 
-				//Setting the points
-				int x1 = Cutitm->m_pGfxInfo->PointsList[0].x;
-				int y1 = Cutitm->m_pGfxInfo->PointsList[0].y;
-				int x2 = Cutitm->m_pGfxInfo->PointsList[1].x;
-				int y2 = Cutitm->m_pGfxInfo->PointsList[1].y;
-				int xhalf = (x2 + x1) / 2, yhalf = (y2 + y1) / 2;
+			//For the connections of the output pin and the 2nd input pin, if exists.
+			GraphicsInfo* pGInfo2 = new GraphicsInfo(2);
 
-				//To set the pGInfos
+			//Setting the points
+			int x1 = Cutitm->m_pGfxInfo->PointsList[0].x;
+			int y1 = Cutitm->m_pGfxInfo->PointsList[0].y;
+			int x2 = Cutitm->m_pGfxInfo->PointsList[1].x;
+			int y2 = Cutitm->m_pGfxInfo->PointsList[1].y;
+			int xhalf = (x2 + x1) / 2, yhalf = (y2 + y1) / 2;
 
-				switch (Cutitm->ComponentType)
+			//To set the pGInfos
+
+			switch (Cutitm->ComponentType)
+			{
+			case T_AND2:
+			case T_OR2:
+			case T_NAND2:
+			case T_NOR2:
+			case T_XOR2:
+			case T_XNOR2:
+				//For all components with 2 pins we'll use the two pGInfos:
+
+				pGInfo1->PointsList[0].x = x2;
+				pGInfo1->PointsList[0].y = y2 - 25;
+				pGInfo1->PointsList[1].x = x1;
+				pGInfo1->PointsList[1].y = y2 - 13;
+
+				pGInfo2->PointsList[0].x = x2;
+				pGInfo2->PointsList[0].y = y2 - 25;
+				pGInfo2->PointsList[1].x = x1;
+				pGInfo2->PointsList[1].y = y1 + 13;
+
+				break;
+
+			case T_NOT:
+
+				pGInfo1->PointsList[0].x = x2 - 1;
+				pGInfo1->PointsList[0].y = y2 - 24;
+				pGInfo1->PointsList[1].x = x1;
+				pGInfo1->PointsList[1].y = y1 + 26;
+
+				break;
+
+			case T_SWITCH:
+
+				pGInfo1->PointsList[0].x = x2;
+				pGInfo1->PointsList[0].y = y2 - 25;
+
+				break;
+
+			case T_LED:
+
+				pGInfo1->PointsList[1].x = x1 + 15;
+				pGInfo1->PointsList[1].y = y2 - 8;
+				break;
+			}
+
+			//Finding the connections associated with the cut component and removing them
+
+			int c = 0;
+			for (int n = 0; n < pManager->CompCount; n++)
+			{
+				if (pManager->CompList[n]->ComponentType == T_CONNECTION)
 				{
-				case T_AND2:
-				case T_OR2:
-				case T_NAND2:
-				case T_NOR2:
-				case T_XOR2:
-				case T_XNOR2:
-					//For all components with 2 pins we'll use the two pGInfos:
-
-					pGInfo1->PointsList[0].x = x2;
-					pGInfo1->PointsList[0].y = y2 - 25;
-					pGInfo1->PointsList[1].x = x1;
-					pGInfo1->PointsList[1].y = y2 - 13;
-
-					pGInfo2->PointsList[0].x = x2;
-					pGInfo2->PointsList[0].y = y2 - 25;
-					pGInfo2->PointsList[1].x = x1;
-					pGInfo2->PointsList[1].y = y1 + 13;
-
-					break;
-
-				case T_NOT:
-
-					pGInfo1->PointsList[0].x = x2 - 1;
-					pGInfo1->PointsList[0].y = y2 - 24;
-					pGInfo1->PointsList[1].x = x1;
-					pGInfo1->PointsList[1].y = y1 + 26;
-
-					break;
-
-				case T_SWITCH:
-
-					pGInfo1->PointsList[0].x = x2;
-					pGInfo1->PointsList[0].y = y2 - 25;
-
-					break;
-
-				case T_LED:
-
-					pGInfo1->PointsList[1].x = x1 + 15;
-					pGInfo1->PointsList[1].y = y2 - 8;
-					break;
-				}
-
-				//Finding the connections associated with the cut component and removing them
-
-				int c = 0;
-				for (int n = 0; n < pManager->CompCount; n++)
-				{
-					if (pManager->CompList[n]->ComponentType == T_CONNECTION)
+					if ((Cutitm->ComponentType != T_LED) && (Cutitm->ComponentType != T_SWITCH))
 					{
-						if ((Cutitm->ComponentType != T_LED) && (Cutitm->ComponentType != T_SWITCH))
+						if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
+							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
+							|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x)
+								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
+							|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[1].x)
+								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
 						{
-							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
-								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y))
-								|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x)
-									&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
-								|| ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo2->PointsList[1].x)
-									&& (pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo2->PointsList[1].y)))
-							{
-								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
-								pManager->CompList[n] = NULL;
-								c = c + 1;
-							}
+							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
-						else if (Cutitm->ComponentType != T_LED)
+					}
+					else if (Cutitm->ComponentType != T_LED)
+					{
+						if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
+							&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
 						{
-							if (((pManager->CompList[n]->m_pGfxInfo->PointsList[0].x == pGInfo1->PointsList[0].x)
-								&& (pManager->CompList[n]->m_pGfxInfo->PointsList[0].y == pGInfo1->PointsList[0].y)))
-							{
-								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
-								pManager->CompList[n] = NULL;
-								c = c + 1;
-							}
+							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
-						else if (Cutitm->ComponentType != T_SWITCH)
+					}
+					else if (Cutitm->ComponentType != T_SWITCH)
+					{
+						if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
+							(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
 						{
-							if ((pManager->CompList[n]->m_pGfxInfo->PointsList[1].x == pGInfo1->PointsList[1].x) &&
-								(pManager->CompList[n]->m_pGfxInfo->PointsList[1].y == pGInfo1->PointsList[1].y))
-							{
-								pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
-								pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
-								pManager->CompList[n] = NULL;
-								c = c + 1;
-							}
+							pUI->ClearConnection(pManager->CompList[n]->m_pGfxInfo);
+							pManager->CutConn[pManager->CutConnCount++] = pManager->CompList[n];
+							pManager->CompList[n] = NULL;
+							c = c + 1;
 						}
 					}
 				}
+			}
 
-				pManager->CutpGInf = pManager->CompList[i]->m_pGfxInfo;
-				pManager->CompList[i] = NULL;
-				//Re-sorting the component list
-				int k = 0;
+			pManager->CutpGInf = pManager->CompList[i]->m_pGfxInfo;
+			pManager->CompList[i] = NULL;
+			//Re-sorting the component list
+			int k = 0;
 
-				for (int j = 0; j < pManager->CompCount; j++)
+			for (int j = 0; j < pManager->CompCount; j++)
+			{
+				if (pManager->CompList[j] != NULL)
 				{
-					if (pManager->CompList[j] != NULL)
-					{
-						pManager->CompList[k] = pManager->CompList[j];
-						k = k + 1;
-					}
+					pManager->CompList[k] = pManager->CompList[j];
+					k = k + 1;
 				}
+			}
 
-				pManager->CompCount = pManager->CompCount - c;
+			pManager->CompCount = pManager->CompCount-c;
 
-				//Setting new position to paste a component
+			//Setting new position to paste a component
 
-				int x, y;
+			int x, y;
 
-				pUI->GetPointClicked(x, y); //Coordinates for copy's center
+			pUI->GetPointClicked(x, y); //Coordinates for copy's center
 
-				int gateWidth = pUI->getGateWidth();
-				int gateHeight = pUI->getGateHeight();
+			int gateWidth = pUI->getGateWidth();
+			int gateHeight = pUI->getGateHeight();
 
-				//Graphics info to construct the copy
-				GraphicsInfo* pGInfo = new GraphicsInfo(2);
+			//Graphics info to construct the copy
+			GraphicsInfo* pGInfo = new GraphicsInfo(2);
 
-				pGInfo->PointsList[0].x = x - gateWidth / 2;
-				pGInfo->PointsList[0].y = y - gateHeight / 2;
-				pGInfo->PointsList[1].x = x + gateWidth / 2;
-				pGInfo->PointsList[1].y = y + gateHeight / 2;
+			pGInfo->PointsList[0].x = x - gateWidth / 2;
+			pGInfo->PointsList[0].y = y - gateHeight / 2;
+			pGInfo->PointsList[1].x = x + gateWidth / 2;
+			pGInfo->PointsList[1].y = y + gateHeight / 2;
 
-				//Cases of pasting on the tool bar or status bar
+			//Cases of pasting on the tool bar or status bar
 
-				if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
+			if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight || pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
+			{
+				if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight)
+					pUI->PrintMsg("You cannot paste the component on the toolbar. Action aborted.");
+
+				if (pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
+					pUI->PrintMsg("You cannot paste the component on the status bar. Action aborted.");
+
+				pManager->Done_Acts[pManager->executed] = NI;
+				pManager->executed--;
+				break;
+			}
+
+			else
+			{
+				pManager->CutItem = Cutitm; //Copying the old cut item with its old position
+				Cutitm->m_pGfxInfo = pGInfo;
+				pManager->CompList[pManager->CompCount - 1] = Cutitm;
+				if ((pManager->CompList[pManager->CompCount - 1]->ComponentType == T_LED) ||
+					(pManager->CompList[pManager->CompCount - 1]->ComponentType == T_SWITCH))
 				{
-					if (pGInfo->PointsList[0].y - 25 < pUI->ToolBarHeight)
-						pUI->PrintMsg("You cannot paste the component on the toolbar. Action aborted.");
-
-					if (pGInfo->PointsList[1].y > pUI->height - pUI->StatusBarHeight)
-						pUI->PrintMsg("You cannot paste the component on the status bar. Action aborted.");
-
-					pManager->Done_Acts[pManager->executed] = NI;
-					pManager->executed--;
-					break;
+					Label temp(pManager);
+					temp.Execute();
 				}
-
-				else
-				{
-					pManager->CutItem = Cutitm; //Copying the old cut item with its old position
-					Cutitm->m_pGfxInfo = pGInfo;
-					pManager->CompList[pManager->CompCount - 1] = Cutitm;
-					if ((pManager->CompList[pManager->CompCount - 1]->ComponentType == T_LED) ||
-						(pManager->CompList[pManager->CompCount - 1]->ComponentType == T_SWITCH))
-					{
-						Label temp(pManager);
-						temp.Execute();
-					}
-					pManager->UnselectAll();
-					pManager->Done_Acts[pManager->executed - 1] = CUT;
-					pUI->PrintMsg("Cut component pasted successfully.");
-					break;
-				}
-
+				pManager->UnselectAll();
+				pManager->Done_Acts[pManager->executed-1] = CUT;
+				pUI->PrintMsg("Cut component pasted successfully.");
+			}
 		}
 
 		//In case no component is selected for cutting
 		else
 		{
 			pUI->PrintMsg("Nothing is selected. Please select a component to cut.");
-			break;
 		}
 	}
 }

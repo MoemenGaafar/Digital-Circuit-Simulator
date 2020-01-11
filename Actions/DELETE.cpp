@@ -23,7 +23,7 @@ void Delete::Execute()
 
 	for (int i = 0; i < pManager->CompCount; i++)
 	{
-		if (pManager->CompList[i]->selected == true)
+		if (pManager->CompList[i]->selected)
 		{
 			if (pManager->CompList[i]->ComponentType != T_CONNECTION)
 			{

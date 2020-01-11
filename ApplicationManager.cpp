@@ -339,7 +339,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		if (pAct->Type == DefMODULE)
 		{
-			for (int i = CompCount - 58; i < CompCount-1; i++)
+			for (int i = CompCount - 74; i < CompCount-2; i++)
 				CompList[i]->inModule = 1; 
 		}
 

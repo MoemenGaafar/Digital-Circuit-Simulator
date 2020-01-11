@@ -5,6 +5,7 @@
 #include "..\Defs.h"
 #include "..\UI\UI.h"
 #include "..\\Components\InputPin.h"
+#include "..//ApplicationManager.h"
 
 
 class OutputPin;
@@ -39,6 +40,8 @@ public:
 	virtual void setDestPin(InputPin* pDstPin);
 	virtual OutputPin* getSourcePin();
 	virtual InputPin* getDestPin();
+
+	virtual void setPins(ApplicationManager* pManager);
 
 
 

@@ -2,6 +2,7 @@
 #define _Def_MODULE_H
 #include "Load.h"
 #include "..\Components\MODULE.h" 
+#include "..\Components\ModuleB.h" 
 
 
 class DefModule : public Action

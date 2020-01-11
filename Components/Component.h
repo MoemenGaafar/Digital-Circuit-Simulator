@@ -20,6 +20,7 @@ protected:
 public:
 
 	bool selected = 0;
+	bool inModule = 0; 
 	Type ComponentType;
 	string m_Label= "-";
 	GraphicsInfo* m_pGfxInfo;  //The parameters required to draw a component

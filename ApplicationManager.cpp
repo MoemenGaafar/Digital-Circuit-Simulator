@@ -337,7 +337,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		pAct->Execute();
 
-		
+		if (pAct->Type == DefMODULE)
+		{
+			for (int i = CompCount - 58; i < CompCount-1; i++)
+				CompList[i]->inModule = 1; 
+		}
+
+
 		
 		delete pAct;
 		pAct = NULL;
@@ -347,6 +353,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 void ApplicationManager::UpdateInterface()
 {
+	
+	
+	
 	for (int i = 0; i < CompCount; i++)
 		pUI->LabelComp(CompList[i]->m_Label, CompList[i]->m_pGfxInfo->PointsList[0].x, CompList[i]->m_pGfxInfo->PointsList[0].y);
 
@@ -355,8 +364,10 @@ void ApplicationManager::UpdateInterface()
 	for (int i = 0; i < CompCount; i++)
 		CompList[i]->Operate();
 
-for (int i = 0; i < CompCount; i++)
-	CompList[i]->Draw(pUI);
+	for (int i = 0; i < CompCount; i++)
+		if (CompList[i]->inModule != 1)
+			  CompList[i]->Draw(pUI);
+
 
 
 }

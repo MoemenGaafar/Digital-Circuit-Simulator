@@ -95,7 +95,8 @@ class UI
 	//This should be calculated accurately because it will be used later to create connections between gates
 	//For now, we will assume that rect width = 50 and height = 50
 	static const int	GATE_Width = 50,		//Gate Image default width
-						GATE_Height = 50;		//Gate Image default height
+		                GATE_Height = 50;		//Gate Image default height
+	                    
 
 	window* pWind;
 	
@@ -139,6 +140,7 @@ public:
 	void DrawNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
 	void DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected = false) const;
+	void DrawModule(const GraphicsInfo& r_GfxInfo, bool selected) const;
 	void DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
 	void DrawLED(const GraphicsInfo& r_GfxInfo, bool selected = false, STATUS isOn = NCON) const;
 

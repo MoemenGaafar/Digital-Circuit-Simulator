@@ -79,7 +79,8 @@ enum Type
 	T_NAND2, 
 	T_NOR2, 
 	T_XOR2,
-	T_XNOR2
+	T_XNOR2,
+	T_Module
 };
 
 //Maximum number of input pins that can be connected to any output pin

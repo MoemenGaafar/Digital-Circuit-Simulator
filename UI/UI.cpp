@@ -382,6 +382,20 @@ void UI::DrawXNOR2(const GraphicsInfo& r_GfxInfo, bool selected) const
 	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, GATE_Width, GATE_Height);
 }
 
+void UI::DrawModule(const GraphicsInfo& r_GfxInfo, bool selected) const
+{
+	string GateImage;
+
+	if (selected)	//use image in the highlighted case
+		GateImage = "Images\\Gates\\Gate_Module_Hi.jpg";
+	else
+		GateImage = "Images\\Gates\\Gate_Module.jpg";
+
+	//Draw AND2 Gate at Gfx_Info (1st corner)
+	//Set the Image Width & Height by AND2 Image Parameter in UI_Info
+	pWind->DrawImage(GateImage, r_GfxInfo.PointsList[0].x, r_GfxInfo.PointsList[0].y, 4*GATE_Width, 2*GATE_Height);
+}
+
 void UI::DrawSWITCH(const GraphicsInfo& r_GfxInfo, bool selected, STATUS isOn) const
 {
 	string GateImage;

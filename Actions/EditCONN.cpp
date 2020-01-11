@@ -9,126 +9,8 @@ EditConn::EditConn(ApplicationManager* pApp) :Action(pApp)
 
 EditConn::~EditConn(void)
 {
+	delete EditAdd; 
 }
-
-int EditConn::checkPin(int x, int y) {
-	for (int i = 0; i < pManager->CompCount; i++) {
-
-
-		int x1 = pManager->CompList[i]->m_pGfxInfo->PointsList[0].x;
-		int y1 = pManager->CompList[i]->m_pGfxInfo->PointsList[0].y;
-		int x2 = pManager->CompList[i]->m_pGfxInfo->PointsList[1].x;
-		int y2 = pManager->CompList[i]->m_pGfxInfo->PointsList[1].y;
-		if (x > x1 && x < x2 && y > y1 && y < y2)
-		{
-			component = pManager->CompList[i];
-
-			int xhalf = (x2 + x1) / 2, yhalf = (y2 + y1) / 2;
-			switch (component->ComponentType) {
-			case T_AND2:
-			case T_OR2:
-			case T_NAND2:
-			case T_NOR2:
-			case T_XOR2:
-			case T_XNOR2:
-			{
-				if (x > xhalf) {
-
-					return 1;
-				}
-				else if (y > yhalf) {
-
-					return 2;
-				}
-				else
-				{
-					return 3;
-				}
-			}
-			case T_NOT: {
-				if (x > xhalf) {
-
-					return 1;
-				}
-				else
-				{
-					return 2;
-				}
-			}
-			case T_SWITCH:
-			{
-				return 1;
-			}
-			case T_LED:
-			{
-				return 2;
-			}
-			}
-		}
-	}
-	return 0;
-}
-
-
-void EditConn::connectPin(int x, int y, int r) {
-
-	int x1 = component->m_pGfxInfo->PointsList[0].x;
-	int y1 = component->m_pGfxInfo->PointsList[0].y;
-	int x2 = component->m_pGfxInfo->PointsList[1].x;
-	int y2 = component->m_pGfxInfo->PointsList[1].y;
-	int xhalf = (x2 + x1) / 2, yhalf = (y2 + y1) / 2;
-
-	switch (component->ComponentType) {
-	case T_AND2:
-	case T_OR2:
-	case T_NAND2:
-	case T_NOR2:
-	case T_XOR2:
-	case T_XNOR2:
-	{
-		if (r == 1) {
-			pGInfo->PointsList[0].x = x2;
-			pGInfo->PointsList[0].y = y2 - 25;
-		}
-		else if (r == 2) {
-			pGInfo->PointsList[1].x = x1;
-			pGInfo->PointsList[1].y = y2 - 13;
-		}
-		else
-		{
-			pGInfo->PointsList[1].x = x1;
-			pGInfo->PointsList[1].y = y1 + 13;
-		}
-		break;
-	}
-	case T_NOT: {
-		if (r == 1) {
-			pGInfo->PointsList[0].x = x2 - 1;
-			pGInfo->PointsList[0].y = y2 - 24;
-		}
-		else
-		{
-			pGInfo->PointsList[1].x = x1;
-			pGInfo->PointsList[1].y = y1 + 26;
-		}
-		break;
-	}
-	case T_SWITCH:
-	{
-		pGInfo->PointsList[0].x = x2;
-		pGInfo->PointsList[0].y = y2 - 25;
-		break;
-	}
-	case T_LED:
-	{
-		pGInfo->PointsList[1].x = x1 + 15;
-		pGInfo->PointsList[1].y = y2 - 8;
-		break;
-	}
-	}
-
-}
-
 
 
 
@@ -189,18 +71,18 @@ void EditConn::Execute()
 
 				//Get Center point of the Gate
 				pUI->GetPointClicked(srcX, srcY);
-				pin = checkPin(srcX, srcY);
+				pin = EditAdd->checkPin(srcX, srcY);
 
 				while (pin != 1) {
 					pUI->PrintMsg("Please click on a valid source pin");
 					pUI->GetPointClicked(srcX, srcY);
-					pin = checkPin(srcX, srcY);
+					pin = EditAdd->checkPin(srcX, srcY);
 				}
 				
-				outp = component->m_OutputPin;
-				connectPin(srcX, srcY, 1); 
+				outp = EditAdd->component->m_OutputPin;
+				EditAdd->connectPin(srcX, srcY, 1); 
 				pManager->CompList[i]->setSourcePin(outp);
-				component->m_OutputPin->setStatus(LOW);
+				EditAdd->component->m_OutputPin->setStatus(LOW);
 				
 
 			    isAvailable = outp->ConnectTo(pManager->CompList[i]); 
@@ -218,18 +100,18 @@ void EditConn::Execute()
 			{
 				pUI->PrintMsg("Connection: Click on the destination pin");
 				pUI->GetPointClicked(destX, destY);
-				pin = checkPin(destX, destY);
+				pin = EditAdd->checkPin(destX, destY);
 
 				while (pin != 2 && pin != 3) {
 					pUI->PrintMsg("Please click on a valid destination pin");
 					pUI->GetPointClicked(destX, destY);
-					pin = checkPin(destX, destY);
+					pin = EditAdd->checkPin(destX, destY);
 				}
 
 				//Ensures that no other connections are connected to this input pin. 
 
-				destX = pGInfo->PointsList[1].x;
-				destY = pGInfo->PointsList[1].y; 
+				destX = EditAdd->pGInfo->PointsList[1].x;
+				destY = EditAdd->pGInfo->PointsList[1].y; 
 
 				for (int j = 0; j < i; j++)
 				{
@@ -260,22 +142,22 @@ void EditConn::Execute()
 
 			if (pin == 2)
 			{
-				connectPin(destX, destY, 2);
-				inp = &component->m_InputPins[0];
+				EditAdd->connectPin(destX, destY, 2);
+				inp = &EditAdd->component->m_InputPins[0];
 			}
 			if (pin == 3)
 			{
-				connectPin(destX, destY, 3);
-				inp = &component->m_InputPins[1];
+				EditAdd->connectPin(destX, destY, 3);
+				inp = &EditAdd->component->m_InputPins[1];
 			}
 
 				pManager->CompList[i]->setDestPin(inp);
-				component->m_InputPins[pin - 2].setStatus(LOW);
+				EditAdd->component->m_InputPins[pin - 2].setStatus(LOW);
 
 				pUI->ClearStatusBar();
 
 				//Change graphics info
-				pManager->CompList[i]->m_pGfxInfo = pGInfo;
+				pManager->CompList[i]->m_pGfxInfo = EditAdd->pGInfo;
 
 				
 				

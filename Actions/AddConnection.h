@@ -12,11 +12,12 @@ private:
 	int pin;
 	InputPin* inp;
 	OutputPin* outp;
-	Component* component;  
-	GraphicsInfo* pGInfo = new GraphicsInfo(2);
+	
 public:
+	Component* component;
 	AddConnection(ApplicationManager* pApp);
 	virtual ~AddConnection(void);
+	GraphicsInfo* pGInfo = new GraphicsInfo(2); 
 	
 	int checkPin(int x, int y); 
 	void connectPin(int x, int y, int r);

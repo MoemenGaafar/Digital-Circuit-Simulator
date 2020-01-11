@@ -3,6 +3,7 @@
 Module::Module(GraphicsInfo* r_pGfxInfo, int r_FanOut) :Gate(r_pGfxInfo, 5, r_FanOut)
 {
 	ComponentType = T_Module;
+	
 }
 
 

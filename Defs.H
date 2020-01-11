@@ -80,7 +80,8 @@ enum Type
 	T_NOR2, 
 	T_XOR2,
 	T_XNOR2,
-	T_Module
+	T_Module, 
+	T_ModuleB
 };
 
 //Maximum number of input pins that can be connected to any output pin

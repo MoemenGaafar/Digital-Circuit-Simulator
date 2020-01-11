@@ -50,13 +50,15 @@ void DefModule::Execute()
 	}
 	else {
 
-		string TempName = "ProgramTXTfiles\\DefaultModule.txt";
+		string TempName = "ProgramTXTfiles\\DefaultModuleA.txt";
+		string TempName2 = "ProgramTXTfiles\\DefaultModuleB.txt";
 
 		int OldCount = pManager->CompCount;
 
 		pUI->ClearStatusBar();
 
 		MLoad->ExecutePart(TempName, pUI, OldCount);
+		MLoad->ExecutePart(TempName2, pUI, OldCount+36);
 
 		for (int i = OldCount; i < pManager->CompCount; i++) {
 
@@ -69,7 +71,12 @@ void DefModule::Execute()
 		}
 			   		 	  	  
 		Module* pA = new Module(pGInfo, Default_FANOUT);
+
+		pA-> m_OutputPin = pManager->CompList[pManager->CompCount - 29]->m_OutputPin;
 		pManager->AddComponent(pA);
+
+		ModuleB* pB = new ModuleB(pGInfo, Default_FANOUT);
+		pManager->AddComponent(pB);
 		
 	}
 }

@@ -201,9 +201,9 @@ void NamedModule::ExecutePart(string TempName, UI* pUI) {
 						if ((pManager->CompList[i]->ComponentType == T_SWITCH || pManager->CompList[i]->ComponentType == T_LED) && pManager->CompList[i]->m_Label == pManager->CompList[j]->m_Label)
 						{
 							unique = 0;
-							pManager->CompList[j]->selected = 1;
+							pManager->CompList[i]->selected = 1;
 							pManager->UpdateInterface();
-							pUI->PrintMsg("The selected LED/Switch has the same label as a LED/Switch in the module you are inserting and will need to be relabeled.");
+							pUI->PrintMsg("The selected LED/Switch has the same label as a LED/Switch already inserted and will need to be relabeled.");
 							std::this_thread::sleep_for(std::chrono::seconds(2));
 							MLabel->Execute();
 							pManager->UpdateInterface();

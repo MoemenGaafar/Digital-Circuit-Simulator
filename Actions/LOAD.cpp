@@ -181,10 +181,11 @@ bool Load::ExecutePart(string name, UI* pUI, int count) {
 			}
 
 			pManager->CompList[count + i]->m_Label = label;
-			pManager->CompCount++;
+			
 			
 			pManager->CompList[count + i]->selected = false; 
 
+			pManager->CompCount++;
 
 		}
 

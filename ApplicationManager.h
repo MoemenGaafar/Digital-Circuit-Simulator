@@ -11,7 +11,7 @@ class ApplicationManager
 {
 
 private:
-	enum { MaxCompCount = 200 };	//Max no of Components
+	enum { MaxCompCount = 10000 };	//Max no of Components
 
 	UI* pUI; //pointer to the UI
 

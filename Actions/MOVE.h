@@ -7,8 +7,10 @@
 class Move : public Action
 {
 private:
-
-
+	//Get a Pointer to the user Interfaces
+	UI* pUI = pManager->GetUI();
+	window* pWind = pUI->getpWind();
+	int Cx, Cy;
 public:
 	Move(ApplicationManager* pApp);
 	virtual ~Move(void);

@@ -25,12 +25,12 @@ void Undo::Execute()
 
 		ActionType t1 = pManager->Undone_Acts[pManager->Undone_count - 1];
 
-		if (t1 == CUT || t1 == DEL)
+		if (t1 == CUT || t1 == DEL) //No Undo for delete and Cut
 		{
 			pUI->PrintMsg("Sorry, cannot undo Cut or Delete! Click on Undo again to Undo the action right before Cut/Delete.");
 		}
 
-		if (t1 == ADD_COMP || t1 == ADD_CONNECTION || t1 == COPY)
+		if (t1 == ADD_COMP || t1 == ADD_CONNECTION || t1 == COPY) //Undoing component-concerned actions
 		{
 			//Clearing the deleted components/actions on the UI:
 
@@ -57,7 +57,7 @@ void Undo::Execute()
 			pManager->CompCount--;
 		}
 
-		else if (t1 == LOAD)
+		else if (t1 == LOAD) //Undoing load
 		{
 			string TempName = "ProgramTXTfiles\\temporaryloadtype2file";
 			TempName += to_string(pManager->UndoneLoadCount);
@@ -76,7 +76,7 @@ void Undo::Execute()
 
 		}
 
-		else if (t1 == EDIT_Conn)
+		else if (t1 == EDIT_Conn) //Undoing edit connection
 		{
 			pManager->UndoneEditConn[pManager->UndoneEditConnCount] = new Connection(pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->m_pGfxInfo, pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->getSourcePin(), pManager->CompList[pManager->EditConnPlaces[pManager->EditConnCount - 1]]->getDestPin());
 
@@ -99,7 +99,7 @@ void Undo::Execute()
 			pManager->EditConnCount--;
 		}
 
-		else if (t1 == NamedMODULE)
+		else if (t1 == NamedMODULE) //Undoing a module
 		{
 
 			for (int i = 0; i < pManager->ModuleCompCount[pManager->ModuleCount - 1]; i++) {

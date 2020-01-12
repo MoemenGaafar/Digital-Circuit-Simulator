@@ -88,6 +88,19 @@ void Redo::Execute()
 			pManager->UndoneModuleCompCount[pManager->UndoneModuleCount] = 0;
 
 		}
+		else if (t1 == DefMODULE)
+		{
+			int OldUndoneCount = pManager->undone_Compcount; 
+			for (int i = OldUndoneCount - 74; i < OldUndoneCount; i++)
+			{
+				pManager->CompList[pManager->CompCount] = pManager->Undone_Comps[i];
+				pManager->Undone_Comps[i] = NULL;
+				pManager->CompCount++;
+				pManager->undone_Compcount--;
+
+			}
+
+		}
 
 		
 	}

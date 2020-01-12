@@ -20,9 +20,15 @@ void Copy::Execute()
 	{
 		if (pManager->CompList[i]->selected)
 		{
+			
 			if (pManager->CompList[i]->ComponentType == T_CONNECTION)
 			{
 				pUI->PrintMsg("Cannot Copy/Paste a connection! Please select a Component to Copy/Paste.");
+				break;
+			}
+			if (pManager->CompList[i]->ComponentType == T_Module)
+			{
+				pUI->PrintMsg("Cannot Copy/Paste a Default Module! Please simply add another one from the toolbar.");
 				break;
 			}
 		

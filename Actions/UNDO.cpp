@@ -134,6 +134,35 @@ void Undo::Execute()
 			pManager->ModuleCompCount[pManager->ModuleCount] = 0;
 
 		}
+
+	  else if (t1 == DefMODULE)
+	  { 
+	  int OldCompCount = pManager->CompCount; 
+		for (int i = OldCompCount - 74; i < OldCompCount ; i++)
+		{
+	  
+			if (i == OldCompCount - 2)
+			{
+				pUI->ClearComponent(pManager->CompList[i]->m_pGfxInfo);
+				pUI->LabelComp("               ",
+					pManager->CompList[i]->m_pGfxInfo->PointsList[0].x,
+					pManager->CompList[i]->m_pGfxInfo->PointsList[0].y);
+			}
+			
+			
+
+			pManager->Undone_Comps[pManager->undone_Compcount] = pManager->CompList[i];
+			pManager->CompList[i] = NULL;
+			pManager->undone_Compcount++;
+			pManager->CompCount--;
+		
+			
+
+	    }
+
+		  
+
+      }
 	}
 
 	else
@@ -141,7 +170,7 @@ void Undo::Execute()
 		pUI->PrintMsg("You cannot undo unless you do something first!");
 	}
 
-	}
+}
 
 
 
